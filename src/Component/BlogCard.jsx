@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 
-const BlogCard = ({ blog }) => {
+const BlogCard = ({ blog, allUsers }) => {
     const [likes, setLikes] = useState(blog.Likes);
     const [comments, setComments] = useState(blog.Comments);
     const [newComment, setNewComment] = useState("");
@@ -12,6 +12,8 @@ const BlogCard = ({ blog }) => {
     const [blogContent, setBlogContent] = useState(blog.Blog);
     const [ownerdp, setOwnerdp] = useState("")
     const [ownername, setOwnername] = useState("")
+    const [commenterName, setCommenterName] = useState("")
+    // const [ausers, setAusers] = useState([])
 
     const handleLike = () => {
         setLikes(likes + 1);
@@ -25,7 +27,7 @@ const BlogCard = ({ blog }) => {
             try {
                 const res = await axios.post(`http://localhost:7500/addcomment/${blog._id}`, { newComment })
 
-                setComments(res.data.Comments)
+                setComments(res.data?.Comments)
                 setNewComment("")
 
             } catch (error) {
@@ -96,13 +98,14 @@ const BlogCard = ({ blog }) => {
 
     }
 
+    
     return (
         <div className={styles.blogCard}>
             <div className={styles.header}>
                 <div className={styles.ownerInfo}>
-                    <img src={getOwnerAvatar(blog.Owner)} alt="Owner" className={styles.ownerAvatar} />
+                    <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
-                        {getOwnerName(blog.Owner)}
+                        {getOwnerName(blog?.Owner)}
                     </div>
                 </div>
                 <div>
@@ -137,9 +140,9 @@ const BlogCard = ({ blog }) => {
                 {comments.map((comment) => (
                     <div key={comment._id} className={styles.comment}>
                         <p>
-                            <strong>{getOwnerName(comment.CommentedBy)}</strong>: {comment.Comment}
+                            <strong>{allUsers?.find((user) => user._id == comment?.CommentedBy)?.Name}</strong>: {comment?.Comment}
                         </p>
-                        {comment.CommentedBy == JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
+                        {comment?.CommentedBy == JSON.parse(localStorage.getItem('LoggedInUser'))?._id && (
                             <div>
                                 {editingCommentId === comment._id ? (
                                     <div>
