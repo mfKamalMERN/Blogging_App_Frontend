@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
     const nav = useNavigate()
     const [blogs, setBlogs] = useState([])
+    const [au, setAu] = useState([])
 
     axios.defaults.withCredentials = true
     const tokenChecker = async () => {
@@ -19,7 +20,12 @@ const Home = () => {
                 nav('/')
                 localStorage.clear()
             }
-            else setBlogs(res.data.AllBlogs)
+            else {
+                setBlogs(res.data.AllBlogs)
+                axios.get(`http://localhost:7500/getallusers`)
+                    .then(res => setAu(res.data))
+                    .catch(er => console.log(er))
+            }
 
         } catch (error) {
             console.log(error);
@@ -28,7 +34,7 @@ const Home = () => {
 
     useEffect(() => {
         tokenChecker()
-    })
+    }, [blogs])
 
     return (
         <div>
@@ -38,7 +44,7 @@ const Home = () => {
                 <p>Share your thoughts and read amazing content from others.</p>
                 <div className={styles.blogs}>
                     {blogs.map((blog) => (
-                        <BlogCard key={blog._id} blog={blog} />
+                        <BlogCard key={blog._id} blog={blog} allUsers={au} />
                     ))}
                 </div>
             </div>

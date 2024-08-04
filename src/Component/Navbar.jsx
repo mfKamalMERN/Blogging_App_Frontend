@@ -33,6 +33,9 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
                             <button onClick={SignOut} className={styles.navButton}>
                                 Log Out
                             </button>
+                            <button className={styles.navButton}>
+                                {JSON.parse(localStorage.getItem('LoggedInUser'))?.Name}
+                            </button>
                         </div>
                 }
             </div>
