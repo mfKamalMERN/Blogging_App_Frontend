@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../Styles/Login.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios'
@@ -13,13 +13,39 @@ const Login = () => {
         confirmPassword: "",
         name: "",
         contact: "",
+
     })
     const [isSignup, setIsSignup] = useState(false);
     // const [confirmPassword, setConfirmPassword] = useState('');
 
+    axios.defaults.withCredentials = true
+    const tokenChecker = async () => {
+
+        try {
+            const res = await axios.get(`http://localhost:7500/getallblogs`)
+
+            if (!res.data.Token) {
+                nav('/')
+                localStorage.clear()
+            }
+            else {
+
+                nav('/home')
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        tokenChecker()
+    }, [])
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignup) {
+
+
             if (formdata.password !== formdata.confirmPassword) {
                 alert("Passwords do not match!");
                 return;
@@ -51,6 +77,7 @@ const Login = () => {
 
                     else if (res.data.LoggedIn) {
                         alert(res.data.Msg)
+                        localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
                         nav('/home')
                     }
 
@@ -73,7 +100,7 @@ const Login = () => {
 
     return (
         <div>
-            <Navbar isSignup={isSignup} toggleForm={toggleForm} />
+            <Navbar isSignup={isSignup} toggleForm={toggleForm} isLogin={true} />
 
             <div className={styles.formContainer}>
 

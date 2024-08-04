@@ -1,40 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../Styles/Home.module.css';
 import Navbar from '../Component/Navbar';
 import BlogCard from '../Component/BlogCard';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const user = { name: 'Current User', avatar: 'https://via.placeholder.com/50' }; // Replace with actual user data
-  const blogs = [
-    {
-      id: 1,
-      title: 'First Blog',
-      content: 'This is the content of the first blog.',
-      user: 'John Doe',
-      ownerAvatar: 'https://via.placeholder.com/50', // Replace with actual avatar URL
-      likes: 5,
-      comments: [
-        { id: 1, user: 'Jane Doe', content: 'Great post!', editable: false },
-        { id: 2, user: 'Current User', content: 'Nice article.', editable: true },
-      ],
-    },
-    // Add more blog objects as needed
-  ];
+    const nav = useNavigate()
+    const [blogs, setBlogs] = useState([])
 
-  return (
-    <div>
-      <Navbar />
-      <div className={styles.container}>
-        <h1>Welcome to BlogApp!</h1>
-        <p>Share your thoughts and read amazing content from others.</p>
-        <div className={styles.blogs}>
-          {blogs.map((blog) => (
-            <BlogCard key={blog.id} blog={blog} user={user} />
-          ))}
+    axios.defaults.withCredentials = true
+    const tokenChecker = async () => {
+
+        try {
+            const res = await axios.get(`http://localhost:7500/getallblogs`)
+
+            if (!res.data.Token) {
+                nav('/')
+                localStorage.clear()
+            }
+            else setBlogs(res.data.AllBlogs)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        tokenChecker()
+    })
+
+    return (
+        <div>
+            <Navbar isLogin={false} />
+            <div className={styles.container}>
+                <h1>Welcome to BlogApp!</h1>
+                <p>Share your thoughts and read amazing content from others.</p>
+                <div className={styles.blogs}>
+                    {blogs.map((blog) => (
+                        <BlogCard key={blog._id} blog={blog} />
+                    ))}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
-  
-  export default Home;
+
+export default Home;
