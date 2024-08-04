@@ -76,7 +76,7 @@ const Login = () => {
                     if (res.data.ValidationError) res.data.map((ve) => alert(ve.msg))
 
                     else if (res.data.LoggedIn) {
-                        alert(res.data.Msg)
+                        // alert(res.data.Msg)
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
                         nav('/home')
                     }
