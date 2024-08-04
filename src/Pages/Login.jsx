@@ -81,7 +81,7 @@ const Login = () => {
                         nav('/home')
                     }
 
-                    else alert(res.data.Msg)
+                    else alert(res.data)
 
                 })
                 .catch(err => console.log(err))
