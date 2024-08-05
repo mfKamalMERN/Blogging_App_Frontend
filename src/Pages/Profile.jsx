@@ -1,14 +1,43 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../Styles/Profile.module.css';
 import Navbar from '../Component/Navbar';
+import axios from 'axios';
 
 const Profile = () => {
-    const [name, setName] = useState('Current User'); // Replace with actual user data
+    const [name, setName] = useState(''); // Replace with actual user data
     const [password, setPassword] = useState('');
     const [File, setFile] = useState(null);
+    const [au, setAu] = useState([]);
     const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100'); // Replace with actual user data
+    const { userid } = useParams()
     const nav = useNavigate();
+
+    axios.defaults.withCredentials = true
+    const tokenChecker = async () => {
+
+        try {
+            const res = await axios.get(`http://localhost:7500/getallblogs`)
+
+            if (!res?.data?.Token) {
+                nav('/')
+                localStorage.clear()
+            }
+            else {
+
+                axios.get(`http://localhost:7500/getallusers`)
+                    .then(res => setAu(res.data))
+                    .catch(er => console.log(er))
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        tokenChecker()
+    })
 
     const handleNameChange = (e) => setName(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -16,6 +45,7 @@ const Profile = () => {
     const handleProfilePicChange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setFile(file)
             const reader = new FileReader();
             reader.onloadend = () => {
                 setProfilePic(reader.result);
@@ -39,17 +69,36 @@ const Profile = () => {
     const handleProfilePicUpdate = (e) => {
         e.preventDefault();
         // Handle profile pic update logic here
-        alert('Profile picture updated successfully');
+        if (!File) alert(`No Pic selected`)
+        else alert('Profile picture updated successfully');
     };
+
+    const getOwnerName = (uid) => {
+
+        axios.get(`http://localhost:7500/getusername/${uid}`)
+            .then(res => setName(res?.data))
+            .catch(er => console.log(er))
+        return name
+
+    }
+
+    const getOwnerAvatar = (uid) => {
+        axios.get(`http://localhost:7500/getuserdp/${uid}`)
+            .then(res => {
+                if (res.data) setProfilePic(res.data)
+            })
+            .catch(er => console.log(er))
+        return profilePic
+    }
 
     return (
         <div>
             <Navbar />
             <div className={styles.container}>
-                <h2>My Profile</h2>
+                <h2>{getOwnerName(userid)}</h2>
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
-                        <img src={profilePic} alt="Profile" className={styles.profilePic} />
+                        <img src={getOwnerAvatar(userid)} alt="Profile" className={styles.profilePic} />
                         <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
                         <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
                     </div>
