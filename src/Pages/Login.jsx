@@ -70,13 +70,12 @@ const Login = () => {
                 .catch(er => console.log(er))
 
         } else {
-            // Handle login logic here
+
             axios.post(`http://localhost:7500/login`, formdata)
                 .then((res) => {
                     if (res.data.ValidationError) res.data.map((ve) => alert(ve.msg))
 
                     else if (res.data.LoggedIn) {
-                        alert(res.data.Msg)
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
                         nav('/home')
                     }
@@ -85,7 +84,6 @@ const Login = () => {
 
                 })
                 .catch(err => console.log(err))
-
         }
     };
 

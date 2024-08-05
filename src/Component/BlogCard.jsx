@@ -9,15 +9,22 @@ const BlogCard = ({ blog, allUsers }) => {
     const [eComment, setEcomment] = useState('');
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editingBlog, setEditingBlog] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const [blogContent, setBlogContent] = useState(blog.Blog);
     const [ownerdp, setOwnerdp] = useState("")
     const [ownername, setOwnername] = useState("")
-    const [commenterName, setCommenterName] = useState("")
-    // const [ausers, setAusers] = useState([])
 
-    const handleLike = () => {
-        setLikes(likes + 1);
-        // Add logic to handle like in the backend
+
+    const handleLike = async () => {
+        try {
+            const res = await axios.patch(`http://localhost:7500/likeunlikeblog/${blog._id}`)
+
+            setLikes(res.data.Likes)
+
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     const handleAddComment = async () => {
@@ -27,7 +34,7 @@ const BlogCard = ({ blog, allUsers }) => {
             try {
                 const res = await axios.post(`http://localhost:7500/addcomment/${blog._id}`, { newComment })
 
-                setComments(res.data?.Comments)
+                setComments(res?.data?.Comments)
                 setNewComment("")
 
             } catch (error) {
@@ -98,7 +105,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     }
 
-    
+
     return (
         <div className={styles.blogCard}>
             <div className={styles.header}>
@@ -133,59 +140,72 @@ const BlogCard = ({ blog, allUsers }) => {
                 </div>
             )}
             <div className={styles.actions}>
-                <button onClick={handleLike} className={styles.button}>Like ({likes.length})</button>
+                {
+                    likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
+                        <button onClick={handleLike} className={styles.button}>Unlike ({likes.length})</button>
+                        :
+                        <button onClick={handleLike} className={styles.button}>Like ({likes.length})</button>
+                }
             </div>
+
             <div className={styles.comments}>
-                <h4>Comments</h4>
-                {comments.map((comment) => (
-                    <div key={comment._id} className={styles.comment}>
-                        <p>
-                            <strong>{allUsers?.find((user) => user._id == comment?.CommentedBy)?.Name}</strong>: {comment?.Comment}
-                        </p>
-                        {comment?.CommentedBy == JSON.parse(localStorage.getItem('LoggedInUser'))?._id && (
-                            <div>
-                                {editingCommentId === comment._id ? (
+                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️Comments</button>
+                {
+                    showComments &&
+                    <>
+                        <h4>Comments</h4>
+                        {comments.map((comment) => (
+                            <div key={comment._id} className={styles.comment}>
+                                <p>
+                                    <strong>{allUsers?.find((user) => user._id == comment?.CommentedBy)?.Name}</strong>: {comment?.Comment}
+                                </p>
+                                {comment?.CommentedBy == JSON.parse(localStorage.getItem('LoggedInUser'))?._id && (
                                     <div>
-                                        <textarea
-                                            value={eComment}
-                                            onChange={(e) => {
-                                                setEcomment(e.target.value)
-                                                setComments(
-                                                    comments.map((c) => c._id === comment._id ? { ...c, Comment: e.target.value } : c))
-                                            }
-                                            }
-                                            className={styles.textarea}
-                                        />
-                                        <button
-                                            onClick={() => handleEditComment(comment._id)}
-                                            className={styles.button}
-                                        >
-                                            Save
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <button
-                                            onClick={() => {
-                                                setEditingCommentId(comment._id)
-                                                setEcomment(comment.Comment)
-                                            }}
-                                            className={styles.button}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteComment(comment._id, blog._id)}
-                                            className={styles.button}
-                                        >
-                                            Delete
-                                        </button>
+                                        {editingCommentId === comment._id ? (
+                                            <div>
+                                                <textarea
+                                                    value={eComment}
+                                                    onChange={(e) => {
+                                                        setEcomment(e.target.value)
+                                                        setComments(
+                                                            comments.map((c) => c._id === comment._id ? { ...c, Comment: e.target.value } : c))
+                                                    }
+                                                    }
+                                                    className={styles.textarea}
+                                                />
+                                                <button
+                                                    onClick={() => handleEditComment(comment._id)}
+                                                    className={styles.button}
+                                                >
+                                                    Save
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <button
+                                                    onClick={() => {
+                                                        setEditingCommentId(comment._id)
+                                                        setEcomment(comment.Comment)
+                                                    }}
+                                                    className={styles.button}
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteComment(comment._id, blog._id)}
+                                                    className={styles.button}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </div>
-                        )}
-                    </div>
-                ))}
+                        ))}
+                    </>
+                }
+
                 <div className={styles.addComment}>
                     <textarea
                         value={newComment}
