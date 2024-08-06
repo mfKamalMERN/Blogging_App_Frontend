@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Profile = () => {
     const [name, setName] = useState(''); // Replace with actual user data
+    const [profileName, setProfileName] = useState(''); // Replace with actual user data
     const [password, setPassword] = useState('');
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);
@@ -26,7 +27,11 @@ const Profile = () => {
             else {
 
                 axios.get(`http://localhost:7500/getallusers`)
-                    .then(res => setAu(res.data))
+                    .then(res => {
+                        setAu(res.data)
+                        const profileUser = res.data.find((user) => user._id == userid)
+                        setName(profileUser.Name)
+                    })
                     .catch(er => console.log(er))
             }
 
@@ -37,15 +42,20 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    })
+    }, [File])
 
-    const handleNameChange = (e) => setName(e.target.value);
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+        setProfileName(e.target.value)
+    }
+
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
     const handleProfilePicChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             setFile(file)
+            console.log(File);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setProfilePic(reader.result);
@@ -54,33 +64,66 @@ const Profile = () => {
         }
     };
 
-    const handleNameUpdate = (e) => {
+    const handleNameUpdate = async (e) => {
         e.preventDefault();
-        // Handle name update logic here
-        alert('Name updated successfully');
+
+        const newName = name
+
+        try {
+            const res = await axios.patch(`http://localhost:7500/updatename`, { newName })
+
+            if (res.data.ValidationError) {
+                res.data.ActError.map((er) => alert(er.msg))
+                // setName(getOwnerName(userid))
+                tokenChecker()
+            }
+
+            else {
+                setProfileName(newName)
+                alert(res.data)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     const handlePasswordUpdate = (e) => {
         e.preventDefault();
-        // Handle password update logic here
-        alert('Password updated successfully');
-    };
 
-    const handleProfilePicUpdate = (e) => {
-        e.preventDefault();
-        // Handle profile pic update logic here
-        if (!File) alert(`No Pic selected`)
-        else alert('Profile picture updated successfully');
-    };
+        const newpassword = password
+        axios.patch(`http://localhost:7500/updatepassword`, { newpassword })
+            .then(res => {
+                if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
 
-    const getOwnerName = (uid) => {
-
-        axios.get(`http://localhost:7500/getusername/${uid}`)
-            .then(res => setName(res?.data))
+                else alert(res.data)
+            })
             .catch(er => console.log(er))
-        return name
 
-    }
+    };
+
+    const handleProfilePicUpdate = async (e) => {
+        e.preventDefault();
+
+        if (!File) alert(`No Pic selected`)
+
+        else {
+            const formdata = new FormData()
+
+            formdata.append('file', File)
+
+            try {
+                const res = await axios.put(`http://localhost:7500/uploadprofilepic`, formdata)
+
+                alert(res.data)
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    };
+
 
     const getOwnerAvatar = (uid) => {
         axios.get(`http://localhost:7500/getuserdp/${uid}`)
@@ -95,10 +138,15 @@ const Profile = () => {
         <div>
             <Navbar />
             <div className={styles.container}>
-                <h2>{getOwnerName(userid)}</h2>
+                <h2>{name}</h2>
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
-                        <img src={getOwnerAvatar(userid)} alt="Profile" className={styles.profilePic} />
+                        {!File ?
+                            <img src={getOwnerAvatar(userid)} alt="Profile" className={styles.profilePic} />
+                            :
+                            <img src={profilePic} alt="Profile" className={styles.profilePic} />
+
+                        }
                         <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
                         <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
                     </div>
@@ -114,8 +162,8 @@ const Profile = () => {
                     </div>
                 </form>
                 <div className={styles.followButtons}>
-                    <button onClick={() => nav('/followers')} className={styles.button}>Followers</button>
-                    <button onClick={() => nav('/followings')} className={styles.button}>Followings</button>
+                    <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers</button>
+                    <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings</button>
                 </div>
             </div>
         </div>

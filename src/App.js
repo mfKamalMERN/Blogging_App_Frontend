@@ -12,8 +12,8 @@ function App() {
     { path: "/", element: <Login /> },
     { path: "/home", element: <Home /> },
     { path: "/profile/:userid", element: <Profile /> },
-    { path: "/followers", element: <Followers /> },
-    { path: "/followings", element: <Followings /> }
+    { path: "/followers/:userid", element: <Followers /> },
+    { path: "/followings/:userid", element: <Followings /> }
   ])
 
   return (
