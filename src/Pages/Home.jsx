@@ -16,12 +16,12 @@ const Home = () => {
         try {
             const res = await axios.get(`http://localhost:7500/getallblogs`)
 
-            if (!res.data.Token) {
+            if (!res?.data?.Token) {
                 nav('/')
                 localStorage.clear()
             }
             else {
-                setBlogs(res.data.AllBlogs)
+                setBlogs(res?.data?.AllBlogs)
                 axios.get(`http://localhost:7500/getallusers`)
                     .then(res => setAu(res.data))
                     .catch(er => console.log(er))

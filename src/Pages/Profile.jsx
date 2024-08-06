@@ -66,8 +66,9 @@ const Profile = () => {
 
     const handleNameUpdate = async (e) => {
         e.preventDefault();
+
         const newName = name
-        // Handle name update logic here
+
         try {
             const res = await axios.patch(`http://localhost:7500/updatename`, { newName })
 
@@ -85,18 +86,26 @@ const Profile = () => {
         } catch (error) {
             console.log(error);
         }
-        // alert('Name updated successfully');
+
     };
 
     const handlePasswordUpdate = (e) => {
         e.preventDefault();
-        // Handle password update logic here
-        alert('Password updated successfully');
+
+        const newpassword = password
+        axios.patch(`http://localhost:7500/updatepassword`, { newpassword })
+            .then(res => {
+                if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
+
+                else alert(res.data)
+            })
+            .catch(er => console.log(er))
+
     };
 
     const handleProfilePicUpdate = async (e) => {
         e.preventDefault();
-        // Handle profile pic update logic here
+
         if (!File) alert(`No Pic selected`)
 
         else {
@@ -115,14 +124,6 @@ const Profile = () => {
         }
     };
 
-    const getOwnerName = (uid) => {
-
-        axios.get(`http://localhost:7500/getusername/${uid}`)
-            .then(res => setProfileName(res?.data))
-            .catch(er => console.log(er))
-        return profileName
-
-    }
 
     const getOwnerAvatar = (uid) => {
         axios.get(`http://localhost:7500/getuserdp/${uid}`)
