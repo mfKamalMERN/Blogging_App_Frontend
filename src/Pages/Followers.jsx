@@ -10,6 +10,7 @@ const Followers = () => {
     const [IsFollowing, setIsFollowing] = useState(false)
     const nav = useNavigate()
     const { userid } = useParams()
+    const [userName, setUserName] = useState("")
 
 
     axios.defaults.withCredentials = true
@@ -54,13 +55,22 @@ const Followers = () => {
 
     }
 
+    const getUserName = (ownerid) => {
+
+        axios.get(`http://localhost:7500/getusername/${ownerid}`)
+            .then(res => setUserName(res.data))
+            .catch(er => console.log(er))
+        return userName
+
+    }
+
     return (
         <div>
             <Navbar isLogin={false} />
 
             <div className={styles.container}>
 
-                <h2>Followers</h2>
+                <h2>Followers of {getUserName(userid)}</h2>
 
                 <div className={styles.list}>
 
