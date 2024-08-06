@@ -162,8 +162,8 @@ const Profile = () => {
                     </div>
                 </form>
                 <div className={styles.followButtons}>
-                    <button onClick={() => nav('/followers')} className={styles.button}>Followers</button>
-                    <button onClick={() => nav('/followings')} className={styles.button}>Followings</button>
+                    <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers</button>
+                    <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings</button>
                 </div>
             </div>
         </div>
