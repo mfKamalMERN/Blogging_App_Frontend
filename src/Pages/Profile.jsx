@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Profile = () => {
     const [name, setName] = useState(''); // Replace with actual user data
+    const [profileName, setProfileName] = useState(''); // Replace with actual user data
     const [password, setPassword] = useState('');
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);
@@ -26,7 +27,11 @@ const Profile = () => {
             else {
 
                 axios.get(`http://localhost:7500/getallusers`)
-                    .then(res => setAu(res.data))
+                    .then(res => {
+                        setAu(res.data)
+                        const profileUser = res.data.find((user) => user._id == userid)
+                        setName(profileUser.Name)
+                    })
                     .catch(er => console.log(er))
             }
 
@@ -39,7 +44,11 @@ const Profile = () => {
         tokenChecker()
     }, [File])
 
-    const handleNameChange = (e) => setName(e.target.value);
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+        setProfileName(e.target.value)
+    }
+
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
     const handleProfilePicChange = (e) => {
@@ -55,10 +64,28 @@ const Profile = () => {
         }
     };
 
-    const handleNameUpdate = (e) => {
+    const handleNameUpdate = async (e) => {
         e.preventDefault();
+        const newName = name
         // Handle name update logic here
-        alert('Name updated successfully');
+        try {
+            const res = await axios.patch(`http://localhost:7500/updatename`, { newName })
+
+            if (res.data.ValidationError) {
+                res.data.ActError.map((er) => alert(er.msg))
+                // setName(getOwnerName(userid))
+                tokenChecker()
+            }
+
+            else {
+                setProfileName(newName)
+                alert(res.data)
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+        // alert('Name updated successfully');
     };
 
     const handlePasswordUpdate = (e) => {
@@ -85,17 +112,15 @@ const Profile = () => {
             } catch (error) {
                 console.log(error);
             }
-
-            // alert('Profile picture updated successfully');
         }
     };
 
     const getOwnerName = (uid) => {
 
         axios.get(`http://localhost:7500/getusername/${uid}`)
-            .then(res => setName(res?.data))
+            .then(res => setProfileName(res?.data))
             .catch(er => console.log(er))
-        return name
+        return profileName
 
     }
 
@@ -112,7 +137,7 @@ const Profile = () => {
         <div>
             <Navbar />
             <div className={styles.container}>
-                <h2>{getOwnerName(userid)}</h2>
+                <h2>{name}</h2>
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
                         {!File ?
