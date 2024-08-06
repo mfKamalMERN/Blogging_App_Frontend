@@ -37,7 +37,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    })
+    }, [File])
 
     const handleNameChange = (e) => setName(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -46,6 +46,7 @@ const Profile = () => {
         const file = e.target.files[0];
         if (file) {
             setFile(file)
+            console.log(File);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setProfilePic(reader.result);
@@ -66,11 +67,27 @@ const Profile = () => {
         alert('Password updated successfully');
     };
 
-    const handleProfilePicUpdate = (e) => {
+    const handleProfilePicUpdate = async (e) => {
         e.preventDefault();
         // Handle profile pic update logic here
         if (!File) alert(`No Pic selected`)
-        else alert('Profile picture updated successfully');
+
+        else {
+            const formdata = new FormData()
+
+            formdata.append('file', File)
+
+            try {
+                const res = await axios.put(`http://localhost:7500/uploadprofilepic`, formdata)
+
+                alert(res.data)
+
+            } catch (error) {
+                console.log(error);
+            }
+
+            // alert('Profile picture updated successfully');
+        }
     };
 
     const getOwnerName = (uid) => {
@@ -98,7 +115,12 @@ const Profile = () => {
                 <h2>{getOwnerName(userid)}</h2>
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
-                        <img src={getOwnerAvatar(userid)} alt="Profile" className={styles.profilePic} />
+                        {!File ?
+                            <img src={getOwnerAvatar(userid)} alt="Profile" className={styles.profilePic} />
+                            :
+                            <img src={profilePic} alt="Profile" className={styles.profilePic} />
+
+                        }
                         <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
                         <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
                     </div>
