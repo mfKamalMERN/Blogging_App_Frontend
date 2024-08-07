@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../Styles/Home.module.css';
-import nstyles from '../Styles/Navbar.module.css';
 import Navbar from '../Component/Navbar';
 import BlogCard from '../Component/BlogCard';
 import axios from 'axios';
