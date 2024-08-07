@@ -10,7 +10,7 @@ const Profile = () => {
     const [password, setPassword] = useState('');
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);
-    const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100'); // Replace with actual user data
+    const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100');
     const { userid } = useParams()
     const nav = useNavigate();
 
@@ -74,7 +74,6 @@ const Profile = () => {
 
             if (res.data.ValidationError) {
                 res.data.ActError.map((er) => alert(er.msg))
-                // setName(getOwnerName(userid))
                 tokenChecker()
             }
 
@@ -134,6 +133,12 @@ const Profile = () => {
         return profilePic
     }
 
+    const isLoggedUser = () => {
+
+        if (JSON.parse(localStorage.getItem('LoggedInUser')) == userid) return true
+        else return false
+    }
+
     return (
         <div>
             <Navbar />
@@ -147,18 +152,39 @@ const Profile = () => {
                             <img src={profilePic} alt="Profile" className={styles.profilePic} />
 
                         }
-                        <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
-                        <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
+                        {
+                            isLoggedUser &&
+                            <>
+                                <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
+                                <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
+
+                            </>
+
+                        }
                     </div>
                     <div className={styles.inputGroup}>
                         <label>Name</label>
-                        <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
-                        <button onClick={handleNameUpdate} className={styles.button}>Update Name</button>
+
+                        {isLoggedUser ?
+                            <>
+                                <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
+                                <button onClick={handleNameUpdate} className={styles.button}>Update Name</button>
+                            </>
+                            :
+                            <input disabled={true} type="text" value={name} className={styles.input} />
+                        }
+
                     </div>
                     <div className={styles.inputGroup}>
-                        <label>Password</label>
-                        <input type="password" value={password} onChange={handlePasswordChange} className={styles.input} />
-                        <button onClick={handlePasswordUpdate} className={styles.button}>Update Password</button>
+
+                        {isLoggedUser &&
+                            <>
+                                <label>Password</label>
+                                <input type="password" value={password} onChange={handlePasswordChange} className={styles.input} />
+                                <button onClick={handlePasswordUpdate} className={styles.button}>Update Password</button>
+                            </>
+                        }
+
                     </div>
                 </form>
                 <div className={styles.followButtons}>

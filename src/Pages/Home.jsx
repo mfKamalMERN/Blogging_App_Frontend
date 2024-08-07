@@ -46,7 +46,7 @@ const Home = () => {
             </div>
 
             <div className={styles.container}>
-                <h1>Welcome to BlogApp!</h1>
+                <h1 style={{ color: "wheat" }}>Welcome to BlogApp!</h1>
                 <p>Share your thoughts and read amazing content from others.</p>
                 <div className={styles.blogs}>
                     {blogs.map((blog) => (
