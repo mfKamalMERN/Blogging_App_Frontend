@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../Styles/Home.module.css';
-import nstyles from '../Styles/Navbar.module.css';
 import Navbar from '../Component/Navbar';
 import BlogCard from '../Component/BlogCard';
 import axios from 'axios';
@@ -46,7 +45,7 @@ const Home = () => {
             </div>
 
             <div className={styles.container}>
-                <h1>Welcome to BlogApp!</h1>
+                <h1 style={{ color: "wheat" }}>Welcome to BlogApp!</h1>
                 <p>Share your thoughts and read amazing content from others.</p>
                 <div className={styles.blogs}>
                     {blogs.map((blog) => (

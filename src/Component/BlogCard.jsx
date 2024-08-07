@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const BlogCard = ({ blog, allUsers }) => {
     const [likes, setLikes] = useState(blog.Likes);
@@ -14,6 +15,7 @@ const BlogCard = ({ blog, allUsers }) => {
     const [ownerdp, setOwnerdp] = useState("")
     const [title, setTitle] = useState(blog.Title)
     const [ownername, setOwnername] = useState("")
+    const nav = useNavigate()
 
 
     const handleLike = async () => {
@@ -113,7 +115,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     return (
         <div className={styles.blogCard}>
-            <div className={styles.header}>
+            <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.header}>
                 <div className={styles.ownerInfo}>
                     <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>

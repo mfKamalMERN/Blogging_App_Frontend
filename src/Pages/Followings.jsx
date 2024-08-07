@@ -18,12 +18,12 @@ const Followings = () => {
         try {
             const res = await axios.get(`http://localhost:7500/getfollowings/${userid}`)
 
-            if (!res.data.Token) {
+            if (!res?.data?.Token) {
                 localStorage.clear()
                 nav('/')
             }
 
-            else setFollowings(res.data.Followings)
+            else setFollowings(res?.data?.Followings)
 
         } catch (error) {
             console.log(error);
@@ -47,7 +47,7 @@ const Followings = () => {
     const getUserName = (usrid) => {
 
         axios.get(`http://localhost:7500/getusername/${usrid}`)
-            .then(res => setUserName(res.data))
+            .then(res => setUserName(res?.data))
             .catch(er => console.log(er))
         return userName
 
@@ -57,6 +57,7 @@ const Followings = () => {
 
         try {
             await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
+            checkFollowingStatus(usrid)
 
         } catch (error) {
             console.log(error);
