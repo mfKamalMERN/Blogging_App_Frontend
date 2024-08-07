@@ -37,7 +37,7 @@ const Followers = () => {
     const checkFollowingStatus = (usrid) => {
 
         axios.get(`http://localhost:7500/checkfollowingstatus/${usrid}`)
-            .then((res) => setIsFollowing(res.data.isFollowing))
+            .then((res) => setIsFollowing(res?.data?.isFollowing))
             .catch(er => console.log(er))
 
         return IsFollowing
@@ -47,7 +47,7 @@ const Followers = () => {
 
         try {
             await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
-            // alert(res.data)
+            checkFollowingStatus(usrid)
 
         } catch (error) {
             console.log(error);
