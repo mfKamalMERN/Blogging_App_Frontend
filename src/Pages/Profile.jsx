@@ -5,8 +5,8 @@ import Navbar from '../Component/Navbar';
 import axios from 'axios';
 
 const Profile = () => {
-    const [name, setName] = useState(''); // Replace with actual user data
-    const [profileName, setProfileName] = useState(''); // Replace with actual user data
+    const [name, setName] = useState('');
+    const [profileName, setProfileName] = useState('');
     const [password, setPassword] = useState('');
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);

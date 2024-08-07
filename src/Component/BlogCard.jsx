@@ -115,8 +115,8 @@ const BlogCard = ({ blog, allUsers }) => {
 
     return (
         <div className={styles.blogCard}>
-            <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.header}>
-                <div className={styles.ownerInfo}>
+            <div className={styles.header}>
+                <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.ownerInfo}>
                     <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
                         {getOwnerName(blog?.Owner)}
@@ -143,26 +143,35 @@ const BlogCard = ({ blog, allUsers }) => {
                         onChange={(e) => setTitle(e.target.value)}
                         className={styles.textarea}
                     />
-                    {/* <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> */}
+
                     <button onClick={handleEditBlog} className={styles.button}>Save</button>
+                    <br />
+                    <br />
                 </div>
             ) : (
                 <div>
                     <h3>{blog.Title}</h3>
-                    <p>{blog.Blog}</p>
+                    <p style={{ color: "white" }}>{blog.Blog}</p>
                 </div>
             )}
-            <div className={styles.actions}>
-                {
-                    likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
-                        <button onClick={handleLike} className={styles.button}>Unlike ({likes.length})</button>
-                        :
-                        <button onClick={handleLike} className={styles.button}>Like ({likes.length})</button>
-                }
+            <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+
+                <div className={styles.actions}>
+                    {
+                        likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
+                            <button onClick={handleLike} className={styles.button}>Unlike ({likes.length})</button>
+                            :
+                            <button onClick={handleLike} className={styles.button}>Like ({likes.length})</button>
+                    }
+                </div>
+
+                <button className={styles.button}>ℹ️ Likes</button>
+
+                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️Comments</button>
+
             </div>
 
             <div className={styles.comments}>
-                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️Comments</button>
                 {
                     showComments &&
                     <>
@@ -224,10 +233,12 @@ const BlogCard = ({ blog, allUsers }) => {
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         className={styles.textarea}
+                        placeholder='Add Comment...'
                     />
-                    <button onClick={handleAddComment} className={styles.button}>Add Comment</button>
+                    <button onClick={handleAddComment} className={styles.button}>➕ Comment</button>
                 </div>
             </div>
+
         </div>
     );
 };
