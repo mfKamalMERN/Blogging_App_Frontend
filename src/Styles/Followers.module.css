@@ -1,8 +1,10 @@
 .container {
     max-width: 600px;
-    margin: 50px auto;
+    margin: 150px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: black;
+    color: wheat;
+    border: 1px solid wheat;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;

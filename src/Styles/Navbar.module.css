@@ -1,12 +1,17 @@
 .navbar {
+
   background-color: #333;
   padding: 10px 20px;
+  width: 98%;
+  position: fixed;
+  top: 0;
 }
 
 .navContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 7vh;
 }
 
 .brand {

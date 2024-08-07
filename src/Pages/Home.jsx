@@ -39,14 +39,16 @@ const Home = () => {
     return (
         <div>
             <Navbar isLogin={false} />
-            <br />
-            <div className={styles.Button}>
-                <button onClick={() => nav('/newblog')} className={styles.button}>➕ Blog</button>
-            </div>
+
 
             <div className={styles.container}>
                 <h1 style={{ color: "wheat" }}>Welcome to BlogApp!</h1>
                 <p>Share your thoughts and read amazing content from others.</p>
+
+                <div className={styles.Button} style={{ marginBottom: "50px" }}>
+                    <button onClick={() => nav('/newblog')} style={{ backgroundColor: "darkgreen", color: "wheat", width: "6%", fontSize: "large", borderRadius: "20px", padding: "3px" }} >➕ Blog</button>
+                </div>
+
                 <div className={styles.blogs}>
                     {blogs.map((blog) => (
                         <BlogCard key={blog._id} blog={blog} allUsers={au} />

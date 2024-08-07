@@ -1,11 +1,14 @@
 .container {
     max-width: 500px;
-    margin: 50px auto;
+    /* margin-top: 100px; */
+    margin: 150px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: black;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    color: wheat;
+    border: 2px solid wheat;
 }
 
 h2 {
@@ -55,19 +58,21 @@ label {
 }
 
 .input {
-    width: 100%;
+    width: 50%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-bottom: 10px;
+    background-color: black;
+    color: wheat;
 }
 
 .button {
     padding: 10px 20px;
     font-size: 16px;
     color: white;
-    background-color: #007bff;
+    background-color: darkgreen;
     border: none;
     border-radius: 5px;
     cursor: pointer;
