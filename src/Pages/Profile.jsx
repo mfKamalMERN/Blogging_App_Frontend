@@ -135,8 +135,13 @@ const Profile = () => {
 
     const isLoggedUser = () => {
 
-        if (JSON.parse(localStorage.getItem('LoggedInUser')) == userid) return true
-        else return false
+        if (JSON.parse(localStorage.getItem('LoggedInUser'))._id == userid) {
+            return true
+        }
+        else {
+
+            return false
+        }
     }
 
     return (
@@ -153,7 +158,7 @@ const Profile = () => {
 
                         }
                         {
-                            isLoggedUser &&
+                            isLoggedUser() &&
                             <>
                                 <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
                                 <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
@@ -165,7 +170,7 @@ const Profile = () => {
                     <div className={styles.inputGroup}>
                         <label>Name</label>
 
-                        {isLoggedUser ?
+                        {isLoggedUser() ?
                             <>
                                 <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
                                 <button onClick={handleNameUpdate} className={styles.button}>Update Name</button>
@@ -177,7 +182,7 @@ const Profile = () => {
                     </div>
                     <div className={styles.inputGroup}>
 
-                        {isLoggedUser &&
+                        {isLoggedUser() &&
                             <>
                                 <label>Password</label>
                                 <input type="password" value={password} onChange={handlePasswordChange} className={styles.input} />

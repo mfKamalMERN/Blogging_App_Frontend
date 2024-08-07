@@ -76,12 +76,18 @@ const Followers = () => {
 
                     {Followers.map((follower) => (
                         <div key={follower._id} className={styles.follower}>
-                            <img src={follower.DP} alt={follower.Name} className={styles.avatar} />
-                            <div>{follower.Name}</div>
-                            {checkFollowingStatus(follower._id) ?
-                                <button onClick={() => FollowUnfollow(follower._id)} className={styles.button}>Unfollow</button>
-                                :
-                                <button onClick={() => FollowUnfollow(follower._id)} className={styles.button}>Follow</button>
+                            <div onClick={() => nav(`/profile/${follower._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}>
+                                <img src={follower.DP} alt={follower.Name} className={styles.avatar} />
+                                <div>{follower.Name}</div>
+                            </div>
+                            {
+                                JSON.parse(localStorage.getItem('LoggedInUser'))._id == follower._id ?
+                                    <></>
+                                    :
+                                    checkFollowingStatus(follower._id) ?
+                                        <button onClick={() => FollowUnfollow(follower._id)} className={styles.button}>Unfollow</button>
+                                        :
+                                        <button onClick={() => FollowUnfollow(follower._id)} className={styles.button}>Follow</button>
 
                             }
                         </div>
