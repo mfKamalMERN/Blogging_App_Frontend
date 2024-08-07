@@ -79,7 +79,9 @@ const Profile = () => {
 
             else {
                 setProfileName(newName)
-                alert(res.data)
+                localStorage.setItem('LoggedInUser', JSON.stringify(res?.data?.UpdatedUser))
+                alert(res.data.Msg)
+                tokenChecker()
             }
 
         } catch (error) {
