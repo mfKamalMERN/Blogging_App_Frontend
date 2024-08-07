@@ -7,22 +7,13 @@ import axios from 'axios';
 const NewBlog = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    // const [image, setImage] = useState(null);
     const nav = useNavigate();
 
     const handleTitleChange = (e) => setTitle(e.target.value);
     const handleContentChange = (e) => setContent(e.target.value);
 
-    // const handleImageChange = (e) => {
-    //     const file = e.target.files[0];
-    //     if (file) {
-    //         const reader = new FileReader();
-    //         reader.onloadend = () => {
-    //             setImage(reader.result);
-    //         };
-    //         reader.readAsDataURL(file);
-    //     }
-    // };
+
+    axios.defaults.withCredentials = true
 
     const handleSubmit = (e) => {
         e.preventDefault();
