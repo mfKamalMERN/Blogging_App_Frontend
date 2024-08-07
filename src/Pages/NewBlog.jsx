@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../Styles/NewBlog.module.css';
 import Navbar from '../Component/Navbar';
+import axios from 'axios';
 
 const NewBlog = () => {
     const [title, setTitle] = useState('');
@@ -25,9 +26,21 @@ const NewBlog = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle blog creation logic here
-        alert('Blog created successfully');
-        nav('/home');
+
+        const blogstring = content
+
+        axios.post(`http://localhost:7500/createblog`, { blogstring, title })
+            .then((res) => {
+                if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
+
+                else {
+                    alert(res.data)
+                    nav('/home');
+                }
+
+            })
+            .catch(er => console.log(er))
+
     };
 
     return (
@@ -57,8 +70,8 @@ const NewBlog = () => {
                             required
                         />
                     </div>
-                    
-                    
+
+
                     <button type="submit" className={styles.button}>Create Blog</button>
                 </form>
             </div>
