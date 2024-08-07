@@ -46,8 +46,8 @@ const Followers = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            const res = await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
-            alert(res.data)
+            await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
+            // alert(res.data)
 
         } catch (error) {
             console.log(error);

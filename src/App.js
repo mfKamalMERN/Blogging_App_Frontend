@@ -5,6 +5,7 @@ import Home from './Pages/Home';
 import Profile from './Pages/Profile';
 import Followers from './Pages/Followers';
 import Followings from './Pages/Followings';
+import NewBlog from './Pages/NewBlog';
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
     { path: "/home", element: <Home /> },
     { path: "/profile/:userid", element: <Profile /> },
     { path: "/followers/:userid", element: <Followers /> },
-    { path: "/followings/:userid", element: <Followings /> }
+    { path: "/followings/:userid", element: <Followings /> },
+    { path: "/newblog", element: <NewBlog /> },
   ])
 
   return (

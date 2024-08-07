@@ -12,6 +12,7 @@ const BlogCard = ({ blog, allUsers }) => {
     const [showComments, setShowComments] = useState(false);
     const [blogContent, setBlogContent] = useState(blog.Blog);
     const [ownerdp, setOwnerdp] = useState("")
+    const [title, setTitle] = useState(blog.Title)
     const [ownername, setOwnername] = useState("")
 
 
@@ -67,10 +68,14 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const handleEditBlog = async () => {
         try {
-            const res = await axios.patch(`http://localhost:7500/editblogtext/${blog._id}`, { blogContent })
+            const res = await axios.patch(`http://localhost:7500/editblogtext/${blog._id}`, { blogContent, title })
 
             if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
-            else setBlogContent(res.data.NewBlog)
+
+            else {
+                setBlogContent(res.data.NewBlog)
+                setTitle(res.data.NewTitle)
+            }
 
 
         } catch (error) {
@@ -131,6 +136,12 @@ const BlogCard = ({ blog, allUsers }) => {
                         onChange={(e) => setBlogContent(e.target.value)}
                         className={styles.textarea}
                     />
+                    <textarea
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className={styles.textarea}
+                    />
+                    {/* <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} /> */}
                     <button onClick={handleEditBlog} className={styles.button}>Save</button>
                 </div>
             ) : (
