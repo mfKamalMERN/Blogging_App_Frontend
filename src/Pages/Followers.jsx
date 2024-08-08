@@ -96,6 +96,8 @@ const Followers = () => {
                 </div>
 
             </div>
+            
+            <button onClick={() => nav('/home')} className={styles.button}>Back</button>
 
         </div>
     );
