@@ -44,7 +44,7 @@ const LikesPage = () => {
                         <p>No likes yet.</p>
                     ) : (
                         likesusers.map((likeuser) => (
-                            <div key={likeuser._id} className={styles.likeCard}>
+                            <div onClick={()=>nav(`/profile/${likeuser._id}`)} key={likeuser._id} className={styles.likeCard}>
                                 <img src={likeuser.DP} alt={likeuser.Name} className={styles.avatar} />
                                 <div className={styles.name}>{likeuser.Name}</div>
                             </div>
