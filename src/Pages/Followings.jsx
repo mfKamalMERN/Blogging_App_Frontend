@@ -65,6 +65,14 @@ const Followings = () => {
 
     }
 
+    const isLoggedUser = (usrid) => {
+        if (JSON.parse(localStorage.getItem('LoggedInUser'))._id == usrid) {
+            return true
+        }
+        else return false
+
+    }
+
     return (
         <div>
             <Navbar />
@@ -79,10 +87,14 @@ const Followings = () => {
                                 <img src={following.DP} alt={following.Name} className={styles.avatar} />
                                 <div>{following.Name}</div>
                             </div>
-                            {checkFollowingStatus(following._id) ?
-                                <button onClick={() => FollowUnfollow(following._id)} className={styles.button}>Unfollow</button>
-                                :
-                                <button onClick={() => FollowUnfollow(following._id)} className={styles.button}>Follow</button>
+                            {
+                                isLoggedUser(following._id) ?
+                                    <></>
+                                    :
+                                    checkFollowingStatus(following._id) ?
+                                        <button onClick={() => FollowUnfollow(following._id)} className={styles.button}>Unfollow</button>
+                                        :
+                                        <button onClick={() => FollowUnfollow(following._id)} className={styles.button}>Follow</button>
 
                             }
                         </div>
