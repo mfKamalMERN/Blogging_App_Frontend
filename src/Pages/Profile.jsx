@@ -212,7 +212,9 @@ const Profile = () => {
                         <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>}
                 </div>
 
+
             </div>
+            <button onClick={() => nav('/home')} className={styles.button}>Back</button>
         </div>
     );
 };
