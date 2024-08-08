@@ -50,7 +50,7 @@ const Home = () => {
                 </div>
 
                 <div className={styles.blogs}>
-                    {blogs.map((blog) => (
+                    {blogs?.map((blog) => (
                         <BlogCard key={blog._id} blog={blog} allUsers={au} />
                     ))}
                 </div>

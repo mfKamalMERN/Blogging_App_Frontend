@@ -116,12 +116,14 @@ const BlogCard = ({ blog, allUsers }) => {
     return (
         <div className={styles.blogCard}>
             <div className={styles.header}>
+
                 <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.ownerInfo}>
-                    <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
+                    <img src={getOwnerAvatar(blog.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
                         {getOwnerName(blog?.Owner)}
                     </div>
                 </div>
+
                 <div>
                     {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
                         <div>

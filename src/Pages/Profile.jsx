@@ -11,6 +11,9 @@ const Profile = () => {
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);
     const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100');
+    // const [dp, setDp] = useState('');
+    const [followingsCount, setFollowingsCount] = useState(0)
+    const [followersCount, setFollowersCount] = useState(0)
     const { userid } = useParams()
     const nav = useNavigate();
 
@@ -29,8 +32,11 @@ const Profile = () => {
                 axios.get(`http://localhost:7500/getallusers`)
                     .then(res => {
                         setAu(res.data)
-                        const profileUser = res.data.find((user) => user._id == userid)
+                        const profileUser = res.data.find((user) => user?._id == userid)
                         setName(profileUser.Name)
+                        setFollowingsCount(profileUser.Followings.length)
+                        setFollowersCount(profileUser.Followers.length)
+                        // setDp(profileUser?.DP)
                     })
                     .catch(er => console.log(er))
             }
@@ -42,7 +48,8 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File])
+    }, [File, followingsCount, followersCount])
+
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -59,6 +66,7 @@ const Profile = () => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setProfilePic(reader.result);
+                // setDp(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -194,10 +202,16 @@ const Profile = () => {
 
                     </div>
                 </form>
+
                 <div className={styles.followButtons}>
-                    <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers</button>
-                    <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings</button>
+                    {followersCount != 0 &&
+                        <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
+                    }
+
+                    {followingsCount != 0 &&
+                        <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>}
                 </div>
+
             </div>
         </div>
     );

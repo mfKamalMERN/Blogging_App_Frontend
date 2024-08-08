@@ -30,7 +30,7 @@ const Login = () => {
             }
             else {
 
-                nav('/home')
+                nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
             }
 
         } catch (error) {
@@ -41,6 +41,8 @@ const Login = () => {
     useEffect(() => {
         tokenChecker()
     }, [])
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (isSignup) {
@@ -77,7 +79,7 @@ const Login = () => {
 
                     else if (res.data.LoggedIn) {
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
-                        nav('/home')
+                        nav(`/profile/${res.data.LoggedUser._id}`)
                     }
 
                     else alert(res.data)
