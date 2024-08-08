@@ -45,6 +45,7 @@ const NewBlog = () => {
                         <input
                             type="text"
                             id="title"
+                            placeholder='Title...'
                             value={title}
                             onChange={handleTitleChange}
                             className={styles.input}
@@ -55,6 +56,7 @@ const NewBlog = () => {
                         <label htmlFor="content">Content</label>
                         <textarea
                             id="content"
+                            placeholder='Content...'
                             value={content}
                             onChange={handleContentChange}
                             className={styles.textarea}
@@ -63,9 +65,10 @@ const NewBlog = () => {
                     </div>
 
 
-                    <button type="submit" className={styles.button}>Create Blog</button>
+                    <button type="submit" className={styles.button}>➕ Blog</button>
                 </form>
             </div>
+            <button onClick={() => nav('/home')} className={styles.button}>Back</button>
         </div>
     );
 };
