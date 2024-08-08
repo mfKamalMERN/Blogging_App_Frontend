@@ -153,7 +153,7 @@ const BlogCard = ({ blog, allUsers }) => {
             ) : (
                 <div>
                     <h3>{blog.Title}</h3>
-                    <p style={{ color: "white" }}>{blog.Blog}</p>
+                    <p style={{ maxWidth: "500px", color: "white" }}>{blog.Blog}</p>
                 </div>
             )}
             <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -161,15 +161,15 @@ const BlogCard = ({ blog, allUsers }) => {
                 <div className={styles.actions}>
                     {
                         likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
-                            <button onClick={handleLike} className={styles.button}>Unlike ({likes.length})</button>
+                            <button style={{ backgroundColor: "darkred" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
                             :
-                            <button onClick={handleLike} className={styles.button}>Like ({likes.length})</button>
+                            <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
                     }
                 </div>
 
-                <button className={styles.button}>ℹ️ Likes</button>
+                <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>ℹ️ 💕</button>
 
-                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️Comments</button>
+                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️ 💭</button>
 
             </div>
 

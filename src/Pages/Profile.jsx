@@ -62,12 +62,11 @@ const Profile = () => {
         const file = e.target.files[0];
         if (file) {
             setFile(file)
-            console.log(File);
+
             const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfilePic(reader.result);
-                // setDp(reader.result);
-            };
+            
+            reader.onloadend = () => setProfilePic(reader.result);
+
             reader.readAsDataURL(file);
         }
     };
@@ -171,8 +170,8 @@ const Profile = () => {
                             isLoggedUser() &&
                             <>
                                 <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
-                                <button onClick={handleProfilePicUpdate} className={styles.button}>Update Profile Pic</button>
 
+                                <button onClick={handleProfilePicUpdate} className={styles.button}>✏️</button>
                             </>
 
                         }
@@ -183,7 +182,7 @@ const Profile = () => {
                         {isLoggedUser() ?
                             <>
                                 <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
-                                <button onClick={handleNameUpdate} className={styles.button}>Update Name</button>
+                                <button onClick={handleNameUpdate} className={styles.button}>✏️</button>
                             </>
                             :
                             <input disabled={true} type="text" value={name} className={styles.input} />
@@ -196,7 +195,7 @@ const Profile = () => {
                             <>
                                 <label>Password</label>
                                 <input type="password" value={password} onChange={handlePasswordChange} className={styles.input} />
-                                <button onClick={handlePasswordUpdate} className={styles.button}>Update Password</button>
+                                <button onClick={handlePasswordUpdate} className={styles.button}>✏️</button>
                             </>
                         }
 

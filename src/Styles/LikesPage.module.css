@@ -1,0 +1,58 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid wheat;
+    margin-top: 200px;
+    color: wheat;
+    border-radius: 25px;
+
+}
+
+.likesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: wheat;
+}
+
+.likeCard {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: wheat;
+    color: white;
+    border: 1px solid wheat;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.backButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.backButton:hover {
+    background-color: #0056b3;
+}
