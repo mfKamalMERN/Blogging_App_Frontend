@@ -45,14 +45,13 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (isSignup) {
 
+        if (isSignup) {
 
             if (formdata.password !== formdata.confirmPassword) {
                 alert("Passwords do not match!");
                 return;
             }
-            // Handle signup logic here
 
             axios.post(`http://localhost:7500/signup`, formdata)
                 .then(res => {
@@ -89,18 +88,18 @@ const Login = () => {
         }
     };
 
-    const toggleForm = () => {
-        setIsSignup(!isSignup);
+    const toggleForm = (val) => {
+        setIsSignup(val);
     };
 
-    const handleChange = (e) => {
-        setFormdata({ ...formdata, [e.target.name]: e.target.value })
+    const handleChange = (e) => setFormdata({ ...formdata, [e.target.name]: e.target.value })
 
-    }
-
+    
     return (
         <div>
             <Navbar isSignup={isSignup} toggleForm={toggleForm} isLogin={true} />
+
+            <h1 style={{ color: "wheat", marginTop: "100px" }}>BlogApp</h1>
 
             <div className={styles.formContainer}>
 
@@ -111,6 +110,7 @@ const Login = () => {
                         <label>Email:</label>
                         <input
                             type="email"
+                            placeholder='Email...'
                             value={formdata.email}
                             onChange={handleChange}
                             required
@@ -122,6 +122,7 @@ const Login = () => {
                         <label>Password:</label>
                         <input
                             type="password"
+                            placeholder='Password...'
                             value={formdata.password}
                             onChange={handleChange}
                             required
@@ -135,6 +136,7 @@ const Login = () => {
                                 <label>Confirm Password:</label>
                                 <input
                                     type="password"
+                                    placeholder='Retype Password...'
                                     value={formdata.confirmPassword}
                                     onChange={handleChange}
                                     required
@@ -146,6 +148,7 @@ const Login = () => {
                                 <label>Name:</label>
                                 <input
                                     type="text"
+                                    placeholder='Name...'
                                     value={formdata.name}
                                     onChange={handleChange}
                                     required
@@ -157,6 +160,7 @@ const Login = () => {
                                 <label>Contact:</label>
                                 <input
                                     type="text"
+                                    placeholder='Contact...'
                                     value={formdata.contact}
                                     onChange={handleChange}
                                     required
@@ -170,7 +174,7 @@ const Login = () => {
                         {isSignup ? 'Signup' : 'Login'}
                     </button>
                 </form>
-                <button onClick={toggleForm} className={styles.toggleButton}>
+                <button onClick={isSignup ? () => toggleForm(false) : () => toggleForm(true)} className={styles.toggleButton}>
                     {isSignup ? 'Already have an account? Login' : 'New user? Signup'}
                 </button>
             </div>

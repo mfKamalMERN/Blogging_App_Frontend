@@ -11,7 +11,6 @@ const Profile = () => {
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);
     const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100');
-    // const [dp, setDp] = useState('');
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const { userid } = useParams()
