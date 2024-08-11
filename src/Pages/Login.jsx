@@ -3,6 +3,7 @@ import styles from '../Styles/Login.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import Localization from '../Resources/Localization.json'
 
 const Login = () => {
     const nav = useNavigate()
@@ -15,8 +16,8 @@ const Login = () => {
         contact: "",
 
     })
+
     const [isSignup, setIsSignup] = useState(false);
-    // const [confirmPassword, setConfirmPassword] = useState('');
 
     axios.defaults.withCredentials = true
     const tokenChecker = async () => {
@@ -28,10 +29,8 @@ const Login = () => {
                 nav('/')
                 localStorage.clear()
             }
-            else {
 
-                nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
-            }
+            else nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
 
         } catch (error) {
             console.log(error);
@@ -94,18 +93,19 @@ const Login = () => {
 
     const handleChange = (e) => setFormdata({ ...formdata, [e.target.name]: e.target.value })
 
-    
+
     return (
         <div>
             <Navbar isSignup={isSignup} toggleForm={toggleForm} isLogin={true} />
 
-            <h1 style={{ color: "wheat", marginTop: "100px" }}>BlogApp</h1>
+            <h1 style={{ color: "wheat", marginTop: "120px" }}>{Localization.navbar.brand}</h1>
 
             <div className={styles.formContainer}>
 
-                <h2>{isSignup ? 'Signup' : 'Login'}</h2>
+                <h2>{isSignup ? Localization.navbar.signup : Localization.navbar.login}</h2>
 
                 <form onSubmit={handleSubmit} className={styles.form}>
+
                     <div className={styles.formGroup}>
                         <label>Email:</label>
                         <input
@@ -118,6 +118,7 @@ const Login = () => {
                             name='email'
                         />
                     </div>
+
                     <div className={styles.formGroup}>
                         <label>Password:</label>
                         <input
@@ -130,6 +131,7 @@ const Login = () => {
                             name='password'
                         />
                     </div>
+
                     {isSignup && (
                         <>
                             <div className={styles.formGroup}>
@@ -144,6 +146,7 @@ const Login = () => {
                                     name='confirmPassword'
                                 />
                             </div>
+
                             <div className={styles.formGroup}>
                                 <label>Name:</label>
                                 <input
@@ -156,6 +159,7 @@ const Login = () => {
                                     name='name'
                                 />
                             </div>
+
                             <div className={styles.formGroup}>
                                 <label>Contact:</label>
                                 <input
@@ -170,14 +174,19 @@ const Login = () => {
                             </div>
                         </>
                     )}
+
                     <button type="submit" className={styles.button}>
-                        {isSignup ? 'Signup' : 'Login'}
+                        {isSignup ? Localization.navbar.signup : Localization.navbar.login}
                     </button>
+
                 </form>
+
                 <button onClick={isSignup ? () => toggleForm(false) : () => toggleForm(true)} className={styles.toggleButton}>
-                    {isSignup ? 'Already have an account? Login' : 'New user? Signup'}
+                    {isSignup ? Localization.signupPage.loginPrompt : Localization.loginPage.signupPrompt}
                 </button>
+
             </div>
+
         </div>
     );
 };

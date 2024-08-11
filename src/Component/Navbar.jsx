@@ -2,8 +2,10 @@ import React from 'react';
 import styles from '../Styles/Navbar.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Localization from '../Resources/Localization.json';
 
 const Navbar = ({ isSignup, toggleForm, isLogin }) => {
+
     const nav = useNavigate()
 
     const SignOut = () => {
@@ -17,7 +19,7 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
     return (
         <nav className={styles.navbar}>
             <div className={styles.navContainer}>
-                <div onClick={() => nav('/home')} className={styles.brand}>BlogApp</div>
+                <div onClick={() => nav('/home')} className={styles.brand}>{Localization.navbar.brand}</div>
                 {
                     isLogin ?
                         <div className={styles.navButtons}>

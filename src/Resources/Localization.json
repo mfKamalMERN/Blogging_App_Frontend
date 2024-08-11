@@ -1,0 +1,80 @@
+{
+    "navbar": {
+        "brand": "Expresso",
+        "login": "Login",
+        "signup": "Signup",
+        "logout": "Logout",
+        "profile": "Profile"
+    },
+    "home": {
+        "title": "Home",
+        "createNewBlog": "Create New Blog",
+        "form": {
+            "titleLabel": "Title",
+            "titlePlaceholder": "Enter blog title",
+            "contentLabel": "Content",
+            "contentPlaceholder": "Write your blog content...",
+            "imageLabel": "Image",
+            "submitButton": "Create Blog"
+        },
+        "noBlogs": "No blogs to display.",
+        "viewMoreButton": "View More",
+        "viewLessButton": "View Less",
+        "viewLikesButton": "View Likes",
+        "downloadImageTooltip": "Click to download image"
+    },
+    "likesPage": {
+        "title": "Blog Likes",
+        "noLikes": "No likes yet.",
+        "backButton": "Back"
+    },
+    "loginPage": {
+        "title": "Login",
+        "usernameLabel": "Username",
+        "passwordLabel": "Password",
+        "loginButton": "Login",
+        "signupPrompt": "Don't have an account? Signup"
+    },
+    "signupPage": {
+        "title": "Signup",
+        "usernameLabel": "Username",
+        "passwordLabel": "Password",
+        "confirmPasswordLabel": "Confirm Password",
+        "signupButton": "Signup",
+        "loginPrompt": "Already have an account? Login"
+    },
+    "profilePage": {
+        "title": "My Profile",
+        "nameLabel": "Name",
+        "passwordLabel": "Password",
+        "profilePicLabel": "Profile Picture",
+        "updateNameButton": "Update Name",
+        "updatePasswordButton": "Update Password",
+        "updateProfilePicButton": "Update Profile Picture",
+        "followersButton": "Followers",
+        "followingsButton": "Followings"
+    },
+    "followersPage": {
+        "title": "Followers",
+        "noFollowers": "No followers yet.",
+        "backButton": "Back",
+        "followButton": "Follow",
+        "unfollowButton": "Unfollow"
+    },
+    "followingsPage": {
+        "title": "Followings",
+        "noFollowings": "No followings yet.",
+        "backButton": "Back",
+        "followButton": "Follow",
+        "unfollowButton": "Unfollow"
+    },
+    "blogCard": {
+        "editButton": "Edit",
+        "deleteButton": "Delete",
+        "commentButton": "Comment",
+        "likeButton": "Like",
+        "viewCommentsButton": "View Comments",
+        "editCommentButton": "Edit Comment",
+        "deleteCommentButton": "Delete Comment"
+    }
+}
