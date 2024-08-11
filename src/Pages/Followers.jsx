@@ -97,7 +97,7 @@ const Followers = () => {
 
             </div>
             
-            <button onClick={() => nav('/home')} className={styles.button}>Back</button>
+            <button onClick={() => nav(-1)} className={styles.button}>Back</button>
 
         </div>
     );

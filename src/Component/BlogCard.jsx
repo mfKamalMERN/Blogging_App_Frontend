@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const BlogCard = ({ blog, allUsers }) => {
-    const [likes, setLikes] = useState(blog.Likes);
+    const [likes, setLikes] = useState(blog?.Likes);
     const [comments, setComments] = useState(blog.Comments);
     const [newComment, setNewComment] = useState("");
     const [eComment, setEcomment] = useState('');

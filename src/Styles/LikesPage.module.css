@@ -4,10 +4,11 @@
     padding: 20px;
     text-align: center;
     border: 1px solid wheat;
-    margin-top: 200px;
+    /* margin-top: 120px; */
     color: wheat;
     border-radius: 25px;
-
+    width: 300px;
+    
 }
 
 .likesContainer {
@@ -56,3 +57,14 @@
 .backButton:hover {
     background-color: #0056b3;
 }
+
+.button {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    background-color: darkgreen;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+  }

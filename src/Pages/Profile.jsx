@@ -63,7 +63,7 @@ const Profile = () => {
             setFile(file)
 
             const reader = new FileReader();
-            
+
             reader.onloadend = () => setProfilePic(reader.result);
 
             reader.readAsDataURL(file);
@@ -168,11 +168,11 @@ const Profile = () => {
                         {
                             isLoggedUser() &&
                             <>
-                                <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
-
-                                <button onClick={handleProfilePicUpdate} className={styles.button}>✏️</button>
+                                <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />✏️
+                                <br />
+                                <br />
+                                <button onClick={handleProfilePicUpdate} className={styles.button}>Update</button>
                             </>
-
                         }
                     </div>
                     <div className={styles.inputGroup}>
@@ -212,7 +212,7 @@ const Profile = () => {
 
 
             </div>
-            <button onClick={() => nav('/home')} className={styles.button}>Back</button>
+            <button onClick={() => nav(-1)} className={styles.button}>Back</button>
         </div>
     );
 };

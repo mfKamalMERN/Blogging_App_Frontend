@@ -101,6 +101,8 @@ const Followings = () => {
                     ))}
                 </div>
             </div>
+            <button onClick={() => nav(-1)} className={styles.button}>Back</button>
+
         </div>
     );
 };
