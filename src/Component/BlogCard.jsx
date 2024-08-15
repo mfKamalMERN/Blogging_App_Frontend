@@ -127,8 +127,8 @@ const BlogCard = ({ blog, allUsers }) => {
                 <div>
                     {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
                         <div>
-                            <button onClick={() => setEditingBlog(true)} className={styles.button}>Edit</button>
-                            <button onClick={handleDeleteBlog} className={styles.button}>Delete</button>
+                            <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
+                            <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
                         </div>
                     )}
                 </div>
@@ -213,13 +213,13 @@ const BlogCard = ({ blog, allUsers }) => {
                                                     }}
                                                     className={styles.button}
                                                 >
-                                                    Edit
+                                                    ✏️
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteComment(comment._id, blog._id)}
                                                     className={styles.button}
                                                 >
-                                                    Delete
+                                                    🪣
                                                 </button>
                                             </div>
                                         )}
@@ -237,7 +237,7 @@ const BlogCard = ({ blog, allUsers }) => {
                         className={styles.textarea}
                         placeholder='Add Comment...'
                     />
-                    <button onClick={handleAddComment} className={styles.button}>➕ Comment</button>
+                    <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
                 </div>
             </div>
 

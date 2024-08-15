@@ -12,14 +12,19 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
         if (window.confirm(`Log Out?`)) {
 
             axios.get(`http://localhost:7500/logout`)
-                .then((res) => nav('/'))
+                .then(nav('/'))
                 .catch((er) => console.log(er))
         }
+    }
+
+    const FindNewPeople = () => {
+
     }
     return (
         <nav className={styles.navbar}>
             <div className={styles.navContainer}>
                 <div onClick={() => nav('/home')} className={styles.brand}>{Localization.navbar.brand}</div>
+                <div onClick={() => nav('/home')} className={styles.brand}><h1>🏠</h1></div>
                 {
                     isLogin ?
                         <div className={styles.navButtons}>
@@ -34,6 +39,9 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
                         <div className={styles.navButtons}>
                             <button onClick={SignOut} className={styles.navButton}>
                                 Log Out
+                            </button>
+                            <button onClick={FindNewPeople} className={styles.navButton}>
+                                👨‍⚖️👨‍⚖️🧑‍🤝‍🧑
                             </button>
                             <button onClick={() => nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
                                 {JSON.parse(localStorage.getItem('LoggedInUser'))?.Name}
