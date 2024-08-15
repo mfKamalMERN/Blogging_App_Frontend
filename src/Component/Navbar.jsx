@@ -20,6 +20,7 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
     const FindNewPeople = () => {
 
     }
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.navContainer}>
@@ -40,7 +41,7 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
                             <button onClick={SignOut} className={styles.navButton}>
                                 Log Out
                             </button>
-                            <button onClick={FindNewPeople} className={styles.navButton}>
+                            <button onClick={() => nav('/newfriends')} className={styles.navButton}>
                                 👨‍⚖️👨‍⚖️🧑‍🤝‍🧑
                             </button>
                             <button onClick={() => nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
