@@ -125,7 +125,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
                 <div>
                     {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
-                        <div>
+                        <div style={{display:"flex"}}>
                             <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
                             <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
                         </div>

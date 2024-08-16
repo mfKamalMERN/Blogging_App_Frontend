@@ -8,6 +8,7 @@
   background-color: black;
   color: wheat;
   text-align: center;
+  width: 100%;
 }
 
 .form {
@@ -63,4 +64,90 @@
 
 .toggleButton:hover {
   color: #0056b3;
+}
+
+.all {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+
+/* img{
+  width: 20%;
+  margin-top: 100px;
+} */
+
+@media only screen and (max-width: 600px) {
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .formGroup {
+    margin-bottom: 15px;
+  }
+
+  .formGroup label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .input {
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+    background-color: grey;
+    color: wheat;
+    /* Adjusting for padding and border */
+  }
+
+  .button {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .toggleButton {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: underline;
+  }
+
+  .toggleButton:hover {
+    color: #0056b3;
+  }
+
+  .all {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+
+  img {
+    margin-top: 100px;
+  }
 }
