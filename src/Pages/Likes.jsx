@@ -95,7 +95,7 @@ const LikesPage = () => {
                                     <img src={likeuser.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${likeuser._id}`)} />
                                     <div className={styles.name} onClick={() => nav(`/profile/${likeuser._id}`)}>{likeuser.Name}</div>
                                     {
-                                        JSON.parse(localStorage.getItem('LoggedInUser'))._id == likeuser._id ?
+                                        JSON.parse(localStorage.getItem('LoggedInUser'))?._id == likeuser._id ?
                                             <></>
                                             :
                                             checkFollowingStatus(likeuser?.Followers) ?
