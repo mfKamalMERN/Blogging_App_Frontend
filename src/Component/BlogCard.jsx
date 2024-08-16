@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const BlogCard = ({ blog, allUsers }) => {
     const [likes, setLikes] = useState(blog?.Likes);
-    const [comments, setComments] = useState(blog.Comments);
+    const [comments, setComments] = useState(blog?.Comments);
     const [newComment, setNewComment] = useState("");
     const [eComment, setEcomment] = useState('');
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editingBlog, setEditingBlog] = useState(false);
     const [showComments, setShowComments] = useState(false);
+    const [dpa, setDpa] = useState(false);
     const [blogContent, setBlogContent] = useState(blog.Blog);
     const [ownerdp, setOwnerdp] = useState("")
     const [title, setTitle] = useState(blog.Title)
@@ -90,7 +91,6 @@ const BlogCard = ({ blog, allUsers }) => {
 
         if (window.confirm(`Delete Blog?`)) {
             axios.delete(`http://localhost:7500/deleteblog/${blog._id}`)
-                // .then(res => alert(res.data))
                 .catch(er => console.log(er))
         }
 
@@ -98,10 +98,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const getOwnerAvatar = (ownerid) => {
         axios.get(`http://localhost:7500/getuserdp/${ownerid}`)
-            .then(res => {
-                const dp = res?.data
-                setOwnerdp(dp)
-            })
+            .then(res => setOwnerdp(res.data))
             .catch(er => console.log(er))
         return ownerdp
     }
@@ -112,7 +109,6 @@ const BlogCard = ({ blog, allUsers }) => {
             .then(res => setOwnername(res.data))
             .catch(er => console.log(er))
         return ownername
-
     }
 
 
@@ -121,7 +117,7 @@ const BlogCard = ({ blog, allUsers }) => {
             <div className={styles.header}>
 
                 <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.ownerInfo}>
-                    <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
+                    <img src={getOwnerAvatar(blog.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
                         {getOwnerName(blog?.Owner)}
                     </div>
