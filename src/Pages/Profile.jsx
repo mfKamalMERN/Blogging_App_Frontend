@@ -49,7 +49,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount])
+    }, [File, followingsCount, followersCount, profilePic])
 
 
     const handleNameChange = (e) => {
@@ -169,7 +169,7 @@ const Profile = () => {
                         {!File ?
                             <img src={getOwnerAvatar(userid)} alt={name} className={styles.profilePic} />
                             :
-                            <img src={profilePic} alt="Profile" className={styles.profilePic} />
+                            <img src={profilePic} alt="" className={styles.profilePic} />
 
                         }
                         {

@@ -69,15 +69,19 @@ const Followers = () => {
             <Navbar isLogin={false} />
 
             <div className={styles.container}>
+                {!Followers.length ?
+                    <h2>No Followers yet</h2>
+                    :
 
-                <h2>Followers of {getUserName(userid)}</h2>
+                    <h2>Followers of {getUserName(userid)}</h2>
+                }
 
                 <div className={styles.list}>
 
-                    {Followers.map((follower) => (
+                    {Followers.length !== 0 && Followers.map((follower) => (
                         <div key={follower._id} className={styles.follower}>
                             <div onClick={() => nav(`/profile/${follower._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}>
-                                <img src={follower.DP} alt={follower.Name} className={styles.avatar} />
+                                <img src={follower?.DP} alt={follower.Name} className={styles.avatar} />
                                 <div>{follower.Name}</div>
                             </div>
                             {
@@ -96,7 +100,7 @@ const Followers = () => {
                 </div>
 
             </div>
-            
+
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
 
         </div>

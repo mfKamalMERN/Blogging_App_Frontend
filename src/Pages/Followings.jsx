@@ -36,14 +36,7 @@ const Followings = () => {
     }, [fstatus])
 
 
-    const checkFollowingStatus = (usrid) => {
-
-        axios.get(`http://localhost:7500/checkfollowingstatus/${usrid}`)
-            .then((res) => setIsFollowing(res.data.isFollowing))
-            .catch(er => console.log(er))
-
-        return IsFollowing
-    }
+    const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
 
     const getUserName = (usrid) => {
 
@@ -58,8 +51,11 @@ const Followings = () => {
 
         try {
             await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
-            checkFollowingStatus(usrid)
-            setFstatus(!fstatus)
+            // checkFollowingStatus(usrid)
+            setTimeout(() => {
+                setFstatus(!fstatus)
+            }, 500);
+
 
 
         } catch (error) {
@@ -69,7 +65,7 @@ const Followings = () => {
     }
 
     const isLoggedUser = (usrid) => {
-        if (JSON.parse(localStorage.getItem('LoggedInUser'))._id === usrid) {
+        if (JSON.parse(localStorage.getItem('LoggedInUser'))._id == usrid) {
             return true
         }
         else return false
@@ -100,7 +96,7 @@ const Followings = () => {
                                     isLoggedUser(following._id) ?
                                         <></>
                                         :
-                                        <button onClick={() => FollowUnfollow(following?._id)} className={styles.button}>{checkFollowingStatus(following?._id) ? 'Unfollow' : 'Follow'}</button>
+                                        <button onClick={() => FollowUnfollow(following?._id)} className={styles.button}>{checkFollowingStatus(following?.Followers) ? 'Unfollow' : 'Follow'}</button>
                                 }
                             </div>
                         ))}
