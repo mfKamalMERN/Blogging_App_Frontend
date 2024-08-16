@@ -16,6 +16,7 @@
   .ownerInfo {
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   
   .ownerAvatar {

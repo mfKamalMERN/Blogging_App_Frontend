@@ -4,6 +4,7 @@ import Home from "../Pages/Home"
 import LikesPage from "../Pages/Likes"
 import { Login } from "../Pages/Login"
 import NewBlog from "../Pages/NewBlog"
+import NewFriendsPage from "../Pages/NewFriendsPage"
 import Profile from "../Pages/Profile"
 
 const routeConfig = [
@@ -14,6 +15,7 @@ const routeConfig = [
     { path: "/followings/:userid", element: <Followings /> },
     { path: "/newblog", element: <NewBlog /> },
     { path: "/likes/:blogid", element: <LikesPage /> },
+    { path: "/newfriends", element: <NewFriendsPage /> },
 ]
 
 export default routeConfig

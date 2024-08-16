@@ -98,7 +98,10 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const getOwnerAvatar = (ownerid) => {
         axios.get(`http://localhost:7500/getuserdp/${ownerid}`)
-            .then(res => setOwnerdp(res.data))
+            .then(res => {
+                const dp = res?.data
+                setOwnerdp(dp)
+            })
             .catch(er => console.log(er))
         return ownerdp
     }
@@ -118,7 +121,7 @@ const BlogCard = ({ blog, allUsers }) => {
             <div className={styles.header}>
 
                 <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.ownerInfo}>
-                    <img src={getOwnerAvatar(blog.Owner)} alt="" className={styles.ownerAvatar} />
+                    <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
                         {getOwnerName(blog?.Owner)}
                     </div>
@@ -127,8 +130,8 @@ const BlogCard = ({ blog, allUsers }) => {
                 <div>
                     {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
                         <div>
-                            <button onClick={() => setEditingBlog(true)} className={styles.button}>Edit</button>
-                            <button onClick={handleDeleteBlog} className={styles.button}>Delete</button>
+                            <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
+                            <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
                         </div>
                     )}
                 </div>
@@ -213,13 +216,13 @@ const BlogCard = ({ blog, allUsers }) => {
                                                     }}
                                                     className={styles.button}
                                                 >
-                                                    Edit
+                                                    ✏️
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteComment(comment._id, blog._id)}
                                                     className={styles.button}
                                                 >
-                                                    Delete
+                                                    🪣
                                                 </button>
                                             </div>
                                         )}
@@ -237,7 +240,7 @@ const BlogCard = ({ blog, allUsers }) => {
                         className={styles.textarea}
                         placeholder='Add Comment...'
                     />
-                    <button onClick={handleAddComment} className={styles.button}>➕ Comment</button>
+                    <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
                 </div>
             </div>
 
