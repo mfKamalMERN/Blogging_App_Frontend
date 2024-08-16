@@ -97,12 +97,12 @@ const Login = () => {
     return (
         <div>
             <Navbar isSignup={isSignup} toggleForm={toggleForm} isLogin={true} />
-            <div className="all" style={{ display: 'flex', justifyContent: "space-evenly" }}>
 
+            <div className={styles.all}>
 
                 <img src="https://files.oaiusercontent.com/file-Bb3xl4V6hgMwPwSX0B4ZFmj9?se=2024-08-16T18%3A28%3A43Z&sp=r&sv=2023-11-03&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De39b3d1a-008d-4482-a205-586712ac1746.webp&sig=eIR5QwRRIvYg182GoFlj6rq31dmqxK%2BFHxnC8%2Bu8BtY%3D" alt="" />
 
-                <div className="contents">
+                <div className="contents" >
 
                     <h1 style={{ color: "wheat", marginTop: "120px" }}>{Localization.navbar.brand}</h1>
 
@@ -193,8 +193,8 @@ const Login = () => {
 
                     </div>
                 </div>
-            </div>
-        </div>
+        //     </div>
+        // </div>
     );
 };
 

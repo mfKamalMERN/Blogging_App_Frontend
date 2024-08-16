@@ -75,11 +75,10 @@ const LikesPage = () => {
     return (
         <div>
             <Navbar />
-            <div className="all" style={{ display: "flex", justifyContent: "space-between", marginTop: "220px" }}>
-
+            <div className={styles.all}>
 
                 {blog &&
-                    <div style={{ marginLeft: "20%", height: "90px" }}>
+                    <div className={styles.blogcard}>
                         <BlogCard key={blogid} blog={blog} allUsers={au} />
                     </div>
                 }

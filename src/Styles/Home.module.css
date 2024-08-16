@@ -1,22 +1,51 @@
 .container {
+  text-align: center;
+  margin-top: 120px;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.blogs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media only screen and (max-width: 700px) {
+  .container {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    align-items: center;
     margin-top: 120px;
   }
-  
+
   h1 {
-    font-size: 36px;
+    font-size: 31px;
+    max-width: 91%;
     margin-bottom: 20px;
   }
-  
+
   p {
     font-size: 18px;
     color: #555;
     margin-bottom: 40px;
+    max-width: 70%;
   }
-  
+
   .blogs {
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 80%;
   }
-  
+}
