@@ -15,9 +15,10 @@
 }
 
 .brand {
-  color: white;
+  color: wheat;
   font-size: 24px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .navButtons {
