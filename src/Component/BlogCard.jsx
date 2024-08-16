@@ -98,7 +98,10 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const getOwnerAvatar = (ownerid) => {
         axios.get(`http://localhost:7500/getuserdp/${ownerid}`)
-            .then(res => setOwnerdp(res.data))
+            .then(res => {
+                const dp = res?.data
+                setOwnerdp(dp)
+            })
             .catch(er => console.log(er))
         return ownerdp
     }
@@ -118,7 +121,7 @@ const BlogCard = ({ blog, allUsers }) => {
             <div className={styles.header}>
 
                 <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.ownerInfo}>
-                    <img src={getOwnerAvatar(blog.Owner)} alt="" className={styles.ownerAvatar} />
+                    <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
                         {getOwnerName(blog?.Owner)}
                     </div>

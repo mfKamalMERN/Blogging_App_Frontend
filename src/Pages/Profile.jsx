@@ -8,11 +8,13 @@ const Profile = () => {
     const [name, setName] = useState('');
     const [profileName, setProfileName] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmpassword, setConfirmPassword] = useState('');
     const [File, setFile] = useState(null);
     const [au, setAu] = useState([]);
     const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100');
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
+    const [pwdsetter, setPwdSetter] = useState(false)
     const { userid } = useParams()
     const nav = useNavigate();
 
@@ -99,15 +101,20 @@ const Profile = () => {
     const handlePasswordUpdate = (e) => {
         e.preventDefault();
 
-        const newpassword = password
-        axios.patch(`http://localhost:7500/updatepassword`, { newpassword })
-            .then(res => {
-                if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
+        if (password.trim() === "" || confirmpassword.trim() === "") alert(`Please type your new password`)
 
-                else alert(res.data)
-            })
-            .catch(er => console.log(er))
+        else if (password !== confirmpassword) alert(`Passwords didn't match`)
 
+        else {
+            const newpassword = password
+            axios.patch(`http://localhost:7500/updatepassword`, { newpassword })
+                .then(res => {
+                    if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
+
+                    else alert(res?.data)
+                })
+                .catch(er => console.log(er))
+        }
     };
 
     const handleProfilePicUpdate = async (e) => {
@@ -135,7 +142,7 @@ const Profile = () => {
     const getOwnerAvatar = (uid) => {
         axios.get(`http://localhost:7500/getuserdp/${uid}`)
             .then(res => {
-                if (res.data) setProfilePic(res.data)
+                if (res?.data) setProfilePic(res.data)
             })
             .catch(er => console.log(er))
         return profilePic
@@ -160,7 +167,7 @@ const Profile = () => {
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
                         {!File ?
-                            <img src={getOwnerAvatar(userid)} alt="Profile" className={styles.profilePic} />
+                            <img src={getOwnerAvatar(userid)} alt={name} className={styles.profilePic} />
                             :
                             <img src={profilePic} alt="Profile" className={styles.profilePic} />
 
@@ -190,12 +197,19 @@ const Profile = () => {
                     </div>
                     <div className={styles.inputGroup}>
 
-                        {isLoggedUser() &&
+                        {isLoggedUser() && pwdsetter ?
                             <>
-                                <label>Password</label>
+                                <label>New Password</label>
                                 <input type="password" value={password} onChange={handlePasswordChange} className={styles.input} />
+
+                                <label>Confirm Password</label>
+                                <input type="password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} className={styles.input} />
                                 <button onClick={handlePasswordUpdate} className={styles.button}>✏️</button>
+                                <button onClick={() => setPwdSetter(false)} className={styles.button}>Cancel</button>
                             </>
+                            :
+                            <button onClick={() => setPwdSetter(!pwdsetter)} className={styles.button}>✏️Pwd</button>
+
                         }
 
                     </div>
@@ -211,9 +225,9 @@ const Profile = () => {
                 </div>
 
 
-            </div>
+            </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
-        </div>
+        </div >
     );
 };
 
