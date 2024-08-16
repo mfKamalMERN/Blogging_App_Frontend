@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../Styles/NewBlog.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios';
+import Localization from '../Resources/Localization.json'
 
 const NewBlog = () => {
     const [title, setTitle] = useState('');
@@ -38,10 +39,10 @@ const NewBlog = () => {
         <div>
             <Navbar />
             <div className={styles.container}>
-                <h2>Create New Blog</h2>
+                <h2>{Localization.home.createNewBlog}</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">{Localization.home.form.titleLabel}</label>
                         <input
                             type="text"
                             id="title"
@@ -53,7 +54,7 @@ const NewBlog = () => {
                         />
                     </div>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="content">Content</label>
+                        <label htmlFor="content">{Localization.home.form.contentLabel}</label>
                         <textarea
                             id="content"
                             placeholder='Content...'

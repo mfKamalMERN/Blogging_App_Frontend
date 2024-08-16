@@ -9,9 +9,11 @@ import BlogCard from '../Component/BlogCard';
 const LikesPage = () => {
     const nav = useNavigate()
     const [likesusers, setLikesUsers] = useState([])
+    const [au, setAu] = useState([])
     const { blogid } = useParams()
     const [blog, setBlog] = useState(null)
-    const [IsFollowing, setIsFollowing] = useState(false)
+    // const [IsFollowing, setIsFollowing] = useState(false)
+    const [fstatus, setFstatus] = useState(false)
 
     axios.defaults.withCredentials = true
     const tokenChecker = async () => {
@@ -27,6 +29,9 @@ const LikesPage = () => {
                 setLikesUsers(res.data.LikedUsers)
                 const response = await axios.get(`http://localhost:7500/getblog/${blogid}`)
                 setBlog(response.data)
+
+                const res2 = await axios.get(`http://localhost:7500/getallusers`)
+                setAu(res2.data)
             }
 
         } catch (error) {
@@ -36,26 +41,30 @@ const LikesPage = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [likesusers, blog])
+    }, [likesusers, blog, fstatus])
 
     const handleBackClick = () => {
         nav('/home')
     };
 
-    const checkFollowingStatus = (usrid) => {
+    // const checkFollowingStatus = (usrid) => {
 
-        axios.get(`http://localhost:7500/checkfollowingstatus/${usrid}`)
-            .then((res) => setIsFollowing(res?.data?.isFollowing))
-            .catch(er => console.log(er))
+    //     axios.get(`http://localhost:7500/checkfollowingstatus/${usrid}`)
+    //         .then((res) => setIsFollowing(res?.data?.isFollowing))
+    //         .catch(er => console.log(er))
 
-        return IsFollowing
-    }
+    //     return IsFollowing
+    // }
+
+    const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
+
 
     const FollowUnfollow = async (usrid) => {
 
         try {
             await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
-            checkFollowingStatus(usrid)
+            // checkFollowingStatus(usrid)
+            setFstatus(!fstatus)
 
         } catch (error) {
             console.log(error);
@@ -71,7 +80,7 @@ const LikesPage = () => {
 
                 {blog &&
                     <div style={{ marginLeft: "20%", height: "90px" }}>
-                        <BlogCard key={blogid} blog={blog} />
+                        <BlogCard key={blogid} blog={blog} allUsers={au} />
                     </div>
                 }
 
@@ -83,13 +92,13 @@ const LikesPage = () => {
                         ) : (
                             likesusers.map((likeuser) => (
                                 <div key={likeuser._id} className={styles.likeCard}>
-                                    <img src={likeuser.DP} alt={likeuser.Name} className={styles.avatar} onClick={() => nav(`/profile/${likeuser._id}`)} />
+                                    <img src={likeuser.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${likeuser._id}`)} />
                                     <div className={styles.name} onClick={() => nav(`/profile/${likeuser._id}`)}>{likeuser.Name}</div>
                                     {
                                         JSON.parse(localStorage.getItem('LoggedInUser'))._id == likeuser._id ?
                                             <></>
                                             :
-                                            checkFollowingStatus(likeuser._id) ?
+                                            checkFollowingStatus(likeuser?.Followers) ?
                                                 <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Unfollow</button>
                                                 :
                                                 <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>

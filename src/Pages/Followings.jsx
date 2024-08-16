@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 const Followings = () => {
     const nav = useNavigate()
     const [Followings, setFollowings] = useState([])
-    const [IsFollowing, setIsFollowing] = useState(false)
     const [fstatus, setFstatus] = useState(false)
     const [userName, setUserName] = useState("")
 

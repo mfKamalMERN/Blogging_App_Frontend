@@ -10,7 +10,6 @@ const Profile = () => {
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
     const [File, setFile] = useState(null);
-    const [au, setAu] = useState([]);
     const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100');
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
@@ -32,12 +31,10 @@ const Profile = () => {
 
                 axios.get(`http://localhost:7500/getallusers`)
                     .then(res => {
-                        setAu(res.data)
                         const profileUser = res.data.find((user) => user?._id == userid)
                         setName(profileUser.Name)
                         setFollowingsCount(profileUser.Followings.length)
                         setFollowersCount(profileUser.Followers.length)
-                        // setDp(profileUser?.DP)
                     })
                     .catch(er => console.log(er))
             }
