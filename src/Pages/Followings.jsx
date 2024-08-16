@@ -51,12 +51,7 @@ const Followings = () => {
 
         try {
             await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
-            // checkFollowingStatus(usrid)
-            setTimeout(() => {
-                setFstatus(!fstatus)
-            }, 500);
-
-
+            setFstatus(!fstatus)
 
         } catch (error) {
             console.log(error);
