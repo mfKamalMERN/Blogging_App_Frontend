@@ -1,39 +1,97 @@
 .container {
-    max-width: 600px;
-    margin: 150px auto;
-    padding: 20px;
-    background-color: black;
+  max-width: 600px;
+  margin: 150px auto;
+  padding: 20px;
+  background-color: black;
+  color: wheat;
+  border: 1px solid wheat;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.follower {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.button {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: white;
+  background-color: darkgreen;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+
+
+@media only screen and (max-width: 700px) {
+  .container {
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: wheat;
     border: 1px solid wheat;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
   }
-  
+
   h2 {
     margin-bottom: 20px;
     font-size: 24px;
   }
-  
+
   .list {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
+
   .follower {
     display: flex;
     align-items: center;
     width: 100%;
     padding: 10px;
     border-bottom: 1px solid #ddd;
+    /* background-color: red; */
+    height: 40px;
+    margin-top: 20px;
   }
-  
+
   .avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
+    margin-bottom: 100px;
+    cursor: pointer;
   }
 
   .button {
@@ -46,4 +104,5 @@
     cursor: pointer;
     margin-left: 5px;
   }
-  
+
+}

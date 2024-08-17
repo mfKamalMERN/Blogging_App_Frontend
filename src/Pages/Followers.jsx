@@ -86,9 +86,9 @@ const Followers = () => {
 
                     {Followers?.map((follower) => (
                         <div key={follower?._id} className={styles.follower}>
-                            <div onClick={() => nav(`/profile/${follower?._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}>
+                            <div onClick={() => nav(`/profile/${follower?._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px",cursor:"pointer" }}>
                                 <img src={follower?.DP} alt={follower.Name} className={styles.avatar} />
-                                <div>{follower.Name}</div>
+                                <div>{follower?.Name}</div>
                             </div>
                             {
                                 isLoggedUser(follower?._id) ?

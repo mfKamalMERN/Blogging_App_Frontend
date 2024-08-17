@@ -33,8 +33,8 @@ const Profile = () => {
                     .then(res => {
                         const profileUser = res.data.find((user) => user?._id == userid)
                         setName(profileUser.Name)
-                        setFollowingsCount(profileUser.Followings.length)
-                        setFollowersCount(profileUser.Followers.length)
+                        setFollowingsCount(profileUser?.Followings?.length)
+                        setFollowersCount(profileUser?.Followers?.length)
                     })
                     .catch(er => console.log(er))
             }
