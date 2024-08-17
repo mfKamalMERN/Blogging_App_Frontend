@@ -9,7 +9,6 @@ const Followings = () => {
     const [Followings, setFollowings] = useState([])
     const [fstatus, setFstatus] = useState(false)
     const [userName, setUserName] = useState("")
-
     const { userid } = useParams()
 
 
@@ -59,9 +58,8 @@ const Followings = () => {
     }
 
     const isLoggedUser = (usrid) => {
-        if (JSON.parse(localStorage.getItem('LoggedInUser'))._id == usrid) {
-            return true
-        }
+        if (JSON.parse(localStorage.getItem('LoggedInUser'))?._id == usrid) return true
+
         else return false
 
     }
@@ -70,7 +68,7 @@ const Followings = () => {
         <div>
             <Navbar />
             <div className={styles.container}>
-                {Followings.length === 0 ?
+                {Followings?.length === 0 ?
                     <h1>{getUserName(userid)} doesn't follow anyone yet</h1>
                     :
 
@@ -87,7 +85,7 @@ const Followings = () => {
                                     <div>{following.Name}</div>
                                 </div>
                                 {
-                                    isLoggedUser(following._id) ?
+                                    isLoggedUser(following?._id) ?
                                         <></>
                                         :
                                         <button onClick={() => FollowUnfollow(following?._id)} className={styles.button}>{checkFollowingStatus(following?.Followers) ? 'Unfollow' : 'Follow'}</button>

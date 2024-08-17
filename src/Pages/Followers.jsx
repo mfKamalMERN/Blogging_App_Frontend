@@ -6,11 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const Followers = () => {
 
-    const [Followers, setFollowers] = useState([])
-    const [IsFollowing, setIsFollowing] = useState(false)
     const nav = useNavigate()
-    const { userid } = useParams()
+    const [Followers, setFollowers] = useState([])
+    const [fstatus, setFstatus] = useState(false)
     const [userName, setUserName] = useState("")
+    const { userid } = useParams()
 
 
     axios.defaults.withCredentials = true
@@ -20,10 +20,10 @@ const Followers = () => {
             const res = await axios.get(`http://localhost:7500/getfollowers/${userid}`)
 
             if (!res?.data?.Token) {
-                nav('/')
                 localStorage.clear()
+                nav('/')
             }
-            else setFollowers(res.data.Followers)
+            else setFollowers(res?.data?.Followwers)
 
         } catch (error) {
             console.log(error);
@@ -32,22 +32,24 @@ const Followers = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [Followers, IsFollowing])
+    }, [fstatus])
 
-    const checkFollowingStatus = (usrid) => {
+    // const checkFollowingStatus = (usrid) => {
 
-        axios.get(`http://localhost:7500/checkfollowingstatus/${usrid}`)
-            .then((res) => setIsFollowing(res?.data?.isFollowing))
-            .catch(er => console.log(er))
+    //     axios.get(`http://localhost:7500/checkfollowingstatus/${usrid}`)
+    //         .then((res) => setIsFollowing(res?.data?.isFollowing))
+    //         .catch(er => console.log(er))
 
-        return IsFollowing
-    }
+    //     return IsFollowing
+    // }
+
+    const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
 
     const FollowUnfollow = async (usrid) => {
 
         try {
             await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
-            checkFollowingStatus(usrid)
+            setFstatus(!fstatus)
 
         } catch (error) {
             console.log(error);
@@ -64,34 +66,35 @@ const Followers = () => {
 
     }
 
+    const isLoggedUser = (usrid) => {
+        if (JSON.parse(localStorage.getItem('LoggedInUser'))?._id == usrid) return true
+
+        else return false
+    }
+
     return (
         <div>
-            <Navbar isLogin={false} />
-
+            <Navbar />
             <div className={styles.container}>
-                {!Followers.length ?
+                {Followers?.length === 0 ?
                     <h2>No Followers yet</h2>
                     :
-
                     <h2>Followers of {getUserName(userid)}</h2>
                 }
 
                 <div className={styles.list}>
 
-                    {Followers.length !== 0 && Followers.map((follower) => (
-                        <div key={follower._id} className={styles.follower}>
-                            <div onClick={() => nav(`/profile/${follower._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}>
+                    {Followers?.map((follower) => (
+                        <div key={follower?._id} className={styles.follower}>
+                            <div onClick={() => nav(`/profile/${follower?._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px" }}>
                                 <img src={follower?.DP} alt={follower.Name} className={styles.avatar} />
                                 <div>{follower.Name}</div>
                             </div>
                             {
-                                JSON.parse(localStorage.getItem('LoggedInUser'))._id == follower._id ?
+                                isLoggedUser(follower?._id) ?
                                     <></>
                                     :
-                                    checkFollowingStatus(follower._id) ?
-                                        <button onClick={() => FollowUnfollow(follower._id)} className={styles.button}>Unfollow</button>
-                                        :
-                                        <button onClick={() => FollowUnfollow(follower._id)} className={styles.button}>Follow</button>
+                                    <button onClick={() => FollowUnfollow(follower?._id)} className={styles.button}>{checkFollowingStatus(follower?.Followers) ? 'Unfollow' : 'Follow'}</button>
 
                             }
                         </div>
