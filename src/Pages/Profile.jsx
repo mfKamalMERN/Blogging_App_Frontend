@@ -24,9 +24,8 @@ const Profile = () => {
             const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res?.data?.Token) {
-                // localStorage.clear()
-                // nav('/')
-                return;
+                localStorage.clear()
+                nav('/')
             }
             else {
 
