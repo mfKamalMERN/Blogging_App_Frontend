@@ -23,7 +23,7 @@ const Login = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/getallblogs`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res.data.Token) {
                 nav('/')
@@ -52,7 +52,7 @@ const Login = () => {
                 return;
             }
 
-            axios.post(`http://localhost:7500/signup`, formdata)
+            axios.post(`https://blogging-app-backend-dpk0.onrender.com/signup`, formdata)
                 .then(res => {
                     if (res.data.ValidationError) res.data.actError.map((er) => alert(er.msg))
 
@@ -71,7 +71,7 @@ const Login = () => {
 
         } else {
 
-            axios.post(`http://localhost:7500/login`, formdata)
+            axios.post(`https://blogging-app-backend-dpk0.onrender.com/login`, formdata)
                 .then((res) => {
                     if (res.data.ValidationError) res.data.map((ve) => alert(ve.msg))
 
@@ -100,7 +100,7 @@ const Login = () => {
 
             <div className={styles.all}>
 
-                <img src="http://localhost:7500/Images/DALL·E 2024-08-16 23.53.57 - Design an image with a unique name for a blogging app. The image should include a stylish, modern logo that combines elements of writing, communicatio.webp" alt="" />
+                <img src="https://blogging-app-backend-dpk0.onrender.com/Images/DALL·E 2024-08-16 23.53.57 - Design an image with a unique name for a blogging app. The image should include a stylish, modern logo that combines elements of writing, communicatio.webp" alt="" />
 
                 <div className="contents" >
 
