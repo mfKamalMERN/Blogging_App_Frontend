@@ -100,7 +100,7 @@ const Login = () => {
 
             <div className={styles.all}>
 
-                <img src="https://blogging-app-backend-dpk0.onrender.com/Images/DALL·E 2024-08-16 23.53.57 - Design an image with a unique name for a blogging app. The image should include a stylish, modern logo that combines elements of writing, communicatio.webp" alt="" />
+                <img src="https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?t=st=1723934612~exp=1723935212~hmac=5b45024586ce72292a91456f468b35831ee471309183fea3e97598e664954ab4" alt="" width={1150} />
 
                 <div className="contents" >
 
