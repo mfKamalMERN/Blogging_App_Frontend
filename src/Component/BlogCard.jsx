@@ -21,7 +21,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const handleLike = async () => {
         try {
-            const res = await axios.patch(`http://localhost:7500/likeunlikeblog/${blog._id}`)
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog._id}`)
 
             setLikes(res.data.Likes)
 
@@ -36,7 +36,7 @@ const BlogCard = ({ blog, allUsers }) => {
         if (newComment.trim() === "") alert("Please type your comment")
         else {
             try {
-                const res = await axios.post(`http://localhost:7500/addcomment/${blog._id}`, { newComment })
+                const res = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}`, { newComment })
 
                 setComments(res?.data?.Comments)
                 setNewComment("")
@@ -54,7 +54,7 @@ const BlogCard = ({ blog, allUsers }) => {
             setComments(blog.Comments)
         }
         else {
-            axios.patch(`http://localhost:7500/editcomment/${blog._id}/${commentId}`, { eComment })
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editcomment/${blog._id}/${commentId}`, { eComment })
                 .then(res => setComments(res.data.Comments))
                 .catch(er => console.log(er))
 
@@ -64,14 +64,14 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const handleDeleteComment = (commentId, blogid) => {
 
-        axios.patch(`http://localhost:7500/deletecomment/${blogid}/${commentId}`)
+        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecomment/${blogid}/${commentId}`)
             .then(res => setComments(res.data.Comments))
             .catch(er => console.log(er))
     };
 
     const handleEditBlog = async () => {
         try {
-            const res = await axios.patch(`http://localhost:7500/editblogtext/${blog._id}`, { blogContent, title })
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editblogtext/${blog._id}`, { blogContent, title })
 
             if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
 
@@ -90,14 +90,14 @@ const BlogCard = ({ blog, allUsers }) => {
     const handleDeleteBlog = () => {
 
         if (window.confirm(`Delete Blog?`)) {
-            axios.delete(`http://localhost:7500/deleteblog/${blog._id}`)
+            axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteblog/${blog._id}`)
                 .catch(er => console.log(er))
         }
 
     };
 
     const getOwnerAvatar = (ownerid) => {
-        axios.get(`http://localhost:7500/getuserdp/${ownerid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserdp/${ownerid}`)
             .then(res => setOwnerdp(res.data))
             .catch(er => console.log(er))
         return ownerdp
@@ -105,7 +105,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const getOwnerName = (ownerid) => {
 
-        axios.get(`http://localhost:7500/getusername/${ownerid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getusername/${ownerid}`)
             .then(res => setOwnername(res.data))
             .catch(er => console.log(er))
         return ownername

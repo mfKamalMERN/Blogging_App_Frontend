@@ -19,7 +19,7 @@ const LikesPage = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/likesusers/${blogid}`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/likesusers/${blogid}`)
 
             if (!res.data.Token) {
                 localStorage.clear()
@@ -27,10 +27,10 @@ const LikesPage = () => {
             }
             else {
                 setLikesUsers(res.data.LikedUsers)
-                const response = await axios.get(`http://localhost:7500/getblog/${blogid}`)
+                const response = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getblog/${blogid}`)
                 setBlog(response.data)
 
-                const res2 = await axios.get(`http://localhost:7500/getallusers`)
+                const res2 = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                 setAu(res2.data)
             }
 
@@ -62,7 +62,7 @@ const LikesPage = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
             // checkFollowingStatus(usrid)
             setFstatus(!fstatus)
 

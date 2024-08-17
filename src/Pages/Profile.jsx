@@ -21,7 +21,7 @@ const Profile = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/getallblogs`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res?.data?.Token) {
                 nav('/')
@@ -29,7 +29,7 @@ const Profile = () => {
             }
             else {
 
-                axios.get(`http://localhost:7500/getallusers`)
+                axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                     .then(res => {
                         const profileUser = res.data.find((user) => user?._id == userid)
                         setName(profileUser.Name)
@@ -75,7 +75,7 @@ const Profile = () => {
         const newName = name
 
         try {
-            const res = await axios.patch(`http://localhost:7500/updatename`, { newName })
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatename`, { newName })
 
             if (res.data.ValidationError) {
                 res.data.ActError.map((er) => alert(er.msg))
@@ -104,7 +104,7 @@ const Profile = () => {
 
         else {
             const newpassword = password
-            axios.patch(`http://localhost:7500/updatepassword`, { newpassword })
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatepassword`, { newpassword })
                 .then(res => {
                     if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
 
@@ -125,7 +125,7 @@ const Profile = () => {
             formdata.append('file', File)
 
             try {
-                const res = await axios.put(`http://localhost:7500/uploadprofilepic`, formdata)
+                const res = await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic`, formdata)
 
                 alert(res.data)
 
@@ -137,7 +137,7 @@ const Profile = () => {
 
 
     const getOwnerAvatar = (uid) => {
-        axios.get(`http://localhost:7500/getuserdp/${uid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserdp/${uid}`)
             .then(res => {
                 if (res?.data) setProfilePic(res.data)
             })
@@ -160,7 +160,7 @@ const Profile = () => {
         if (window.confirm(`Deleting your Account`)) {
 
             try {
-                const res = await axios.delete(`http://localhost:7500/deleteaccount`)
+                const res = await axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteaccount`)
                 alert(res?.data)
                 nav('/')
             } catch (error) {

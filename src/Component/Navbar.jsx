@@ -11,7 +11,7 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
     const SignOut = () => {
         if (window.confirm(`Log Out?`)) {
 
-            axios.get(`http://localhost:7500/logout`)
+            axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
                 .then(nav('/'))
                 .catch((er) => console.log(er))
         }

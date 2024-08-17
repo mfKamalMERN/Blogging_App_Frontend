@@ -21,7 +21,7 @@ const NewBlog = () => {
 
         const blogstring = content
 
-        axios.post(`http://localhost:7500/createblog`, { blogstring, title })
+        axios.post(`https://blogging-app-backend-dpk0.onrender.com/createblog`, { blogstring, title })
             .then((res) => {
                 if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
 

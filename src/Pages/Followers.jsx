@@ -17,7 +17,7 @@ const Followers = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/getfollowers/${userid}`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getfollowers/${userid}`)
 
             if (!res?.data?.Token) {
                 localStorage.clear()
@@ -48,7 +48,7 @@ const Followers = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
             setFstatus(!fstatus)
 
         } catch (error) {
@@ -59,7 +59,7 @@ const Followers = () => {
 
     const getUserName = (ownerid) => {
 
-        axios.get(`http://localhost:7500/getusername/${ownerid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getusername/${ownerid}`)
             .then(res => setUserName(res.data))
             .catch(er => console.log(er))
         return userName
