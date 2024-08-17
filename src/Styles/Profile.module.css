@@ -39,10 +39,11 @@ h2 {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    opacity: 0;
-    width: 100px;
-    height: 100px;
+    opacity: 10;
+    width: 180px;
+    height: 30px;
     cursor: pointer;
+    background-color: darkslategray;
 }
 
 .inputGroup {
@@ -129,10 +130,11 @@ label {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        opacity: 0;
-        width: 100px;
-        height: 100px;
+        opacity: 10;
+        width: 180px;
+        height: 30px;
         cursor: pointer;
+        background-color: darkslategray;
     }
 
     .inputGroup {
