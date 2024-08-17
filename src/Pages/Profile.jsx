@@ -147,12 +147,26 @@ const Profile = () => {
 
     const isLoggedUser = () => {
 
-        if (JSON.parse(localStorage.getItem('LoggedInUser'))._id == userid) {
+        if (JSON.parse(localStorage.getItem('LoggedInUser'))?._id === userid) {
             return true
         }
         else {
 
             return false
+        }
+    }
+
+    const DeleteAccount = async () => {
+        if (window.confirm(`Deleting your Account`)) {
+
+            try {
+                const res = await axios.delete(`http://localhost:7500/deleteaccount`)
+                alert(res?.data)
+                nav('/')
+            } catch (error) {
+                console.log(error);
+
+            }
         }
     }
 
@@ -221,6 +235,7 @@ const Profile = () => {
                         <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>}
                 </div>
 
+                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.button}>Delete My Account</button>}
 
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
