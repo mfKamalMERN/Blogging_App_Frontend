@@ -100,7 +100,7 @@ const Login = () => {
 
             <div className={styles.all}>
 
-                <img src="https://files.oaiusercontent.com/file-Bb3xl4V6hgMwPwSX0B4ZFmj9?se=2024-08-16T18%3A28%3A43Z&sp=r&sv=2023-11-03&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3De39b3d1a-008d-4482-a205-586712ac1746.webp&sig=eIR5QwRRIvYg182GoFlj6rq31dmqxK%2BFHxnC8%2Bu8BtY%3D" alt="" />
+                <img src="http://localhost:7500/Images/DALL·E 2024-08-16 23.53.57 - Design an image with a unique name for a blogging app. The image should include a stylish, modern logo that combines elements of writing, communicatio.webp" alt="" />
 
                 <div className="contents" >
 
