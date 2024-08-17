@@ -14,6 +14,7 @@ const Profile = () => {
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
+    const [edp, setEdp] = useState(false)
     const { userid } = useParams()
     const nav = useNavigate();
 
@@ -46,7 +47,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount, profilePic])
+    }, [File, followingsCount, followersCount, profilePic, edp])
 
 
     const handleNameChange = (e) => {
@@ -126,7 +127,8 @@ const Profile = () => {
 
             try {
                 const res = await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic`, formdata)
-
+                localStorage.setItem('edp', JSON.stringify(false))
+                setEdp(!edp)
                 alert(res.data)
 
             } catch (error) {
@@ -186,11 +188,20 @@ const Profile = () => {
                         {
                             isLoggedUser() &&
                             <>
-                                <label htmlFor=""></label>
-                                <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
-                                <br />
-                                <br />
-                                <button onClick={handleProfilePicUpdate} className={styles.button}>Update</button>
+                                {!JSON.parse(localStorage.getItem('edp')) && <button onClick={() => localStorage.setItem('edp', JSON.stringify(true))} className={styles.button}>✏️ Profile Pic</button>}
+
+                                {JSON.parse(localStorage.getItem('edp')) &&
+                                    <>
+                                        <label htmlFor=""></label>
+                                        <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
+                                        <br />
+                                        <br />
+
+                                        <button onClick={handleProfilePicUpdate} className={styles.button}>Update</button>
+
+                                        <button onClick={() => localStorage.setItem('edp', JSON.stringify(false))} className={styles.button}>Cancel</button>
+                                    </>
+                                }
                             </>
                         }
                     </div>
