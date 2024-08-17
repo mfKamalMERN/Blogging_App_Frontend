@@ -186,7 +186,8 @@ const Profile = () => {
                         {
                             isLoggedUser() &&
                             <>
-                                <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />✏️
+                            <label htmlFor=""></label>
+                                <input type="file" onChange={handleProfilePicChange} className={styles.fileInput} />
                                 <br />
                                 <br />
                                 <button onClick={handleProfilePicUpdate} className={styles.button}>Update</button>
