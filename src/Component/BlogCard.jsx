@@ -3,7 +3,7 @@ import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const BlogCard = ({ blog, allUsers }) => {
+const BlogCard = ({ blog, allUsers, isLikes }) => {
     const [likes, setLikes] = useState(blog?.Likes);
     const [comments, setComments] = useState(blog?.Comments);
     const [newComment, setNewComment] = useState("");
@@ -21,7 +21,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const handleLike = async () => {
         try {
-            const res = await axios.patch(`http://localhost:7500/likeunlikeblog/${blog._id}`)
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog._id}`)
 
             setLikes(res.data.Likes)
 
@@ -36,7 +36,7 @@ const BlogCard = ({ blog, allUsers }) => {
         if (newComment.trim() === "") alert("Please type your comment")
         else {
             try {
-                const res = await axios.post(`http://localhost:7500/addcomment/${blog._id}`, { newComment })
+                const res = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}`, { newComment })
 
                 setComments(res?.data?.Comments)
                 setNewComment("")
@@ -54,7 +54,7 @@ const BlogCard = ({ blog, allUsers }) => {
             setComments(blog.Comments)
         }
         else {
-            axios.patch(`http://localhost:7500/editcomment/${blog._id}/${commentId}`, { eComment })
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editcomment/${blog._id}/${commentId}`, { eComment })
                 .then(res => setComments(res.data.Comments))
                 .catch(er => console.log(er))
 
@@ -64,14 +64,14 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const handleDeleteComment = (commentId, blogid) => {
 
-        axios.patch(`http://localhost:7500/deletecomment/${blogid}/${commentId}`)
+        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecomment/${blogid}/${commentId}`)
             .then(res => setComments(res.data.Comments))
             .catch(er => console.log(er))
     };
 
     const handleEditBlog = async () => {
         try {
-            const res = await axios.patch(`http://localhost:7500/editblogtext/${blog._id}`, { blogContent, title })
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editblogtext/${blog._id}`, { blogContent, title })
 
             if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
 
@@ -90,14 +90,14 @@ const BlogCard = ({ blog, allUsers }) => {
     const handleDeleteBlog = () => {
 
         if (window.confirm(`Delete Blog?`)) {
-            axios.delete(`http://localhost:7500/deleteblog/${blog._id}`)
+            axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteblog/${blog._id}`)
                 .catch(er => console.log(er))
         }
 
     };
 
     const getOwnerAvatar = (ownerid) => {
-        axios.get(`http://localhost:7500/getuserdp/${ownerid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserdp/${ownerid}`)
             .then(res => setOwnerdp(res.data))
             .catch(er => console.log(er))
         return ownerdp
@@ -105,7 +105,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
     const getOwnerName = (ownerid) => {
 
-        axios.get(`http://localhost:7500/getusername/${ownerid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getusername/${ownerid}`)
             .then(res => setOwnername(res.data))
             .catch(er => console.log(er))
         return ownername
@@ -123,14 +123,17 @@ const BlogCard = ({ blog, allUsers }) => {
                     </div>
                 </div>
 
-                <div>
-                    {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
-                        <div style={{display:"flex"}}>
-                            <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
-                            <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
-                        </div>
-                    )}
-                </div>
+                {!isLikes &&
+                    <div>
+                        {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
+                            <div style={{ display: "flex" }}>
+                                <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
+                                <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
+                            </div>
+                        )}
+                    </div>
+                }
+
             </div>
             {editingBlog ? (
                 <div>
@@ -155,22 +158,24 @@ const BlogCard = ({ blog, allUsers }) => {
                     <p style={{ maxWidth: "500px", color: "white" }}>{blog.Blog}</p>
                 </div>
             )}
-            <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {!isLikes &&
+                <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
 
-                <div className={styles.actions}>
-                    {
-                        likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
-                            <button style={{ backgroundColor: "darkred" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
-                            :
-                            <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
-                    }
+                    <div className={styles.actions}>
+                        {
+                            likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
+                                <button style={{ backgroundColor: "darkred" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
+                                :
+                                <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
+                        }
+                    </div>
+
+                    <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>ℹ️ 💕</button>
+
+                    <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️ 💭</button>
+
                 </div>
-
-                <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>ℹ️ 💕</button>
-
-                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️ 💭</button>
-
-            </div>
+            }
 
             <div className={styles.comments}>
                 {
@@ -229,15 +234,17 @@ const BlogCard = ({ blog, allUsers }) => {
                     </>
                 }
 
-                <div className={styles.addComment}>
-                    <textarea
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        className={styles.textarea}
-                        placeholder='Add Comment...'
-                    />
-                    <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
-                </div>
+                {!isLikes &&
+                    <div className={styles.addComment}>
+                        <textarea
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            className={styles.textarea}
+                            placeholder='Add Comment...'
+                        />
+                        <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
+                    </div>
+                }
             </div>
 
         </div>

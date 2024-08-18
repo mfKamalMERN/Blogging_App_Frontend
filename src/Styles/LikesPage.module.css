@@ -34,12 +34,16 @@
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
+    margin-bottom: 70px;
+    cursor: pointer;
+    /* margin-top: 100px; */
 }
 
 .name {
     font-size: 1.2em;
     font-weight: bold;
     color: #333;
+    cursor: pointer;
 }
 
 .backButton {
@@ -63,6 +67,17 @@
     font-size: 14px;
     color: white;
     background-color: darkgreen;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.unfollowbutton {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    background-color: darkred;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -124,13 +139,16 @@
         height: 50px;
         border-radius: 50%;
         margin-right: 15px;
-        margin-bottom: 100px;
+        margin-bottom: 70px;
+        cursor: pointer;
+        /* margin-top: 100px; */
     }
 
     .name {
         font-size: 1.2em;
         font-weight: bold;
         color: #333;
+        cursor: pointer;
     }
 
     .backButton {
@@ -158,6 +176,17 @@
         border-radius: 5px;
         cursor: pointer;
         margin-left: 8%;
+    }
+
+    .unfollowbutton {
+        padding: 5px 10px;
+        font-size: 14px;
+        color: white;
+        background-color: darkred;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 5px;
     }
 
     .all {

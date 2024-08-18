@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json';
 
-const Navbar = ({ isSignup, toggleForm, isLogin }) => {
+const Navbar = ({ toggleForm, isLogin }) => {
 
     const nav = useNavigate()
 
     const SignOut = () => {
         if (window.confirm(`Log Out?`)) {
 
-            axios.get(`http://localhost:7500/logout`)
+            axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
                 .then(nav('/'))
                 .catch((er) => console.log(er))
         }
@@ -38,7 +38,7 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
                                 Log Out
                             </button>
                             <button onClick={() => nav('/newfriends')} className={styles.navButton}>
-                                👨‍⚖️👨‍⚖️🧑‍🤝‍🧑
+                                <h2>🧑‍🤝‍🧑</h2>
                             </button>
                             <button onClick={() => nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
                                 {JSON.parse(localStorage.getItem('LoggedInUser'))?.Name}

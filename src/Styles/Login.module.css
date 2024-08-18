@@ -74,10 +74,10 @@
 
 
 
-/* img{
-  width: 20%;
-  margin-top: 100px;
-} */
+img {
+  /* width: 20%; */
+  margin-top: 85px;
+}
 
 @media only screen and (max-width: 600px) {
   .formContainer {
@@ -126,7 +126,7 @@
     padding: 10px;
     font-size: 16px;
     color: white;
-    background-color: #007bff;
+    background-color: green;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -140,7 +140,7 @@
   .toggleButton {
     background: none;
     border: none;
-    color: #007bff;
+    color: wheat;
     cursor: pointer;
     margin-top: 10px;
     font-size: 14px;
@@ -148,7 +148,7 @@
   }
 
   .toggleButton:hover {
-    color: #0056b3;
+    color: wheat;
   }
 
   .all {
@@ -158,6 +158,8 @@
   }
 
   img {
-    margin-top: 100px;
+    margin-top: 70px;
+    width: 100%;
+    height: auto;
   }
 }

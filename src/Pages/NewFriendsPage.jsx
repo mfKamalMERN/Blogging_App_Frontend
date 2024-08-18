@@ -14,7 +14,7 @@ const NewFriendsPage = () => {
 
     const tokenChecker = async () => {
         try {
-            const res = await axios.get(`http://localhost:7500/findnewpeople`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/findnewpeople`)
 
             if (!res?.data?.Token) {
                 localStorage.clear()
@@ -38,7 +38,7 @@ const NewFriendsPage = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`http://localhost:7500/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
             setFstatus(!fstatus)
 
         } catch (error) {

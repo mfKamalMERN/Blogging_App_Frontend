@@ -14,7 +14,7 @@ const Profile = () => {
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
-    const [editdp, setEditdp] = useState(false)
+    const [edp, setEdp] = useState(false)
     const { userid } = useParams()
     const nav = useNavigate();
 
@@ -22,15 +22,15 @@ const Profile = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/getallblogs`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res?.data?.Token) {
-                nav('/')
                 localStorage.clear()
+                nav('/')
             }
             else {
 
-                axios.get(`http://localhost:7500/getallusers`)
+                axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                     .then(res => {
                         const profileUser = res.data.find((user) => user?._id == userid)
                         setName(profileUser.Name)
@@ -47,7 +47,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount, profilePic, editdp])
+    }, [File, followingsCount, followersCount, profilePic, edp])
 
 
     const handleNameChange = (e) => {
@@ -76,7 +76,7 @@ const Profile = () => {
         const newName = name
 
         try {
-            const res = await axios.patch(`http://localhost:7500/updatename`, { newName })
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatename`, { newName })
 
             if (res.data.ValidationError) {
                 res.data.ActError.map((er) => alert(er.msg))
@@ -105,7 +105,7 @@ const Profile = () => {
 
         else {
             const newpassword = password
-            axios.patch(`http://localhost:7500/updatepassword`, { newpassword })
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatepassword`, { newpassword })
                 .then(res => {
                     if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
 
@@ -126,10 +126,9 @@ const Profile = () => {
             formdata.append('file', File)
 
             try {
-                const res = await axios.put(`http://localhost:7500/uploadprofilepic`, formdata)
-
+                const res = await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic`, formdata)
                 localStorage.setItem('edp', JSON.stringify(false))
-                setEditdp(!editdp)
+                setEdp(!edp)
                 alert(res.data)
 
 
@@ -141,7 +140,7 @@ const Profile = () => {
 
 
     const getOwnerAvatar = (uid) => {
-        axios.get(`http://localhost:7500/getuserdp/${uid}`)
+        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserdp/${uid}`)
             .then(res => {
                 if (res?.data) setProfilePic(res.data)
             })
@@ -164,7 +163,7 @@ const Profile = () => {
         if (window.confirm(`Deleting your Account`)) {
 
             try {
-                const res = await axios.delete(`http://localhost:7500/deleteaccount`)
+                const res = await axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteaccount`)
                 alert(res?.data)
                 nav('/')
             } catch (error) {
@@ -213,15 +212,15 @@ const Profile = () => {
                         {isLoggedUser() ?
                             <>
                                 <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
-                                <button onClick={handleNameUpdate} className={styles.button}>✏️</button>
+                                <button onClick={handleNameUpdate} className={styles.button}>Set Name</button>
                             </>
                             :
                             <input disabled={true} type="text" value={name} className={styles.input} />
                         }
 
                     </div>
-                    <div className={styles.inputGroup}>
 
+                    <div className={styles.inputGroup}>
                         {isLoggedUser() && pwdsetter ?
                             <>
                                 <label>New Password</label>
@@ -229,15 +228,16 @@ const Profile = () => {
 
                                 <label>Confirm Password</label>
                                 <input type="password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} className={styles.input} />
-                                <button onClick={handlePasswordUpdate} className={styles.button}>✏️</button>
+
+                                <button onClick={handlePasswordUpdate} className={styles.button}>Update</button>
+
                                 <button onClick={() => setPwdSetter(false)} className={styles.button}>Cancel</button>
                             </>
                             :
-                            <button onClick={() => setPwdSetter(!pwdsetter)} className={styles.button}>✏️Pwd</button>
-
-                        }
-
+                            isLoggedUser() &&
+                            <button onClick={() => setPwdSetter(!pwdsetter)} className={styles.button}>✏️ Password</button>}
                     </div>
+
                 </form>
 
                 <div className={styles.followButtons}>
@@ -249,7 +249,7 @@ const Profile = () => {
                         <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>}
                 </div>
 
-                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.button}>Delete My Account</button>}
+                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
 
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>

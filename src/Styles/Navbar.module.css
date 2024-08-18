@@ -31,7 +31,7 @@
   background: none;
   border: none;
   font-size: 18px;
-  margin-left: 20px;
+  margin-left: 50px;
   cursor: pointer;
 }
 
@@ -64,16 +64,15 @@
   
   .navButtons {
     display: flex;
-    margin-right: 15px;
+    margin-right: 8%;
   }
   
   .navButton {
     color: white;
     background: none;
     border: none;
-    font-size: small;
-    margin-left: 0px;
-    margin-right: 1px;
+    font-size: 13px;
+    margin-left: 12%;
     cursor: pointer;
   }
   

@@ -23,7 +23,7 @@ const Login = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/getallblogs`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res.data.Token) {
                 nav('/')
@@ -52,7 +52,7 @@ const Login = () => {
                 return;
             }
 
-            axios.post(`http://localhost:7500/signup`, formdata)
+            axios.post(`https://blogging-app-backend-dpk0.onrender.com/signup`, formdata)
                 .then(res => {
                     if (res.data.ValidationError) res.data.actError.map((er) => alert(er.msg))
 
@@ -71,13 +71,13 @@ const Login = () => {
 
         } else {
 
-            axios.post(`http://localhost:7500/login`, formdata)
+            axios.post(`https://blogging-app-backend-dpk0.onrender.com/login`, formdata)
                 .then((res) => {
                     if (res.data.ValidationError) res.data.map((ve) => alert(ve.msg))
 
                     else if (res.data.LoggedIn) {
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
-                        nav(`/profile/${res.data.LoggedUser._id}`)
+                        nav(`/profile/${res?.data?.LoggedUser?._id}`)
                     }
 
                     else alert(res.data)
@@ -100,11 +100,11 @@ const Login = () => {
 
             <div className={styles.all}>
 
-                <img src="http://localhost:7500/Images/DALL·E 2024-08-16 23.53.57 - Design an image with a unique name for a blogging app. The image should include a stylish, modern logo that combines elements of writing, communicatio.webp" alt="" />
+                <img src="https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?t=st=1723934612~exp=1723935212~hmac=5b45024586ce72292a91456f468b35831ee471309183fea3e97598e664954ab4" alt="" width={1150} />
 
-                <div className="contents">
+                <div className="contents" style={{ color: "darkslategrey", marginTop: "100px",display:"flex",flexDirection:"column",alignItems:'center'}} >
 
-                    <h1 style={{ color: "darkslategrey", marginTop: "110px" }}>{Localization.navbar.brand}</h1>
+                    <h1 >{Localization.navbar.brand}</h1>
 
                     <div className={styles.formContainer}>
 

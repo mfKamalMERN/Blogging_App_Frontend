@@ -14,15 +14,15 @@ const Home = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`http://localhost:7500/getallblogs`)
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res?.data?.Token) {
-                nav('/')
                 localStorage.clear()
+                nav('/')
             }
             else {
                 setBlogs(res?.data?.AllBlogs)
-                axios.get(`http://localhost:7500/getallusers`)
+                axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                     .then(res => setAu(res.data))
                     .catch(er => console.log(er))
             }
