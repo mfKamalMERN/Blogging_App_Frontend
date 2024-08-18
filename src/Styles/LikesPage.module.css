@@ -35,14 +35,15 @@
     border-radius: 50%;
     margin-right: 15px;
     margin-bottom: 70px;
+    cursor: pointer;
     /* margin-top: 100px; */
 }
-
 
 .name {
     font-size: 1.2em;
     font-weight: bold;
     color: #333;
+    cursor: pointer;
 }
 
 .backButton {
@@ -128,13 +129,15 @@
         border-radius: 50%;
         margin-right: 15px;
         margin-bottom: 70px;
+        cursor: pointer;
         /* margin-top: 100px; */
     }
-
+    
     .name {
         font-size: 1.2em;
         font-weight: bold;
         color: #333;
+        cursor: pointer;
     }
 
     .backButton {
