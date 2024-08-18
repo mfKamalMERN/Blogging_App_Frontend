@@ -102,9 +102,9 @@ const Login = () => {
 
                 <img src="https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?t=st=1723934612~exp=1723935212~hmac=5b45024586ce72292a91456f468b35831ee471309183fea3e97598e664954ab4" alt="" width={1150} />
 
-                <div className="contents" >
+                <div className="contents" style={{ color: "darkslategrey", marginTop: "100px",display:"flex",flexDirection:"column",alignItems:'center'}} >
 
-                    <h1 style={{ color: "wheat", marginTop: "120px" }}>{Localization.navbar.brand}</h1>
+                    <h1 >{Localization.navbar.brand}</h1>
 
                     <div className={styles.formContainer}>
 
