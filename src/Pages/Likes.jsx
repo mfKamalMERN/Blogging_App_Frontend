@@ -79,7 +79,7 @@ const LikesPage = () => {
 
                 {blog &&
                     <div className={styles.blogcard}>
-                        <BlogCard key={blogid} blog={blog} allUsers={au} />
+                        <BlogCard key={blogid} blog={blog} allUsers={au} isLikes={true} />
                     </div>
                 }
 

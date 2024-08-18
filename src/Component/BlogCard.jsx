@@ -3,7 +3,7 @@ import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const BlogCard = ({ blog, allUsers }) => {
+const BlogCard = ({ blog, allUsers, isLikes }) => {
     const [likes, setLikes] = useState(blog?.Likes);
     const [comments, setComments] = useState(blog?.Comments);
     const [newComment, setNewComment] = useState("");
@@ -125,7 +125,7 @@ const BlogCard = ({ blog, allUsers }) => {
 
                 <div>
                     {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
-                        <div style={{display:"flex"}}>
+                        <div style={{ display: "flex" }}>
                             <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
                             <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
                         </div>
@@ -155,22 +155,24 @@ const BlogCard = ({ blog, allUsers }) => {
                     <p style={{ maxWidth: "500px", color: "white" }}>{blog.Blog}</p>
                 </div>
             )}
-            <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {!isLikes &&
+                <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
 
-                <div className={styles.actions}>
-                    {
-                        likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
-                            <button style={{ backgroundColor: "darkred" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
-                            :
-                            <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
-                    }
+                    <div className={styles.actions}>
+                        {
+                            likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
+                                <button style={{ backgroundColor: "darkred" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
+                                :
+                                <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
+                        }
+                    </div>
+
+                    <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>ℹ️ 💕</button>
+
+                    <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️ 💭</button>
+
                 </div>
-
-                <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>ℹ️ 💕</button>
-
-                <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️ 💭</button>
-
-            </div>
+            }
 
             <div className={styles.comments}>
                 {
@@ -229,15 +231,17 @@ const BlogCard = ({ blog, allUsers }) => {
                     </>
                 }
 
-                <div className={styles.addComment}>
-                    <textarea
-                        value={newComment}
-                        onChange={(e) => setNewComment(e.target.value)}
-                        className={styles.textarea}
-                        placeholder='Add Comment...'
-                    />
-                    <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
-                </div>
+                {!isLikes &&
+                    <div className={styles.addComment}>
+                        <textarea
+                            value={newComment}
+                            onChange={(e) => setNewComment(e.target.value)}
+                            className={styles.textarea}
+                            placeholder='Add Comment...'
+                        />
+                        <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
+                    </div>
+                }
             </div>
 
         </div>
