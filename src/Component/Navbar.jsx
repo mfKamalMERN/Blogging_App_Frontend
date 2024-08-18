@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json';
 
-const Navbar = ({ isSignup, toggleForm, isLogin }) => {
+const Navbar = ({ toggleForm, isLogin }) => {
 
     const nav = useNavigate()
 
@@ -38,7 +38,7 @@ const Navbar = ({ isSignup, toggleForm, isLogin }) => {
                                 Log Out
                             </button>
                             <button onClick={() => nav('/newfriends')} className={styles.navButton}>
-                                👨‍⚖️👨‍⚖️🧑‍🤝‍🧑
+                                <h2>🧑‍🤝‍🧑</h2>
                             </button>
                             <button onClick={() => nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
                                 {JSON.parse(localStorage.getItem('LoggedInUser'))?.Name}
