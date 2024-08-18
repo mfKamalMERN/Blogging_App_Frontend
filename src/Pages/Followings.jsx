@@ -88,7 +88,7 @@ const Followings = () => {
                                     isLoggedUser(following?._id) ?
                                         <></>
                                         :
-                                        <button onClick={() => FollowUnfollow(following?._id)} className={styles.button}>{checkFollowingStatus(following?.Followers) ? 'Unfollow' : 'Follow'}</button>
+                                        <button onClick={() => FollowUnfollow(following?._id)} className={!checkFollowingStatus(following?.Followers) ? styles.button : styles.unfollowbutton}>{checkFollowingStatus(following?.Followers) ? 'Unfollow' : 'Follow'}</button>
                                 }
                             </div>
                         ))}

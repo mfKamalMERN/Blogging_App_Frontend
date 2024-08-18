@@ -89,7 +89,7 @@ const LikesPage = () => {
                                             <></>
                                             :
                                             checkFollowingStatus(likeuser?.Followers) ?
-                                                <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Unfollow</button>
+                                                <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.unfollowbutton}>Unfollow</button>
                                                 :
                                                 <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>
 
