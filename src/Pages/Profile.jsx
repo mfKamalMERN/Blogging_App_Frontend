@@ -211,15 +211,15 @@ const Profile = () => {
                         {isLoggedUser() ?
                             <>
                                 <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
-                                <button onClick={handleNameUpdate} className={styles.button}>✏️</button>
+                                <button onClick={handleNameUpdate} className={styles.button}>Set Name</button>
                             </>
                             :
                             <input disabled={true} type="text" value={name} className={styles.input} />
                         }
 
                     </div>
-                    <div className={styles.inputGroup}>
 
+                    <div className={styles.inputGroup}>
                         {isLoggedUser() && pwdsetter ?
                             <>
                                 <label>New Password</label>
@@ -227,15 +227,16 @@ const Profile = () => {
 
                                 <label>Confirm Password</label>
                                 <input type="password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} className={styles.input} />
-                                <button onClick={handlePasswordUpdate} className={styles.button}>✏️</button>
+
+                                <button onClick={handlePasswordUpdate} className={styles.button}>Update</button>
+
                                 <button onClick={() => setPwdSetter(false)} className={styles.button}>Cancel</button>
                             </>
                             :
-                            <button onClick={() => setPwdSetter(!pwdsetter)} className={styles.button}>✏️Pwd</button>
-
-                        }
-
+                            isLoggedUser() &&
+                            <button onClick={() => setPwdSetter(!pwdsetter)} className={styles.button}>✏️ Password</button>}
                     </div>
+
                 </form>
 
                 <div className={styles.followButtons}>
