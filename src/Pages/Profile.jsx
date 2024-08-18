@@ -247,7 +247,7 @@ const Profile = () => {
                         <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>}
                 </div>
 
-                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.button}>Delete My Account</button>}
+                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
 
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
