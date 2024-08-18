@@ -102,9 +102,9 @@ const Login = () => {
 
                 <img src="http://localhost:7500/Images/DALL·E 2024-08-16 23.53.57 - Design an image with a unique name for a blogging app. The image should include a stylish, modern logo that combines elements of writing, communicatio.webp" alt="" />
 
-                <div className="contents" >
+                <div className="contents">
 
-                    <h1 style={{ color: "wheat", marginTop: "120px" }}>{Localization.navbar.brand}</h1>
+                    <h1 style={{ color: "darkslategrey", marginTop: "110px" }}>{Localization.navbar.brand}</h1>
 
                     <div className={styles.formContainer}>
 

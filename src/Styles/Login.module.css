@@ -1,11 +1,11 @@
 .formContainer {
   max-width: 400px;
-  margin: 70px auto;
+  /* margin: 70px auto; */
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: black;
+  background-color: darkslategray;
   color: wheat;
   text-align: center;
   width: 100%;
@@ -84,6 +84,16 @@
     display: flex;
     flex-direction: column;
     width: 70%;
+    max-width: 400px;
+    margin: 0px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: darkslategray;
+    color: wheat;
+    text-align: center;
+    /* width: 100%; */
   }
 
   .form {
