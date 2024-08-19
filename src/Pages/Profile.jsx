@@ -15,6 +15,7 @@ const Profile = () => {
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
     const [followers, setFollowers] = useState([])
+    const [blogscount, setBlogscount] = useState(0)
     // const [fstatus, setFstatus] = useState(false)
     const [edp, setEdp] = useState(false)
     const { userid } = useParams()
@@ -39,6 +40,7 @@ const Profile = () => {
                         setFollowingsCount(profileUser?.Followings?.length)
                         setFollowersCount(profileUser?.Followers?.length)
                         setFollowers(profileUser?.Followers)
+                        setBlogscount(profileUser?.Blogs?.length)
                     })
                     .catch(er => console.log(er))
             }
@@ -50,7 +52,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount, profilePic, edp, followers])
+    }, [File, followingsCount, followersCount, profilePic, edp, followers, blogscount])
 
 
     const handleNameChange = (e) => {
@@ -235,25 +237,19 @@ const Profile = () => {
                 </form>
 
                 <div className={styles.followButtons}>
-                    {isLoggedUser() ?
+                    {isLoggedUser() || checkFollowingStatus(userid) ?
                         <>
                             <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
                             <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
-                            <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs</button>
+                            <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>
                         </>
                         :
-                        checkFollowingStatus(userid) ?
-                            <>
-                                <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
-                                <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
-                                <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs</button>
-                            </>
-                            :
-                            <>
-                                <h2>You're not following {name}</h2>
-                                <button disabled={true} onClick={() => nav(`/followers/${userid}`)}>Followers {followersCount}</button>
-                                <button disabled={true} onClick={() => nav(`/followings/${userid}`)}>Followings {followingsCount}</button>
-                            </>}
+                        <>
+                            <h2>You're not following {name}</h2>
+                            <button disabled={true} onClick={() => nav(`/followers/${userid}`)}>Followers {followersCount}</button>
+                            <button disabled={true} onClick={() => nav(`/followings/${userid}`)}>Followings {followingsCount}</button>
+                            <button disabled={true} onClick={() => nav(`/home/${userid}`)}>Blogs {blogscount}</button>
+                        </>}
                 </div>
 
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
