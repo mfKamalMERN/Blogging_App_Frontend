@@ -202,18 +202,16 @@ const Profile = () => {
                             </>
                         }
                     </div>
+
                     <div className={styles.inputGroup}>
                         <label>Name</label>
-
                         {isLoggedUser() ?
                             <>
                                 <input type="text" value={name} onChange={handleNameChange} className={styles.input} />
                                 <button onClick={handleNameUpdate} className={styles.button}>Set Name</button>
                             </>
                             :
-                            <input disabled={true} type="text" value={name} className={styles.input} />
-                        }
-
+                            <input disabled={true} type="text" value={name} className={styles.input} />}
                     </div>
 
                     <div className={styles.inputGroup}>
