@@ -3,28 +3,49 @@ import styles from '../Styles/Home.module.css';
 import Navbar from '../Component/Navbar';
 import BlogCard from '../Component/BlogCard';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Home = () => {
     const nav = useNavigate()
     const [blogs, setBlogs] = useState([])
+    const { userid } = useParams()
     const [au, setAu] = useState([])
 
     axios.defaults.withCredentials = true
+
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
+            if (userid) {
+                const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}`)
 
-            if (!res?.data?.Token) {
-                localStorage.clear()
-                nav('/')
+                if (!res?.data?.Token) {
+                    localStorage.clear()
+                    nav('/')
+                }
+                else {
+                    setBlogs(res?.data?.UserBlogs)
+
+                    axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
+                        .then(resp => setAu(resp?.data))
+                        .catch(er => console.log(er))
+                }
             }
+
             else {
-                setBlogs(res?.data?.AllBlogs)
-                axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-                    .then(res => setAu(res.data))
-                    .catch(er => console.log(er))
+                const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
+
+                if (!res?.data?.Token) {
+                    localStorage.clear()
+                    nav('/')
+                }
+                else {
+                    setBlogs(res?.data?.AllBlogs)
+
+                    axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
+                        .then(resp => setAu(resp.data))
+                        .catch(er => console.log(er))
+                }
             }
 
         } catch (error) {
@@ -40,7 +61,6 @@ const Home = () => {
         <div>
             <Navbar isLogin={false} />
 
-
             <div className={styles.container}>
                 <h1 style={{ color: "wheat" }}>Welcome to Expresso!</h1>
                 <p>Share your thoughts and read amazing content from others.</p>
@@ -50,9 +70,10 @@ const Home = () => {
                 </div>
 
                 <div className={styles.blogs}>
-                    {blogs?.map((blog) => (
-                        <BlogCard key={blog._id} blog={blog} allUsers={au} />
-                    ))}
+                    {blogs.length && blogs?.map((blog) => {
+                        if (blog) return <BlogCard key={blog._id} blog={blog} allUsers={au} />
+                    })}
+
                 </div>
             </div>
         </div>

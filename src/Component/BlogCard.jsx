@@ -116,8 +116,8 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
         <div className={styles.blogCard}>
             <div className={styles.header}>
 
-                <div onClick={() => nav(`/profile/${blog.Owner}`)} className={styles.ownerInfo}>
-                    <img src={getOwnerAvatar(blog.Owner)} alt="" className={styles.ownerAvatar} />
+                <div onClick={() => nav(`/profile/${blog?.Owner}`)} className={styles.ownerInfo}>
+                    <img src={getOwnerAvatar(blog?.Owner)} alt="" className={styles.ownerAvatar} />
                     <div className={styles.ownerName}>
                         {getOwnerName(blog?.Owner)}
                     </div>
@@ -125,7 +125,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
 
                 {!isLikes &&
                     <div>
-                        {blog.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))._id && (
+                        {blog?.Owner === JSON.parse(localStorage.getItem('LoggedInUser'))?._id && (
                             <div style={{ display: "flex" }}>
                                 <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
                                 <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
@@ -154,8 +154,8 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                 </div>
             ) : (
                 <div>
-                    <h3>{blog.Title}</h3>
-                    <p style={{ maxWidth: "500px", color: "white" }}>{blog.Blog}</p>
+                    <h3>{blog?.Title}</h3>
+                    <p style={{ maxWidth: "500px", color: "white" }}>{blog?.Blog}</p>
                 </div>
             )}
             {!isLikes &&
@@ -202,7 +202,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                                     className={styles.textarea}
                                                 />
                                                 <button
-                                                    onClick={() => handleEditComment(comment._id)}
+                                                    onClick={() => handleEditComment(comment?._id)}
                                                     className={styles.button}
                                                 >
                                                     Save
@@ -220,7 +220,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                                     ✏️
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDeleteComment(comment._id, blog._id)}
+                                                    onClick={() => handleDeleteComment(comment._id, blog?._id)}
                                                     className={styles.button}
                                                 >
                                                     🪣

@@ -10,6 +10,7 @@ import Profile from "../Pages/Profile"
 const routeConfig = [
     { path: "/", element: <Login /> },
     { path: "/home", element: <Home /> },
+    { path: "/home/:userid", element: <Home /> },
     { path: "/profile/:userid", element: <Profile /> },
     { path: "/followers/:userid", element: <Followers /> },
     { path: "/followings/:userid", element: <Followings /> },
