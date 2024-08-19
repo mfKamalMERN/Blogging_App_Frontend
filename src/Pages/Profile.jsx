@@ -14,6 +14,8 @@ const Profile = () => {
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
+    const [followers, setFollowers] = useState([])
+    // const [fstatus, setFstatus] = useState(false)
     const [edp, setEdp] = useState(false)
     const { userid } = useParams()
     const nav = useNavigate();
@@ -36,6 +38,7 @@ const Profile = () => {
                         setName(profileUser.Name)
                         setFollowingsCount(profileUser?.Followings?.length)
                         setFollowersCount(profileUser?.Followers?.length)
+                        setFollowers(profileUser?.Followers)
                     })
                     .catch(er => console.log(er))
             }
@@ -47,7 +50,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount, profilePic, edp])
+    }, [File, followingsCount, followersCount, profilePic, edp, followers])
 
 
     const handleNameChange = (e) => {
@@ -148,16 +151,7 @@ const Profile = () => {
         return profilePic
     }
 
-    const isLoggedUser = () => {
-
-        if (JSON.parse(localStorage.getItem('LoggedInUser'))?._id === userid) {
-            return true
-        }
-        else {
-
-            return false
-        }
-    }
+    const isLoggedUser = () => JSON.parse(localStorage.getItem('LoggedInUser'))?._id == userid
 
     const DeleteAccount = async () => {
         if (window.confirm(`Deleting your Account`)) {
@@ -172,6 +166,8 @@ const Profile = () => {
             }
         }
     }
+
+    const checkFollowingStatus = () => followers.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
 
     return (
         <div>
@@ -241,12 +237,23 @@ const Profile = () => {
                 </form>
 
                 <div className={styles.followButtons}>
-                    {followersCount != 0 &&
-                        <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
-                    }
-
-                    {followingsCount != 0 &&
-                        <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>}
+                    {isLoggedUser() ?
+                        <>
+                            <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
+                            <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
+                        </>
+                        :
+                        checkFollowingStatus(userid) ?
+                            <>
+                                <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
+                                <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
+                            </>
+                            :
+                            <>
+                                <h2>You're not following {name}</h2>
+                                <button disabled={true} onClick={() => nav(`/followers/${userid}`)}>Followers {followersCount}</button>
+                                <button disabled={true} onClick={() => nav(`/followings/${userid}`)}>Followings {followingsCount}</button>
+                            </>}
                 </div>
 
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
