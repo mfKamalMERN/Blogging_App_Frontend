@@ -35,7 +35,7 @@ const Profile = () => {
 
                 axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                     .then(res => {
-                        const profileUser = res.data.find((user) => user?._id == userid)
+                        const profileUser = res.data.find((user) => user?._id === userid)
                         setName(profileUser.Name)
                         setFollowingsCount(profileUser?.Followings?.length)
                         setFollowersCount(profileUser?.Followers?.length)
@@ -52,7 +52,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [])
+    }, [File, followingsCount, followersCount, profilePic, edp, followers, blogscount])
     // [File, followingsCount, followersCount, profilePic, edp, followers, blogscount]
 
     const handleNameChange = (e) => {
