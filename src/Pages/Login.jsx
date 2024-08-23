@@ -77,7 +77,7 @@ const Login = () => {
 
                     else if (res.data.LoggedIn) {
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
-                        nav(`/profile/${res?.data?.LoggedUser?._id}`)
+                        nav(`/home`)
                     }
 
                     else alert(res.data)
