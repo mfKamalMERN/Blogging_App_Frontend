@@ -241,7 +241,11 @@ const Profile = () => {
                         <>
                             <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
                             <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
-                            <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>
+                            {blogscount > 0 ?
+                                <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>
+                                :
+                                <button disabled={true} onClick={() => nav(`/home/${userid}`)}>Blogs {blogscount}</button>
+                            }
                         </>
                         :
                         <>
