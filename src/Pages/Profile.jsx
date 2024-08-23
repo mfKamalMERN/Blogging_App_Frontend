@@ -22,18 +22,21 @@ const Profile = () => {
     const nav = useNavigate();
 
     axios.defaults.withCredentials = true
-    const tokenChecker = () => {
+    const tokenChecker = async () => {
 
-        axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-            .then(res => {
-                const profileUser = res.data.Users.find((user) => user?._id == userid)
-                setName(profileUser.Name)
-                setFollowingsCount(profileUser?.Followings?.length)
-                setFollowersCount(profileUser?.Followers?.length)
-                setFollowers(profileUser?.Followers)
-                setBlogscount(profileUser?.Blogs?.length)
-            })
-            .catch(er => console.log(er))
+        try {
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
+            const profileUser = res.data.Users.find((user) => user?._id == userid)
+            setName(profileUser.Name)
+            setFollowingsCount(profileUser?.Followings?.length)
+            setFollowersCount(profileUser?.Followers?.length)
+            setFollowers(profileUser?.Followers)
+            setBlogscount(profileUser?.Blogs?.length)
+
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
     useEffect(() => {
