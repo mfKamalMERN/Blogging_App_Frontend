@@ -25,24 +25,35 @@ const Profile = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-            const profileUser = res.data.Users.find((user) => user?._id == userid)
-            setName(profileUser.Name)
-            setFollowingsCount(profileUser?.Followings?.length)
-            setFollowersCount(profileUser?.Followers?.length)
-            setFollowers(profileUser?.Followers)
-            setBlogscount(profileUser?.Blogs?.length)
+            const resp = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
+
+            if (!resp?.data?.Token) {
+                localStorage.clear()
+                nav('/')
+            }
+            else {
+
+                axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
+                    .then(res => {
+                        const profileUser = res.data.find((user) => user?._id == userid)
+                        setName(profileUser.Name)
+                        setFollowingsCount(profileUser?.Followings?.length)
+                        setFollowersCount(profileUser?.Followers?.length)
+                        setFollowers(profileUser?.Followers)
+                        setBlogscount(profileUser?.Blogs?.length)
+                    })
+                    .catch(er => console.log(er))
+            }
 
         } catch (error) {
             console.log(error);
-
         }
     }
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount, profilePic, edp, followers, blogscount])
-
+    }, [])
+    // [File, followingsCount, followersCount, profilePic, edp, followers, blogscount]
 
     const handleNameChange = (e) => {
         setName(e.target.value);
@@ -168,7 +179,7 @@ const Profile = () => {
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
                         {!File ?
-                            <img src={getOwnerAvatar(userid)} alt={name} className={styles.profilePic} />
+                            <img src={getOwnerAvatar(userid)} alt="" className={styles.profilePic} />
                             :
                             <img src={profilePic} alt="" className={styles.profilePic} />
 
@@ -230,10 +241,7 @@ const Profile = () => {
                         <>
                             <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
                             <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
-                            {blogscount > 0 ?
-                                <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>
-                                :
-                                <button disabled={true} onClick={() => nav(`/home/${userid}`)}>Blogs {blogscount}</button>}
+                            <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>
                         </>
                         :
                         <>
