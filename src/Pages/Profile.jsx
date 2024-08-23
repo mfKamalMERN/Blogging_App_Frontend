@@ -25,9 +25,9 @@ const Profile = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
+            const resp = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
-            if (!res?.data?.Token) {
+            if (!resp?.data?.Token) {
                 localStorage.clear()
                 nav('/')
             }
@@ -244,7 +244,7 @@ const Profile = () => {
                             {blogscount > 0 ?
                                 <button onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>
                                 :
-                                <button disabled={true} onClick={() => nav(`/home/${userid}`)} className={styles.button}>Blogs {blogscount}</button>}
+                                <button disabled={true} onClick={() => nav(`/home/${userid}`)}>Blogs {blogscount}</button>}
                         </>
                         :
                         <>

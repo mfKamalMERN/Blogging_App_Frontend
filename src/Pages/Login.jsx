@@ -73,7 +73,7 @@ const Login = () => {
 
             axios.post(`https://blogging-app-backend-dpk0.onrender.com/login`, formdata)
                 .then((res) => {
-                    if (res.data.ValidationError) res.data.map((ve) => alert(ve.msg))
+                    if (res.data.ValidationError) res.data.actError.map((ve) => alert(ve.msg))
 
                     else if (res.data.LoggedIn) {
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))

@@ -19,7 +19,7 @@ const Home = () => {
             if (userid) {
                 const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}`)
 
-                if (!res?.data?.Token) {
+                if (!res.data.Token) {
                     localStorage.clear()
                     nav('/')
                 }
@@ -55,7 +55,7 @@ const Home = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [blogs])
+    })
 
     return (
         <div>
