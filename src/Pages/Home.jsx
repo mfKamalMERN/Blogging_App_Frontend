@@ -55,7 +55,7 @@ const Home = () => {
 
     useEffect(() => {
         tokenChecker()
-    })
+    },[blogs])
 
     // [blogs]
 
