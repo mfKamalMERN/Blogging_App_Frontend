@@ -136,18 +136,21 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
             </div>
             {editingBlog ? (
                 <div>
-                    <textarea
-                        value={blogContent}
-                        onChange={(e) => setBlogContent(e.target.value)}
-                        className={styles.textarea}
-                    />
+                    <h4>Blog Title</h4>
                     <textarea
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         className={styles.textarea}
                     />
+                    <h4>Blog Content</h4>
+                    <textarea
+                        value={blogContent}
+                        onChange={(e) => setBlogContent(e.target.value)}
+                        className={styles.textarea}
+                    />
 
                     <button onClick={handleEditBlog} className={styles.button}>Save</button>
+                    <button onClick={() => setEditingBlog(false)} className={styles.button} style={{ backgroundColor: "darkred" }}>Cancel</button>
                     <br />
                     <br />
                 </div>
@@ -156,8 +159,10 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                     <h3>{blog?.Title}</h3>
                     <p style={{ maxWidth: "500px", color: "white" }}>{blog?.Blog}</p>
                 </div>
-            )}
-            {!isLikes &&
+            )
+            }
+            {
+                !isLikes &&
                 <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
 
                     <div className={styles.actions}>
@@ -249,7 +254,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                 }
             </div>
 
-        </div>
+        </div >
     );
 };
 
