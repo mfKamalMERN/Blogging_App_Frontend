@@ -39,6 +39,7 @@ const Profile = () => {
     useEffect(() => {
         tokenChecker()
     }, [File, followingsCount, followersCount, profilePic, edp, followers, blogscount])
+    
     // [File, followingsCount, followersCount, profilePic, edp, followers, blogscount]
 
     const handleNameChange = (e) => {
