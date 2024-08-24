@@ -21,7 +21,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
 
     const handleLike = async () => {
         try {
-            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog._id}`)
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog?._id}`)
 
             setLikes(res.data.Likes)
 
@@ -29,7 +29,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
             console.log(error);
         }
 
-    };
+    }
 
     const handleAddComment = async () => {
 
@@ -159,12 +159,12 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                 </div>
             )}
             {!isLikes &&
-                <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div className="threebuttons" style={{ display: "flex", alignItems: "center", justifyContent: "space-around" }}>
 
                     <div className={styles.actions}>
                         {
                             likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
-                                <button style={{ backgroundColor: "darkred" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
+                                <button style={{ backgroundColor: "darkgreen" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
                                 :
                                 <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
                         }

@@ -57,6 +57,8 @@ const Home = () => {
         tokenChecker()
     })
 
+    // [blogs]
+
     return (
         <div>
             <Navbar isLogin={false} />
