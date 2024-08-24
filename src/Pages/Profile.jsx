@@ -118,12 +118,10 @@ const Profile = () => {
             formdata.append('file', File)
 
             try {
-                const res = await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic`, formdata)
+                await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic`, formdata)
                 localStorage.setItem('edp', JSON.stringify(false))
                 setEdp(!edp)
-                alert(res.data)
-
-
+                // alert(res.data)
             } catch (error) {
                 console.log(error);
             }

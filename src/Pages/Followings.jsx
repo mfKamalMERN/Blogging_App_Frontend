@@ -81,7 +81,11 @@ const Followings = () => {
                             <div key={following._id} className={styles.following}>
 
                                 <div onClick={() => nav(`/profile/${following._id}`)} className="imgAndName" style={{ display: "flex", alignItems: "center", marginRight: "10px", cursor: "pointer" }}>
-                                    <img src={following.DP} alt={following.Name} className={styles.avatar} />
+                                    {following.DP ?
+                                        <img src={following.DP} alt='' className={styles.avatar} />
+                                        :
+                                        <img src='https://via.placeholder.com/100' alt='' className={styles.avatar} />
+                                    }
                                     <div>{following.Name}</div>
                                 </div>
                                 {
