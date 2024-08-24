@@ -11,7 +11,6 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editingBlog, setEditingBlog] = useState(false);
     const [showComments, setShowComments] = useState(false);
-    const [dpa, setDpa] = useState(false);
     const [blogContent, setBlogContent] = useState(blog.Blog);
     const [ownerdp, setOwnerdp] = useState("")
     const [title, setTitle] = useState(blog.Title)
@@ -242,7 +241,10 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                             className={styles.textarea}
                             placeholder='Add Comment...'
                         />
-                        <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
+                        {newComment?.length ?
+                            <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
+                            :
+                            <></>}
                     </div>
                 }
             </div>
