@@ -62,7 +62,11 @@ const NewFriendsPage = () => {
                         {friends.map((friend) => (
                             <div key={friend?._id} className={styles.friendCard}>
 
-                                <img src={friend?.DP} alt={friend?.Name} className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />
+                                {friend.DP ?
+                                    <img src={friend?.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />
+                                :
+                                <img src="https://via.placeholder.com/100" alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />}
+
                                 <div className={styles.name} onClick={() => nav(`/profile/${friend._id}`)}>{friend?.Name}</div>
 
                                 <button
