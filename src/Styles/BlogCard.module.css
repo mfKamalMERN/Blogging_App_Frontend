@@ -91,6 +91,8 @@
     margin-bottom: 100px;
     background-color: darkslategray;
     color: wheat;
+    min-width: 70%;
+    /* width: 80%; */
   }
 
   .header {
