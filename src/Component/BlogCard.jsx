@@ -263,10 +263,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                             className={styles.textarea}
                             placeholder='Add Comment...'
                         />
-                        {newComment?.length ?
-                            <button onClick={handleAddComment} className={styles.button}>➕Comment</button>
-                            :
-                            <></>}
+                        {newComment?.length && <button onClick={handleAddComment} className={styles.button}>➕Comment</button>}
                     </div>
                 }
             </div>
