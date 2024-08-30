@@ -62,10 +62,11 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
     }
 
     const handleDeleteComment = (commentId, blogid) => {
-
-        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecomment/${blogid}/${commentId}`)
-            .then(res => setComments(res.data.Comments))
-            .catch(er => console.log(er))
+        if (window.confirm("Delete Comment")) {
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecomment/${blogid}/${commentId}`)
+                .then(res => setComments(res.data.Comments))
+                .catch(er => console.log(er))
+        }
     };
 
     const handleEditBlog = async () => {
@@ -110,6 +111,9 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
         return ownername
     }
 
+    const isBlogOwner = () => blog.Owner == JSON.parse(localStorage.getItem('LoggedInUser'))?._id
+
+    const isCommentOwner = (commentorId) => commentorId == JSON.parse(localStorage.getItem('LoggedInUser'))?._id
 
     return (
         <div className={styles.blogCard}>
@@ -168,15 +172,15 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                     <div className={styles.actions}>
                         {
                             likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
-                                <button style={{ backgroundColor: "darkgreen" }} onClick={handleLike} className={styles.button}>  ❤️({likes.length})</button>
+                                <button style={{ backgroundColor: "darkgreen" }} onClick={handleLike} className={styles.button}>❤️ {likes.length}</button>
                                 :
-                                <button onClick={handleLike} className={styles.button}>🩶({likes.length})</button>
+                                <button onClick={handleLike} className={styles.button}>🩶 {likes.length}</button>
                         }
                     </div>
 
                     <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>ℹ️ 💕</button>
 
-                    <button className={styles.button} onClick={() => setShowComments(!showComments)}>ℹ️ 💭</button>
+                    <button className={styles.button} onClick={() => setShowComments(!showComments)}>💭 {blog.Comments.length}</button>
 
                 </div>
             }
@@ -191,7 +195,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                 <p>
                                     <strong>{allUsers?.find((user) => user._id == comment?.CommentedBy)?.Name}</strong>: {comment?.Comment}
                                 </p>
-                                {comment?.CommentedBy == JSON.parse(localStorage.getItem('LoggedInUser'))?._id && (
+                                {isCommentOwner(comment?.CommentedBy) ? (
                                     <div>
                                         {editingCommentId === comment._id ? (
                                             <div>
@@ -210,6 +214,15 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                                     className={styles.button}
                                                 >
                                                     Save
+                                                </button>
+                                                <button
+                                                    onClick={() => {
+                                                        setEditingCommentId(null)
+                                                        setComments(blog?.Comments)
+                                                    }}
+                                                    className={styles.button} style={{ backgroundColor: "darkred" }}
+                                                >
+                                                    Cancel
                                                 </button>
                                             </div>
                                         ) : (
@@ -231,8 +244,12 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                                 </button>
                                             </div>
                                         )}
-                                    </div>
-                                )}
+                                    </div>)
+                                    :
+                                    isBlogOwner() && <button onClick={() => handleDeleteComment(comment._id, blog?._id)} className={styles.button}>
+                                        🪣
+                                    </button>
+                                }
                             </div>
                         ))}
                     </>
