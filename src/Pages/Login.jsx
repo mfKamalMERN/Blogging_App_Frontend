@@ -18,6 +18,7 @@ const Login = () => {
     })
 
     const [isSignup, setIsSignup] = useState(false);
+    const [showPwd, setShowPwd] = useState(false);
 
     axios.defaults.withCredentials = true
     const tokenChecker = async () => {
@@ -100,7 +101,7 @@ const Login = () => {
 
             <div className={styles.all}>
 
-                <img src="https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?t=st=1723934612~exp=1723935212~hmac=5b45024586ce72292a91456f468b35831ee471309183fea3e97598e664954ab4" alt="" width={850}/>
+                <img src="https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?t=st=1723934612~exp=1723935212~hmac=5b45024586ce72292a91456f468b35831ee471309183fea3e97598e664954ab4" alt="" width={850} />
 
                 <div className="contents" style={{ color: "darkslategrey", marginTop: "100px", display: "flex", flexDirection: "column", alignItems: 'center', }} >
 
@@ -127,15 +128,41 @@ const Login = () => {
 
                             <div className={styles.formGroup}>
                                 <label>Password:</label>
-                                <input
-                                    type="password"
-                                    placeholder='Password...'
-                                    value={formdata.password}
-                                    onChange={handleChange}
-                                    required
-                                    className={styles.input}
-                                    name='password'
-                                />
+                                {!showPwd ?
+                                    <>
+                                        <input
+                                            type="password"
+                                            placeholder='Password...'
+                                            value={formdata.password}
+                                            onChange={handleChange}
+                                            required
+                                            className={styles.input}
+                                            name='password'
+                                        />
+                                        <button onClick={(e) => {
+                                            e.preventDefault()
+                                            setShowPwd(!showPwd)
+                                        }} className={styles.button}>🔐</button>
+                                    </>
+                                    :
+                                    <>
+                                        <input
+                                            type="text"
+                                            placeholder='Password...'
+                                            value={formdata.password}
+                                            onChange={handleChange}
+                                            required
+                                            className={styles.input}
+                                            name='password'
+                                        />
+
+                                        <button onClick={(e) => {
+                                            e.preventDefault()
+                                            setShowPwd(!showPwd)
+                                        }} className={styles.button}>🔓</button>
+                                    </>
+
+                                }
                             </div>
 
                             {isSignup && (
