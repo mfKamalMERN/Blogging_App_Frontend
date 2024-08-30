@@ -139,10 +139,12 @@ const Login = () => {
                                             className={styles.input}
                                             name='password'
                                         />
-                                        <button onClick={(e) => {
-                                            e.preventDefault()
-                                            setShowPwd(!showPwd)
-                                        }} className={styles.button}>🔐</button>
+                                        {formdata.password &&
+                                            <button onClick={(e) => {
+                                                e.preventDefault()
+                                                setShowPwd(!showPwd)
+                                            }} className={styles.button}>🔐</button>
+                                        }
                                     </>
                                     :
                                     <>
@@ -155,11 +157,12 @@ const Login = () => {
                                             className={styles.input}
                                             name='password'
                                         />
-
-                                        <button onClick={(e) => {
-                                            e.preventDefault()
-                                            setShowPwd(!showPwd)
-                                        }} className={styles.button}>🔓</button>
+                                        {formdata.password &&
+                                            <button onClick={(e) => {
+                                                e.preventDefault()
+                                                setShowPwd(!showPwd)
+                                            }} className={styles.button}>🔓</button>
+                                        }
                                     </>
 
                                 }
