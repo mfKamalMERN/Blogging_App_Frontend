@@ -65,6 +65,8 @@ const LikesPage = () => {
 
     }
 
+    const isLoggedUser = (userid) => JSON.parse(localStorage.getItem('LoggedInUser'))?._id == userid
+
     return (
         <div>
             <Navbar />
@@ -82,18 +84,20 @@ const LikesPage = () => {
                         ) : (
                             likesusers.map((likeuser) => (
                                 <div key={likeuser._id} className={styles.likeCard}>
-                                    <img src={likeuser.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${likeuser._id}`)} />
-                                    <div className={styles.name} onClick={() => nav(`/profile/${likeuser._id}`)}>{likeuser.Name}</div>
-                                    {
-                                        JSON.parse(localStorage.getItem('LoggedInUser'))?._id == likeuser._id ?
-                                            <></>
-                                            :
-                                            checkFollowingStatus(likeuser?.Followers) ?
-                                                <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.unfollowbutton}>Unfollow</button>
-                                                :
-                                                <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>
+                                    {likeuser.DP ?
+                                        <img src={likeuser.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${likeuser._id}`)} />
+                                        :
+                                        <img src="https://via.placeholder.com/100" alt="" className={styles.avatar} onClick={() => nav(`/profile/${likeuser._id}`)} />}
 
-                                    }
+                                    <div className={styles.name} onClick={() => nav(`/profile/${likeuser._id}`)}>{likeuser.Name}</div>
+
+                                    {isLoggedUser(likeuser?._id) ?
+                                        <></>
+                                        :
+                                        checkFollowingStatus(likeuser?.Followers) ?
+                                            <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.unfollowbutton}>Unfollow</button>
+                                            :
+                                            <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>}
                                 </div>
                             ))
                         )}
