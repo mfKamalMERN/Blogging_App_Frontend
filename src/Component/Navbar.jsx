@@ -21,7 +21,7 @@ const Navbar = ({ toggleForm, isLogin }) => {
         <nav className={styles.navbar}>
             <div className={styles.navContainer}>
                 <div onClick={() => nav('/home')} className={styles.brand}>{Localization.navbar.brand}</div>
-                {!isLogin && <div onClick={() => nav('/home')} className={styles.brand}><h1>🏠</h1></div>}
+                {/* {!isLogin && <div onClick={() => nav('/home')} className={styles.brand}><h1>🏠</h1></div>} */}
                 {
                     isLogin ?
                         <div className={styles.navButtons}>

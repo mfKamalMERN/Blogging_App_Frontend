@@ -64,7 +64,7 @@ const Home = () => {
             <Navbar isLogin={false} />
 
             <div className={styles.container}>
-                <h1 style={{ color: "wheat" }}>Welcome to Expresso!</h1>
+                <h1 style={{ color: "wheat" }}>Welcome to MUFAISA 🦁🦁!</h1>
                 <p>Share your thoughts and read amazing content from others.</p>
 
                 <div className={styles.Button} style={{ marginBottom: "50px" }}>
