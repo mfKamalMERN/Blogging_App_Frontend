@@ -161,7 +161,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
             ) : (
                 <div>
                     <h3>{blog?.Title}</h3>
-                    <p style={{ maxWidth: "500px", color: "white" }}>{blog?.Blog}</p>
+                    <p className={styles.blogContent}> {blog?.Blog}</p>
                 </div>
             )
             }

@@ -80,6 +80,10 @@
   background-color: black;
 }
 
+.blogContent {
+  max-width: 500px;
+  color: white;
+}
 
 
 
@@ -91,8 +95,15 @@
     margin-bottom: 100px;
     background-color: darkslategray;
     color: wheat;
-    min-width: 80%;
+    min-width: 95%;
+    /* font-size: smaller */
     /* width: 80%; */
+  }
+
+  .blogContent {
+    max-width: 500px;
+    color: white;
+    font-size: small;
   }
 
   .header {
