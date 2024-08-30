@@ -26,12 +26,18 @@ const Profile = () => {
 
         axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuser/${userid}`)
             .then(res => {
-                const profileUser = res?.data?.User
-                setName(res.data.User.Name)
-                setFollowingsCount(profileUser?.Followings?.length)
-                setFollowersCount(profileUser?.Followers?.length)
-                setFollowers(profileUser?.Followers)
-                setBlogscount(profileUser?.Blogs?.length)
+                if (!res?.data?.Token) {
+                    localStorage.clear()
+                    nav('/')
+                }
+                else {
+                    const profileUser = res?.data?.User
+                    setName(res.data.User.Name)
+                    setFollowingsCount(profileUser?.Followings?.length)
+                    setFollowersCount(profileUser?.Followers?.length)
+                    setFollowers(profileUser?.Followers)
+                    setBlogscount(profileUser?.Blogs?.length)
+                }
             })
             .catch(er => console.log(er))
     }
