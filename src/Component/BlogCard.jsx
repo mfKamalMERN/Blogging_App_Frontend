@@ -205,16 +205,16 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                                         setEcomment(e.target.value)
                                                         setComments(
                                                             comments.map((c) => c._id === comment._id ? { ...c, Comment: e.target.value } : c))
-                                                    }
-                                                    }
+                                                    }}
                                                     className={styles.textarea}
                                                 />
+
                                                 <button
                                                     onClick={() => handleEditComment(comment?._id)}
-                                                    className={styles.button}
-                                                >
+                                                    className={styles.button}>
                                                     Save
                                                 </button>
+
                                                 <button
                                                     onClick={() => {
                                                         setEditingCommentId(null)
@@ -263,7 +263,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                             className={styles.textarea}
                             placeholder='Add Comment...'
                         />
-                        {newComment?.length && <button onClick={handleAddComment} className={styles.button}>➕Comment</button>}
+                        {newComment?.length ? <button onClick={handleAddComment} className={styles.button}>➕Comment</button> : <></>}
                     </div>
                 }
             </div>
