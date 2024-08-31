@@ -191,9 +191,8 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                     {!editBlogPic ?
                         blogPicUrl ?
                             <>
-
-                                <img src={blogPicUrl} alt="" width={400} />
-                                {isBlogOwner() && <button onClick={() => setEditBlogPic(true)} className={styles.button}>✏️</button>}
+                                <img src={blogPicUrl} alt="" width={500} />
+                                {(isBlogOwner() && !isLikes) && <button onClick={() => setEditBlogPic(true)} className={styles.button}>✏️</button>}
                             </>
                             :
                             isBlogOwner() && <button onClick={() => setEditBlogPic(true)} className={styles.button}>➕ Pic</button>
