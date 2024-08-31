@@ -5,16 +5,19 @@ import { useNavigate } from 'react-router-dom';
 
 const BlogCard = ({ blog, allUsers, isLikes }) => {
     const [likes, setLikes] = useState(blog?.Likes);
+    const [blogPicUrl, setBlogPicUrl] = useState(blog?.Picture);
     const [comments, setComments] = useState(blog?.Comments);
     const [newComment, setNewComment] = useState("");
     const [eComment, setEcomment] = useState('');
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editingBlog, setEditingBlog] = useState(false);
     const [showComments, setShowComments] = useState(false);
+    const [editBlogPic, setEditBlogPic] = useState(false);
     const [blogContent, setBlogContent] = useState(blog.Blog);
     const [ownerdp, setOwnerdp] = useState("")
     const [title, setTitle] = useState(blog.Title)
     const [ownername, setOwnername] = useState("")
+    const [file, setFile] = useState(null)
     const nav = useNavigate()
 
 
@@ -73,7 +76,11 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
         try {
             const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editblogtext/${blog._id}`, { blogContent, title })
 
-            if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
+            if (res.data.ValidationError) {
+                res.data.ActError.map((er) => alert(er.msg))
+                setBlogContent(blog.Blog)
+                setTitle(blog.Title)
+            }
 
             else {
                 setBlogContent(res.data.NewBlog)
@@ -114,6 +121,26 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
     const isBlogOwner = () => blog.Owner == JSON.parse(localStorage.getItem('LoggedInUser'))?._id
 
     const isCommentOwner = (commentorId) => commentorId == JSON.parse(localStorage.getItem('LoggedInUser'))?._id
+
+    const handlePicUpdate = () => {
+        if (!file) alert(`No image file selected`)
+
+        else {
+            const formdata = new FormData()
+            formdata.append('file', file)
+
+            axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadblogpicture/${blog._id}`, formdata)
+                .then(res => {
+                    if (res.data.Msg === "upload successful") {
+                        setBlogPicUrl(res.data.url)
+                        setEditBlogPic(false)
+                        // setFile(null)
+                    }
+                    else alert(res.data.Msg)
+                })
+                .catch(er => console.log(er))
+        }
+    }
 
     return (
         <div className={styles.blogCard}>
@@ -161,6 +188,27 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
             ) : (
                 <div>
                     <h3>{blog?.Title}</h3>
+                    {!editBlogPic ?
+                        blogPicUrl ?
+                            <>
+
+                                <img src={blogPicUrl} alt="" width={400} />
+                                {isBlogOwner() && <button onClick={() => setEditBlogPic(true)} className={styles.button}>✏️</button>}
+                            </>
+                            :
+                            isBlogOwner() && <button onClick={() => setEditBlogPic(true)} className={styles.button}>➕ Pic</button>
+
+                        :
+                        <>
+                            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+                            {isBlogOwner() &&
+                                <>
+                                    <button onClick={handlePicUpdate} className={styles.button}>Update Pic</button>
+                                    <button onClick={() => setEditBlogPic(false)} className={styles.button}>Cancel</button>
+                                </>
+                            }
+                        </>
+                    }
                     <p className={styles.blogContent}> {blog?.Blog}</p>
                 </div>
             )
