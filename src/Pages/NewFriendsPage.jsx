@@ -56,7 +56,8 @@ const NewFriendsPage = () => {
             {
 
                 <div className={styles.container}>
-                    <h2>Find New Friends</h2>
+
+                    <h2 style={{ color: "wheat", marginTop: "20%" }}>Find New Friends</h2>
 
                     <div className={styles.friendsContainer}>
                         {friends.map((friend) => (
@@ -64,8 +65,8 @@ const NewFriendsPage = () => {
 
                                 {friend.DP ?
                                     <img src={friend?.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />
-                                :
-                                <img src="https://via.placeholder.com/100" alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />}
+                                    :
+                                    <img src="https://via.placeholder.com/100" alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />}
 
                                 <div className={styles.name} onClick={() => nav(`/profile/${friend._id}`)}>{friend?.Name}</div>
 
@@ -78,6 +79,7 @@ const NewFriendsPage = () => {
 
                             </div>))}
                     </div>
+                    <button onClick={() => nav('/home')} className={styles.followButton} style={{ marginTop: "25px", backgroundColor: "black" }}><h1>🏠</h1></button>
                 </div>
             }
 
