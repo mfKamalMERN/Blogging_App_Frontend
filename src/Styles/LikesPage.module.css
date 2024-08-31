@@ -94,8 +94,9 @@
 }
 
 .blogcard {
-    width: 25%;
-    margin-left: 37%;
+    min-width: 40%;
+    max-width: 90%;
+    margin-left: 35%;
 }
 
 @media only screen and (max-width: 600px) {
