@@ -5,8 +5,8 @@
   margin-bottom: 100px;
   background-color: darkslategray;
   color: wheat;
-  min-width: 30%;
-  max-width: 50%;
+  min-width: 90%;
+  max-width: 100%;
 }
 
 .header {
@@ -96,9 +96,9 @@
     margin-bottom: 100px;
     background-color: darkslategray;
     color: wheat;
-    min-width: 95%;
+    min-width: 90%;
     /* font-size: smaller */
-    /* width: 80%; */
+    /* width: 90%; */
   }
 
   .blogContent {
