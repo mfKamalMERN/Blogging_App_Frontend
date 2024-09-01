@@ -8,6 +8,7 @@ import Localization from '../Resources/Localization.json'
 const NewBlog = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [file, setFile] = useState(null)
     const nav = useNavigate();
 
     const handleTitleChange = (e) => setTitle(e.target.value);
@@ -19,9 +20,13 @@ const NewBlog = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const blogstring = content
+        // const blogstring = content
+        const formdata = new FormData()
+        formdata.append('file', file)
+        formdata.append('blogstring', content)
+        formdata.append('title', title)
 
-        axios.post(`https://blogging-app-backend-dpk0.onrender.com/createblog`, { blogstring, title })
+        axios.put(`https://blogging-app-backend-dpk0.onrender.com/createblog`, formdata)
             .then((res) => {
                 if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
 
@@ -42,7 +47,7 @@ const NewBlog = () => {
                 <h2>{Localization.home.createNewBlog}</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="title">{Localization.home.form.titleLabel}</label>
+                        <label htmlFor="title">{Localization.home.form.titleLabel}*</label>
                         <input
                             type="text"
                             id="title"
@@ -54,7 +59,7 @@ const NewBlog = () => {
                         />
                     </div>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="content">{Localization.home.form.contentLabel}</label>
+                        <label htmlFor="content">{Localization.home.form.contentLabel}*</label>
                         <textarea
                             id="content"
                             placeholder='Content...'
@@ -64,7 +69,16 @@ const NewBlog = () => {
                             required
                         />
                     </div>
-
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="image">Image</label>
+                        <input
+                            type='file'
+                            id="image"
+                            placeholder='Image...'
+                            onChange={(e) => setFile(e.target.files[0])}
+                            className={styles.fileInput}
+                        />
+                    </div>
 
                     <button type="submit" className={styles.button}>➕ Blog</button>
                 </form>
