@@ -70,7 +70,7 @@ const NewBlog = () => {
                         />
                     </div>
                     <div className={styles.inputGroup}>
-                        <label htmlFor="image">Image</label>
+                        <label htmlFor="image">Image (Optional)</label>
                         <input
                             type='file'
                             id="image"
