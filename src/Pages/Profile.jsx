@@ -275,11 +275,10 @@ const Profile = () => {
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
 
                 {!isLoggedUser() &&
-                    checkFollowingStatus() ?
-                    <button onClick={() => FollowUnfollow(userid)} className={styles.deleteaccount}>Unfollow</button>
-                    :
-                    <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>
-                }
+                    (checkFollowingStatus() ?
+                        <button onClick={() => FollowUnfollow(userid)} className={styles.deleteaccount}>Unfollow</button>
+                        :
+                        <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>)}
 
                 {isLoggedUser() ?
                     privateAccount ?
