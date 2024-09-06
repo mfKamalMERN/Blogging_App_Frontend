@@ -287,10 +287,9 @@ const Profile = () => {
                         <button onClick={changeAccountPrivacy} className={styles.button}>Change Account to Private</button>
                     :
                     privateAccount ?
-                        <h3>This account is private</h3>
+                        <p style={{ color: "wheat" }}>This account is private</p>
                         :
-                        <></>
-                }
+                        <></>}
 
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
