@@ -14,11 +14,13 @@ const Profile = () => {
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
+    const [privateAccount, setPrivateAccount] = useState(false)
     const [followers, setFollowers] = useState([])
     const [blogscount, setBlogscount] = useState(0)
     // const [fstatus, setFstatus] = useState(false)
     const [edp, setEdp] = useState(false)
     const { userid } = useParams()
+    const [fstatus, setFstatus] = useState(false)
     const nav = useNavigate();
 
     axios.defaults.withCredentials = true
@@ -37,6 +39,7 @@ const Profile = () => {
                     setFollowersCount(profileUser?.Followers?.length)
                     setFollowers(profileUser?.Followers)
                     setBlogscount(profileUser?.Blogs?.length)
+                    setPrivateAccount(profileUser?.isPrivateAccount)
                 }
             })
             .catch(er => console.log(er))
@@ -44,7 +47,7 @@ const Profile = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [File, followingsCount, followersCount, edp, blogscount, profilePic])
+    }, [File, followingsCount, followersCount, edp, blogscount, profilePic, privateAccount, fstatus])
 
     // [File, followingsCount, followersCount, profilePic, edp, followers, blogscount]
 
@@ -162,6 +165,28 @@ const Profile = () => {
 
     const checkFollowingStatus = () => followers.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
 
+    const changeAccountPrivacy = () => {
+        const isPrivate = !privateAccount
+        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/privatepublic`, { isPrivate })
+            .then(res => {
+                setPrivateAccount(!privateAccount)
+                alert(res.data)
+            })
+            .catch(er => console.log(er))
+    }
+
+    const FollowUnfollow = async (usrid) => {
+
+        try {
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
+            setFstatus(!fstatus)
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     return (
         <div>
             <Navbar />
@@ -248,6 +273,25 @@ const Profile = () => {
                 </div>
 
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
+
+                {!isLoggedUser() &&
+                    checkFollowingStatus() ?
+                    <button onClick={() => FollowUnfollow(userid)} className={styles.deleteaccount}>Unfollow</button>
+                    :
+                    <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>
+                }
+
+                {isLoggedUser() ?
+                    privateAccount ?
+                        <button onClick={changeAccountPrivacy} className={styles.button}>Change Account to Public</button>
+                        :
+                        <button onClick={changeAccountPrivacy} className={styles.button}>Change Account to Private</button>
+                    :
+                    privateAccount ?
+                        <h3>This account is private</h3>
+                        :
+                        <></>
+                }
 
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
