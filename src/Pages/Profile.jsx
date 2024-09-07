@@ -15,6 +15,7 @@ const Profile = () => {
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
     const [privateAccount, setPrivateAccount] = useState(false)
+    const [privateText, setPrivateText] = useState('')
     const [followers, setFollowers] = useState([])
     const [blogscount, setBlogscount] = useState(0)
     // const [fstatus, setFstatus] = useState(false)
@@ -40,6 +41,8 @@ const Profile = () => {
                     setFollowers(profileUser?.Followers)
                     setBlogscount(profileUser?.Blogs?.length)
                     setPrivateAccount(profileUser?.isPrivateAccount)
+                    if (privateAccount) setPrivateText(`Private Account`)
+                    else setPrivateText(`Public Account`)
                 }
             })
             .catch(er => console.log(er))
@@ -191,7 +194,7 @@ const Profile = () => {
         <div>
             <Navbar />
             <div className={styles.container}>
-                <h2>{name}</h2>
+                <h2>{name} ({privateText})</h2>
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
                         {!File ?
@@ -253,7 +256,7 @@ const Profile = () => {
                 </form>
 
                 <div className={styles.followButtons}>
-                    {isLoggedUser() || checkFollowingStatus(userid) ?
+                    {isLoggedUser() || checkFollowingStatus(userid) || !privateAccount ?
                         <>
                             <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
                             <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
