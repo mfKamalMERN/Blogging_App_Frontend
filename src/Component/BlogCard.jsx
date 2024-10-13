@@ -53,15 +53,15 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
 
         if (eComment.trim() === "") {
             alert(`Kindly Enter a comment`)
-            setComments(blog.Comments)
+            setComments(blog.Comments);
+            setEcomment(blog.Comments.find((c) => c._id == commentId).Comment);
         }
         else {
             axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editcomment/${blog._id}/${commentId}`, { eComment })
                 .then(res => setComments(res.data.Comments))
                 .catch(er => console.log(er))
-
+            setEditingCommentId(null);
         }
-        setEditingCommentId(null);
     }
 
     const handleDeleteComment = (commentId, blogid) => {
@@ -131,7 +131,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
 
             axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadblogpicture/${blog._id}`, formdata)
                 .then(res => {
-                    if (res.data.Msg === "upload successful") {
+                    if (!res.data.Issue) {
                         setBlogPicUrl(res.data.url)
                         setEditBlogPic(false)
                         // setFile(null)
@@ -254,7 +254,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
                                                     onChange={(e) => {
                                                         setEcomment(e.target.value)
                                                         setComments(
-                                                            comments.map((c) => c._id === comment._id ? { ...c, Comment: e.target.value } : c))
+                                                            comments.map((c) => c._id === editingCommentId ? { ...c, Comment: e.target.value } : c))
                                                     }}
                                                     className={styles.textarea}
                                                 />
