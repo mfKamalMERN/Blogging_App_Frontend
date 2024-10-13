@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../Styles/NewBlog.module.css';
 import Navbar from '../Component/Navbar';
@@ -16,6 +16,26 @@ const NewBlog = () => {
 
 
     axios.defaults.withCredentials = true
+
+    const tokenChecker = async () => {
+
+        try {
+
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
+
+            if (!res?.data?.Token) {
+                localStorage.clear()
+                nav('/')
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        tokenChecker()
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
