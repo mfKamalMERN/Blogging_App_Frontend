@@ -25,21 +25,23 @@ const Home = () => {
                 }
                 else {
                     setBlogs(res?.data?.UserBlogs)
-
+                    console.log(res.data.Token);
+                    
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-                        .then(resp => setAu(resp?.data))
-                        .catch(er => console.log(er))
+                    .then(resp => setAu(resp?.data))
+                    .catch(er => console.log(er))
                 }
             }
-
+            
             else {
                 const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
-
+                
                 if (!res?.data?.Token) {
                     localStorage.clear()
                     nav('/')
                 }
                 else {
+                    console.log(res.data.Token);
                     setBlogs(res?.data?.AllBlogs)
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
@@ -55,13 +57,13 @@ const Home = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [blogs])
+    }, [])
 
     // [blogs]
 
     return (
         <div>
-            <Navbar isLogin={false} />
+            <Navbar isLogin={false} fromHome={true} />
 
             <div className={styles.container}>
                 <h1 style={{ color: "wheat" }}>Welcome to MUFAISA 🦁🦁!</h1>
