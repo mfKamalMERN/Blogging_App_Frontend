@@ -6,7 +6,7 @@ import axios from 'axios';
 
 const Profile = () => {
     const [name, setName] = useState('');
-    const [profileName, setProfileName] = useState('');
+    // const [profileName, setProfileName] = useState('');
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
     const [File, setFile] = useState(null);
@@ -22,6 +22,7 @@ const Profile = () => {
     const [edp, setEdp] = useState(false)
     const { userid } = useParams()
     const [fstatus, setFstatus] = useState(false)
+    const [token, setToken] = useState("")
     const nav = useNavigate();
 
     axios.defaults.withCredentials = true
@@ -30,10 +31,12 @@ const Profile = () => {
         axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuser/${userid}`)
             .then(res => {
                 if (!res?.data?.Token) {
+                    setToken("")
                     localStorage.clear()
                     nav('/')
                 }
                 else {
+                    setToken(res.data.Token)
                     const profileUser = res?.data?.User
                     setName(res.data.User.Name)
                     setFollowingsCount(profileUser?.Followings?.length)
@@ -49,14 +52,15 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        tokenChecker()
-    }, [File, followingsCount, followersCount, edp, blogscount, profilePic, privateAccount, fstatus])
+        tokenChecker();
+    }, [File, followingsCount, followersCount, edp, blogscount, profilePic, privateAccount, fstatus, token])
 
+    // [File, followingsCount, followersCount, edp, blogscount, profilePic, privateAccount, fstatus]
     // [File, followingsCount, followersCount, profilePic, edp, followers, blogscount]
 
     const handleNameChange = (e) => {
         setName(e.target.value);
-        setProfileName(e.target.value)
+        // setProfileName(e.target.value)
     }
 
     const handlePasswordChange = (e) => setPassword(e.target.value);
@@ -88,7 +92,7 @@ const Profile = () => {
             }
 
             else {
-                setProfileName(newName)
+                // setProfileName(newName)
                 localStorage.setItem('LoggedInUser', JSON.stringify(res?.data?.UpdatedUser))
                 alert(res.data.Msg)
                 tokenChecker()
@@ -192,7 +196,7 @@ const Profile = () => {
 
     return (
         <div>
-            <Navbar />
+            <Navbar/>
             <div className={styles.container}>
                 <h2>{name} ({privateText})</h2>
                 <form className={styles.form}>
