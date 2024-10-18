@@ -12,7 +12,7 @@ const Navbar = ({ toggleForm, isLogin }) => {
         if (window.confirm(`Log Out?`)) {
 
             axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
-                // .then(nav('/'))
+                .then(nav('/home'))
                 .catch((er) => console.log(er))
         }
     }
