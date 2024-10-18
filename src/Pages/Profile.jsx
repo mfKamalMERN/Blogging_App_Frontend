@@ -18,7 +18,6 @@ const Profile = () => {
     const [privateText, setPrivateText] = useState('')
     const [followers, setFollowers] = useState([])
     const [blogscount, setBlogscount] = useState(0)
-    // const [fstatus, setFstatus] = useState(false)
     const [edp, setEdp] = useState(false)
     const { userid } = useParams()
     const [fstatus, setFstatus] = useState(false)
