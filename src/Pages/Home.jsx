@@ -19,33 +19,33 @@ const Home = () => {
             if (userid) {
                 const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}`)
 
-                if (!res.data.Token) {
-                    localStorage.clear()
-                    nav('/')
-                }
-                else {
+                // if (!res.data.Token) {
+                //     localStorage.clear()
+                //     nav('/')
+                // }
+                // else {
                     setBlogs(res?.data?.UserBlogs)
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                         .then(resp => setAu(resp?.data))
                         .catch(er => console.log(er))
-                }
+                // }
             }
 
             else {
                 const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
-                if (!res?.data?.Token) {
-                    localStorage.clear()
-                    nav('/')
-                }
-                else {
+                // if (!res?.data?.Token) {
+                //     localStorage.clear()
+                //     nav('/')
+                // }
+                // else {
                     setBlogs(res?.data?.AllBlogs)
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                         .then(resp => setAu(resp.data))
                         .catch(er => console.log(er))
-                }
+                // }
             }
 
         } catch (error) {
