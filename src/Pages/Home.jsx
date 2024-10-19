@@ -24,25 +24,28 @@ const Home = () => {
                     nav('/')
                 }
                 else {
+                    // if (!blogs.length)
                     setBlogs(res?.data?.UserBlogs)
                     console.log(res.data.Token);
-                    
+
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-                    .then(resp => setAu(resp?.data))
-                    .catch(er => console.log(er))
+                        .then(resp => setAu(resp?.data))
+                        .catch(er => console.log(er))
                 }
             }
-            
+
             else {
                 const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
-                
+
                 if (!res?.data?.Token) {
                     localStorage.clear()
                     nav('/')
                 }
                 else {
                     console.log(res.data.Token);
+                    // if (!blogs.length) 
                     setBlogs(res?.data?.AllBlogs)
+                    // setBlogs(res?.data?.AllBlogs)
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                         .then(resp => setAu(resp.data))
@@ -57,7 +60,7 @@ const Home = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [blogs])
+    }, [])
 
     // [blogs]
 
@@ -75,7 +78,7 @@ const Home = () => {
 
                 <div className={styles.blogs}>
                     {blogs.length && blogs?.map((blog) => {
-                        if (blog) return <BlogCard key={blog._id} blog={blog} allUsers={au} />
+                        if (blog) return <BlogCard key={blog._id} blog={blog} allUsers={au} tokenChecker={tokenChecker} />
                     })}
 
                 </div>
