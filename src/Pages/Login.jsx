@@ -31,7 +31,8 @@ const Login = () => {
                 localStorage.clear()
             }
 
-            else nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
+            else nav('/home') 
+            // nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
 
         } catch (error) {
             console.log(error);
