@@ -24,7 +24,9 @@ const Home = () => {
                     nav('/')
                 }
                 else {
+                    // if (!blogs.length)
                     setBlogs(res?.data?.UserBlogs)
+                    console.log(res.data.Token);
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                         .then(resp => setAu(resp?.data))
@@ -40,7 +42,10 @@ const Home = () => {
                     nav('/')
                 }
                 else {
+                    console.log(res.data.Token);
+                    // if (!blogs.length) 
                     setBlogs(res?.data?.AllBlogs)
+                    // setBlogs(res?.data?.AllBlogs)
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                         .then(resp => setAu(resp.data))
@@ -55,13 +60,13 @@ const Home = () => {
 
     useEffect(() => {
         tokenChecker()
-    }, [blogs])
+    }, [])
 
     // [blogs]
 
     return (
         <div>
-            <Navbar isLogin={false} />
+            <Navbar isLogin={false} fromHome={true} />
 
             <div className={styles.container}>
                 <h1 style={{ color: "wheat" }}>Welcome to MUFAISA 🦁🦁!</h1>
@@ -73,7 +78,7 @@ const Home = () => {
 
                 <div className={styles.blogs}>
                     {blogs.length && blogs?.map((blog) => {
-                        if (blog) return <BlogCard key={blog._id} blog={blog} allUsers={au} />
+                        if (blog) return <BlogCard key={blog._id} blog={blog} allUsers={au} tokenChecker={tokenChecker} />
                     })}
 
                 </div>

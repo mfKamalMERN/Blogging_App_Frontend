@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json';
 
-const Navbar = ({ toggleForm, isLogin }) => {
+const Navbar = ({ toggleForm, isLogin, fromHome }) => {
 
     const nav = useNavigate()
 
@@ -12,7 +12,12 @@ const Navbar = ({ toggleForm, isLogin }) => {
         if (window.confirm(`Log Out?`)) {
 
             axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
-                .then(nav('/home'))
+                .then(res => {
+                    if (res.data.LoggedOut) {
+                        if (fromHome) nav('/')
+                        else nav('/home')
+                    }
+                })
                 .catch((er) => console.log(er))
         }
     }
@@ -20,7 +25,7 @@ const Navbar = ({ toggleForm, isLogin }) => {
     return (
         <nav className={styles.navbar}>
             <div className={styles.navContainer}>
-                <div onClick={() => nav('/home')} className={styles.brand}>{Localization.navbar.brand}</div>
+                <div onClick={() => nav('/')} className={styles.brand}>{Localization.navbar.brand}</div>
                 {/* {!isLogin && <div onClick={() => nav('/home')} className={styles.brand}><h1>🏠</h1></div>} */}
                 {
                     isLogin ?

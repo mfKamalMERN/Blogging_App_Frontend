@@ -3,7 +3,7 @@ import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const BlogCard = ({ blog, allUsers, isLikes }) => {
+const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const [likes, setLikes] = useState(blog?.Likes);
     const [blogPicUrl, setBlogPicUrl] = useState(blog?.Picture);
     const [comments, setComments] = useState(blog?.Comments);
@@ -42,7 +42,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
 
                 setComments(res?.data?.Comments)
                 setNewComment("")
-
+                tokenChecker()
             } catch (error) {
                 console.log(error);
             }
@@ -67,7 +67,10 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
     const handleDeleteComment = (commentId, blogid) => {
         if (window.confirm("Delete Comment")) {
             axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecomment/${blogid}/${commentId}`)
-                .then(res => setComments(res.data.Comments))
+                .then(res => {
+                    setComments(res.data.Comments)
+                    tokenChecker()
+                })
                 .catch(er => console.log(er))
         }
     };
@@ -85,6 +88,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
             else {
                 setBlogContent(res.data.NewBlog)
                 setTitle(res.data.NewTitle)
+                tokenChecker()
             }
 
 
@@ -98,6 +102,7 @@ const BlogCard = ({ blog, allUsers, isLikes }) => {
 
         if (window.confirm(`Delete Blog?`)) {
             axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteblog/${blog._id}`)
+                .then((res) => tokenChecker())
                 .catch(er => console.log(er))
         }
 
