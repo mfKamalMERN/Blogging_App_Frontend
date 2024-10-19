@@ -13,8 +13,10 @@ const Navbar = ({ toggleForm, isLogin, fromHome }) => {
 
             axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
                 .then(res => {
-                    if (fromHome) nav('/')
-                    else nav('/home')
+                    if (res.data.LoggedOut) {
+                        if (fromHome) nav('/')
+                        else nav('/home')
+                    }
                 })
                 .catch((er) => console.log(er))
         }
