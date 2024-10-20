@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import Localization from '../Resources/Localization.json'
 
 const Login = () => {
+    axios.defaults.withCredentials = true;
     const nav = useNavigate()
 
     const [formdata, setFormdata] = useState({
@@ -20,7 +21,6 @@ const Login = () => {
     const [isSignup, setIsSignup] = useState(false);
     const [showPwd, setShowPwd] = useState(false);
 
-    axios.defaults.withCredentials = true;
     const tokenChecker = async () => {
 
         try {
@@ -31,7 +31,7 @@ const Login = () => {
                 nav('/')
             }
 
-            else nav('/home') 
+            else nav('/home')
             // nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
 
         } catch (error) {
@@ -77,8 +77,11 @@ const Login = () => {
                 .then((res) => {
                     if (res.data.ValidationError) res.data.actError.map((ve) => alert(ve.msg))
 
-                    else if (res.data.LoggedIn && res.data.Token) {
+                    else if (res.data.Token) {
+                        console.log(res.data.Token);
+                        // cookies.set('token', res.data.Token);
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
+                        localStorage.setItem('token', res.data.Token);
                         nav(`/home`)
                     }
 

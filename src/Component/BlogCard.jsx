@@ -236,7 +236,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
 
                     <div className={styles.actions}>
                         {
-                            likes.includes(JSON.parse(localStorage.getItem('LoggedInUser'))._id) ?
+                            likes.includes(localStorage.getItem('LoggedInUser') ? JSON.parse(localStorage.getItem('LoggedInUser'))._id : null) ?
                                 <button style={{ backgroundColor: "darkgreen" }} onClick={handleLike} className={styles.button}>❤️ {likes.length}</button>
                                 :
                                 <button onClick={handleLike} className={styles.button}>🩶 {likes.length}</button>
