@@ -139,7 +139,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                     if (!res.data.Issue) {
                         setBlogPicUrl(res.data.url)
                         setEditBlogPic(false)
-                        // setFile(null)
+                        setFile(null)
                     }
                     else alert(res.data.Msg)
                 })
