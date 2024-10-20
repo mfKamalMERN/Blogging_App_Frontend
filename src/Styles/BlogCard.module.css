@@ -50,6 +50,17 @@
   margin-left: 5px;
 }
 
+.buttonRemove {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: white;
+  background-color: darkred;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
 .button:hover {
   background-color: #0056b3;
 }
@@ -149,6 +160,17 @@
     font-size: 14px;
     color: white;
     background-color: darkgreen;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+
+  .buttonRemove {
+    padding: 5px 10px;
+    font-size: 14px;
+    color: white;
+    background-color: darkred;
     border: none;
     border-radius: 5px;
     cursor: pointer;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -175,7 +175,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                         {isBlogOwner() && (
                             <div style={{ display: "flex" }}>
                                 <button onClick={() => setEditingBlog(true)} className={styles.button}>✏️</button>
-                                <button onClick={handleDeleteBlog} className={styles.button}>🪣</button>
+                                <button onClick={handleDeleteBlog} className={styles.buttonRemove}>🪣</button>
                             </div>
                         )}
                     </div>
@@ -210,7 +210,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                             <>
                                 <img src={blogPicUrl} alt="" width={500} />
                                 {(isBlogOwner() && !isLikes) && <button onClick={() => setEditBlogPic(true)} className={styles.button}>✏️</button>}
-                                {(isBlogOwner() && !isLikes) && <button onClick={removeBlogPic} className={styles.button}>🪣</button>}
+                                {(isBlogOwner() && !isLikes) && <button onClick={removeBlogPic} className={styles.buttonRemove}>🪣</button>}
                             </>
                             :
                             isBlogOwner() && <button onClick={() => setEditBlogPic(true)} className={styles.button}>➕ Pic</button>
@@ -306,7 +306,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                                                 </button>
                                                 <button
                                                     onClick={() => handleDeleteComment(comment._id, blog?._id)}
-                                                    className={styles.button}
+                                                    className={styles.buttonRemove}
                                                 >
                                                     🪣
                                                 </button>
@@ -314,7 +314,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                                         )}
                                     </div>)
                                     :
-                                    isBlogOwner() && <button onClick={() => handleDeleteComment(comment._id, blog?._id)} className={styles.button}>
+                                    isBlogOwner() && <button onClick={() => handleDeleteComment(comment._id, blog?._id)} className={styles.buttonRemove}>
                                         🪣
                                     </button>
                                 }
