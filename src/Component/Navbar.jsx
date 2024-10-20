@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json';
 
-const Navbar = ({ toggleForm, isLogin, fromHome }) => {
+const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
 
     const nav = useNavigate()
 
@@ -22,10 +22,15 @@ const Navbar = ({ toggleForm, isLogin, fromHome }) => {
         }
     }
 
+    const homeNavigator = () => {
+        if (userid) nav('/')
+        else nav('/home')
+    }
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.navContainer}>
-                <div onClick={() => nav('/')} className={styles.brand}>{Localization.navbar.brand}</div>
+                <div onClick={homeNavigator} className={styles.brand}>{Localization.navbar.brand}</div>
                 {/* {!isLogin && <div onClick={() => nav('/home')} className={styles.brand}><h1>🏠</h1></div>} */}
                 {
                     isLogin ?

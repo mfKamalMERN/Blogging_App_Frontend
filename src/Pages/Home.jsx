@@ -66,7 +66,7 @@ const Home = () => {
 
     return (
         <div>
-            <Navbar isLogin={false} fromHome={true} />
+            <Navbar isLogin={false} fromHome={true} userid={userid} />
 
             <div className={styles.container}>
                 <h1 style={{ color: "wheat" }}>Welcome to MUFAISA 🦁🦁!</h1>
