@@ -147,6 +147,18 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
         }
     }
 
+    const removeBlogPic = async () => {
+        try {
+            if (window.confirm(`Removing Pic`)) {
+                const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/removeblogpic/${blog._id}`)
+                setBlogPicUrl(res.data.URL);
+                setFile(null);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className={styles.blogCard}>
             <div className={styles.header}>
@@ -198,6 +210,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                             <>
                                 <img src={blogPicUrl} alt="" width={500} />
                                 {(isBlogOwner() && !isLikes) && <button onClick={() => setEditBlogPic(true)} className={styles.button}>✏️</button>}
+                                {(isBlogOwner() && !isLikes) && <button onClick={removeBlogPic} className={styles.button}>🪣</button>}
                             </>
                             :
                             isBlogOwner() && <button onClick={() => setEditBlogPic(true)} className={styles.button}>➕ Pic</button>

@@ -20,7 +20,7 @@ const Login = () => {
     const [isSignup, setIsSignup] = useState(false);
     const [showPwd, setShowPwd] = useState(false);
 
-    axios.defaults.withCredentials = true
+    axios.defaults.withCredentials = true;
     const tokenChecker = async () => {
 
         try {
@@ -77,7 +77,7 @@ const Login = () => {
                 .then((res) => {
                     if (res.data.ValidationError) res.data.actError.map((ve) => alert(ve.msg))
 
-                    else if (res.data.LoggedIn) {
+                    else if (res.data.LoggedIn && res.data.Token) {
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
                         nav(`/home`)
                     }
