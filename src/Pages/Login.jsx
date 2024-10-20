@@ -27,8 +27,8 @@ const Login = () => {
             const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
             if (!res.data.Token) {
-                nav('/')
                 localStorage.clear()
+                nav('/')
             }
 
             else nav('/home') 
