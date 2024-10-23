@@ -134,7 +134,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
             const formdata = new FormData()
             formdata.append('file', file)
 
-            axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadblogpicture/${blog._id}/${uploadblogpicture}`, formdata)
+            axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadblogpicture/${blog._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, formdata)
                 .then(res => {
                     if (!res.data.Issue) {
                         setBlogPicUrl(res.data.url)
