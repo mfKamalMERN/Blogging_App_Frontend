@@ -95,8 +95,9 @@ const Followers = () => {
                                 {follower.DP ?
                                     <img src={follower?.DP} alt={follower.Name} className={styles.avatar} />
                                     :
-                                    <img src='https://via.placeholder.com/100' alt='' className={styles.avatar} />
+                                    <img src='https://preview.redd.it/simba-what-do-you-think-about-this-character-v0-7ffmfdfy56pb1.jpg?width=640&crop=smart&auto=webp&s=8ef7bacd9c3aaa19bc5192bf7ad89dcdcd1069b3' alt='' className={styles.avatar} />
                                 }
+                                {/* https://t4.ftcdn.net/jpg/01/16/61/93/360_F_116619399_YA611bKNOW35ffK0OiyuaOcjAgXgKBui.jpg */}
                                 <div>{follower?.Name}</div>
                             </div>
                             {
