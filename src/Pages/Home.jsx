@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar';
 import BlogCard from '../Component/BlogCard';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const Home = () => {
     const nav = useNavigate()
@@ -14,19 +15,21 @@ const Home = () => {
     axios.defaults.withCredentials = true
 
     const tokenChecker = async () => {
+        const cookies = new Cookies()
 
         try {
             if (userid) {
-                const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}`)
-
-                if (!res.data.Token) {
+                if (!cookies.get('token') || !localStorage.getItem('token')) {
                     localStorage.clear()
+                    cookies.remove('token')
                     nav('/')
                 }
+
                 else {
+                    const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)
                     // if (!blogs.length)
                     setBlogs(res?.data?.UserBlogs)
-                    console.log(res.data.Token);
+                    // console.log(res.data.Token);
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
                         .then(resp => setAu(resp?.data))
@@ -35,14 +38,14 @@ const Home = () => {
             }
 
             else {
-                const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
-
-                if (!res?.data?.Token) {
+                if (!cookies.get('token') || !localStorage.getItem('token')) {
                     localStorage.clear()
+                    cookies.remove('token')
                     nav('/')
                 }
                 else {
-                    console.log(res.data.Token);
+                    const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
+                    console.log(cookies.get('token'));
                     // if (!blogs.length) 
                     setBlogs(res?.data?.AllBlogs)
                     // setBlogs(res?.data?.AllBlogs)

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from '../Styles/Profile.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const Profile = () => {
     const [name, setName] = useState('');
@@ -29,13 +30,15 @@ const Profile = () => {
 
         axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuser/${userid}`)
             .then(res => {
-                if (!res?.data?.Token) {
+                const cookies = new Cookies()
+                if (!cookies.get('token')) {
                     setToken("")
                     localStorage.clear()
+                    cookies.remove('token')
                     nav('/')
                 }
                 else {
-                    setToken(res.data.Token)
+                    setToken(cookies.get('token'))
                     const profileUser = res?.data?.User
                     setName(res.data.User.Name)
                     setFollowingsCount(profileUser?.Followings?.length)
@@ -83,7 +86,7 @@ const Profile = () => {
         const newName = name
 
         try {
-            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatename`, { newName })
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatename/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newName })
 
             if (res.data.ValidationError) {
                 res.data.ActError.map((er) => alert(er.msg))
@@ -112,7 +115,7 @@ const Profile = () => {
 
         else {
             const newpassword = password
-            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatepassword`, { newpassword })
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatepassword/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newpassword })
                 .then(res => {
                     if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
 
@@ -133,7 +136,7 @@ const Profile = () => {
             formdata.append('file', File)
 
             try {
-                await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic`, formdata)
+                await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, formdata)
                 localStorage.setItem('edp', JSON.stringify(false))
                 setEdp(!edp)
                 // alert(res.data)
@@ -159,7 +162,7 @@ const Profile = () => {
         if (window.confirm(`Deleting your Account`)) {
 
             try {
-                const res = await axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteaccount`)
+                const res = await axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteaccount/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
                 alert(res?.data)
                 nav('/')
             } catch (error) {
@@ -173,7 +176,7 @@ const Profile = () => {
 
     const changeAccountPrivacy = () => {
         const isPrivate = !privateAccount
-        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/privatepublic`, { isPrivate })
+        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/privatepublic/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { isPrivate })
             .then(res => {
                 setPrivateAccount(!privateAccount)
                 alert(res.data)
@@ -184,7 +187,7 @@ const Profile = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
             setFstatus(!fstatus)
 
         } catch (error) {
@@ -195,7 +198,7 @@ const Profile = () => {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <div className={styles.container}>
                 <h2>{name} ({privateText})</h2>
                 <form className={styles.form}>

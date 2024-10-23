@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar';
 import styles from '../Styles/LikesPage.module.css';
 import axios from 'axios';
 import BlogCard from '../Component/BlogCard';
+import Cookies from 'universal-cookie';
 
 const LikesPage = () => {
     const nav = useNavigate()
@@ -16,13 +17,22 @@ const LikesPage = () => {
     axios.defaults.withCredentials = true
 
     const tokenChecker = async () => {
-        axios.get(`https://blogging-app-backend-dpk0.onrender.com/likesusers/${blogid}`)
-            .then((res) => {
-                if (!res.data.Token) {
-                    localStorage.clear()
-                    nav('/')
-                }
-                else {
+        const cookies = new Cookies()
+        if (!cookies.get('token')) {
+            localStorage.clear()
+            cookies.remove('token')
+            nav('/')
+
+        }
+        else {
+
+            axios.get(`https://blogging-app-backend-dpk0.onrender.com/likesusers/${blogid}`)
+                .then((res) => {
+                    // if (!res.data.Token) {
+                    //     localStorage.clear()
+                    //     nav('/')
+                    // }
+                    // else {
                     setLikesUsers(res.data.LikedUsers)
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getblog/${blogid}`)
@@ -37,9 +47,10 @@ const LikesPage = () => {
 
 
 
-                }
-            })
-            .catch((er) => console.log(er))
+                    // }
+                })
+                .catch((er) => console.log(er))
+        }
     }
 
     useEffect(() => {
@@ -55,7 +66,7 @@ const LikesPage = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
 
             setFstatus(!fstatus)
 

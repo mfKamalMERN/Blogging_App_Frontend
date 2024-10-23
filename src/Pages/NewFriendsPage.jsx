@@ -3,6 +3,7 @@ import Navbar from '../Component/Navbar';
 import styles from '../Styles/NewFriendsPage.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const NewFriendsPage = () => {
     const [friends, setFriends] = useState([]);
@@ -13,11 +14,13 @@ const NewFriendsPage = () => {
     axios.defaults.withCredentials = true
 
     const tokenChecker = async () => {
+        const cookies = new Cookies();
         try {
             const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/findnewpeople`)
 
-            if (!res?.data?.Token) {
+            if (!cookies.get('token')) {
                 localStorage.clear()
+                cookies.remove('token')
                 nav('/')
             }
             else {
@@ -38,7 +41,7 @@ const NewFriendsPage = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
             setFstatus(!fstatus)
 
         } catch (error) {

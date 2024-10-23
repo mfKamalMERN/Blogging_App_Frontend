@@ -3,6 +3,7 @@ import styles from '../Styles/Navbar.module.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json';
+import Cookies from 'universal-cookie';
 
 const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
 
@@ -10,15 +11,18 @@ const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
 
     const SignOut = () => {
         if (window.confirm(`Log Out?`)) {
-
-            axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
-                .then(res => {
-                    if (res.data.LoggedOut) {
-                        if (fromHome) nav('/')
-                        else nav('/home')
-                    }
-                })
-                .catch((er) => console.log(er))
+            const cookies = new Cookies()
+            cookies.remove('token')
+            localStorage.clear()
+            nav('/')
+            // axios.get(`https://blogging-app-backend-dpk0.onrender.com/logout`)
+            //     .then(res => {
+            //         if (res.data.LoggedOut) {
+            //             if (fromHome) nav('/')
+            //             else nav('/home')
+            //         }
+            //     })
+            //     .catch((er) => console.log(er))
         }
     }
 

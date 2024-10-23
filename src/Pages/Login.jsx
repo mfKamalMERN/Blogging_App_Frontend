@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Localization from '../Resources/Localization.json'
+import Cookies from 'universal-cookie';
 
 const Login = () => {
     axios.defaults.withCredentials = true;
@@ -24,10 +25,11 @@ const Login = () => {
     const tokenChecker = async () => {
 
         try {
-            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
-
-            if (!res.data.Token) {
+            // const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
+            const cookies = new Cookies()
+            if (!cookies.get('token') || !localStorage.getItem('token')) {
                 localStorage.clear()
+                cookies.remove('token')
                 nav('/')
             }
 
@@ -79,7 +81,8 @@ const Login = () => {
 
                     else if (res.data.Token) {
                         console.log(res.data.Token);
-                        // cookies.set('token', res.data.Token);
+                        var cookies = new Cookies()
+                        cookies.set('token', res.data.Token);
                         localStorage.setItem('LoggedInUser', JSON.stringify(res.data.LoggedUser))
                         localStorage.setItem('token', res.data.Token);
                         nav(`/home`)
