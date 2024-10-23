@@ -245,7 +245,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
 
                     <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>👁️ Likes</button>
                     {blog.Comments.length ?
-                        <button className={styles.button} onClick={() => setShowComments(!showComments)}>📢{blog.Comments.length}</button>
+                        <button className={styles.button} onClick={() => setShowComments(!showComments)}>📢 {blog.Comments.length}</button>
                         :
                         <button disabled={true}>📢 {blog.Comments.length}</button>
                     }
