@@ -69,8 +69,8 @@ const NewFriendsPage = () => {
                                 {friend.DP ?
                                     <img src={friend?.DP} alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />
                                     :
-                                    <img src="https://via.placeholder.com/100" alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />}
-
+                                    <img src="https://t4.ftcdn.net/jpg/01/16/61/93/360_F_116619399_YA611bKNOW35ffK0OiyuaOcjAgXgKBui.jpg" alt="" className={styles.avatar} onClick={() => nav(`/profile/${friend?._id}`)} />}
+                                {/* https://via.placeholder.com/100 */}
                                 <div className={styles.name} onClick={() => nav(`/profile/${friend._id}`)}>{friend?.Name}</div>
 
                                 <button
