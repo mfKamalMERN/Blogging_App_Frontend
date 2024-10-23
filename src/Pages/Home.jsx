@@ -76,7 +76,7 @@ const Home = () => {
                 <p>Share your thoughts and read amazing content from others.</p>
 
                 <div className={styles.Button} style={{ marginBottom: "50px" }}>
-                    <button onClick={() => nav('/newblog')} style={{ backgroundColor: "black", color: "wheat", width: "auto", fontSize: "large", borderRadius: "20px", padding: "10px" }} ><h2>💭💭➕</h2></button>
+                    <button onClick={() => nav('/newblog')} style={{ backgroundColor: "black", color: "wheat", width: "auto", fontSize: "large", borderRadius: "20px", padding: "10px" }} ><h2>➕ Thoughts 💡🚵‍♀️⚽</h2></button>
                 </div>
 
                 <div className={styles.blogs}>
