@@ -94,7 +94,7 @@ const Followings = () => {
                                     {following.DP ?
                                         <img src={following.DP} alt='' className={styles.avatar} />
                                         :
-                                        <img src='https://via.placeholder.com/100' alt='' className={styles.avatar} />
+                                        <img src='https://preview.redd.it/simba-what-do-you-think-about-this-character-v0-7ffmfdfy56pb1.jpg?width=640&crop=smart&auto=webp&s=8ef7bacd9c3aaa19bc5192bf7ad89dcdcd1069b3' alt='' className={styles.avatar} />
                                     }
                                     <div>{following.Name}</div>
                                 </div>
