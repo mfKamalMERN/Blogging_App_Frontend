@@ -52,7 +52,7 @@ const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
                                 Log Out
                             </button>
                             <button onClick={() => nav('/newfriends')} className={styles.navButton}>
-                                <h2>🧑‍🤝‍🧑</h2>
+                                <h2>🔍</h2>
                             </button>
                             <button onClick={() => nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
                                 {JSON.parse(localStorage.getItem('LoggedInUser'))?.Name}
