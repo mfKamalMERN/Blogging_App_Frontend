@@ -11,7 +11,7 @@ const Profile = () => {
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
     const [File, setFile] = useState(null);
-    const [profilePic, setProfilePic] = useState('https://via.placeholder.com/100');
+    const [profilePic, setProfilePic] = useState('https://t4.ftcdn.net/jpg/01/16/61/93/360_F_116619399_YA611bKNOW35ffK0OiyuaOcjAgXgKBui.jpg');
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
