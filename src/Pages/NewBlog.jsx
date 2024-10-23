@@ -4,6 +4,7 @@ import styles from '../Styles/NewBlog.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json'
+import Cookies from 'universal-cookie';
 
 const NewBlog = () => {
     const [title, setTitle] = useState('');
@@ -18,13 +19,14 @@ const NewBlog = () => {
     axios.defaults.withCredentials = true
 
     const tokenChecker = async () => {
-
+        const cookies = new Cookies();
         try {
 
-            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
+            // const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallblogs`)
 
-            if (!res?.data?.Token) {
+            if (!cookies.get('token')) {
                 localStorage.clear()
+                cookies.remove('token')
                 nav('/')
             }
 
@@ -46,7 +48,7 @@ const NewBlog = () => {
         formdata.append('blogstring', content)
         formdata.append('title', title)
 
-        axios.put(`https://blogging-app-backend-dpk0.onrender.com/createblog`, formdata)
+        axios.put(`https://blogging-app-backend-dpk0.onrender.com/createblog/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, formdata)
             .then((res) => {
                 if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
 

@@ -3,6 +3,7 @@ import styles from '../Styles/Followers.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 const Followers = () => {
 
@@ -15,18 +16,26 @@ const Followers = () => {
 
     axios.defaults.withCredentials = true
     const tokenChecker = async () => {
+        const cookies = new Cookies();
+        if (!cookies.get('token')) {
+            localStorage.clear()
+            cookies.remove('token')
+            nav('/')
+        }
+        else {
 
-        try {
-            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getfollowers/${userid}`)
+            try {
+                const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getfollowers/${userid}`)
 
-            if (!res?.data?.Token) {
-                localStorage.clear()
-                nav('/')
+                // if (!res?.data?.Token) {
+                //     localStorage.clear()
+                //     nav('/')
+                // }
+                setFollowers(res?.data?.Followwers)
+
+            } catch (error) {
+                console.log(error);
             }
-            else setFollowers(res?.data?.Followwers)
-
-        } catch (error) {
-            console.log(error);
         }
     }
 
@@ -48,7 +57,7 @@ const Followers = () => {
     const FollowUnfollow = async (usrid) => {
 
         try {
-            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}`)
+            await axios.put(`https://blogging-app-backend-dpk0.onrender.com/followunfollow/${usrid}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
             setFstatus(!fstatus)
 
         } catch (error) {

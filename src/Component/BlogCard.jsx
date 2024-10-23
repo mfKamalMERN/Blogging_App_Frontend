@@ -23,7 +23,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
 
     const handleLike = async () => {
         try {
-            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog?._id}`)
+            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog?._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
 
             setLikes(res.data.Likes)
 
@@ -38,7 +38,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
         if (newComment.trim() === "") alert("Please type your comment")
         else {
             try {
-                const res = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}`, { newComment })
+                const res = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newComment })
 
                 setComments(res?.data?.Comments)
                 setNewComment("")
@@ -134,7 +134,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
             const formdata = new FormData()
             formdata.append('file', file)
 
-            axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadblogpicture/${blog._id}`, formdata)
+            axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadblogpicture/${blog._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, formdata)
                 .then(res => {
                     if (!res.data.Issue) {
                         setBlogPicUrl(res.data.url)
