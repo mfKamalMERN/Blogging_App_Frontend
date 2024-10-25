@@ -198,12 +198,19 @@ const Profile = () => {
 
     const removeDP = (loggedUserID) => {
         const imgurl = "https://preview.redd.it/simba-what-do-you-think-about-this-character-v0-7ffmfdfy56pb1.jpg?width=640&crop=smart&auto=webp&s=8ef7bacd9c3aaa19bc5192bf7ad89dcdcd1069b3"
-        
+
         if (window.confirm(`Removing Profile Picture...`)) {
             axios.patch(`https://blogging-app-backend-dpk0.onrender.com/removedp/${loggedUserID}`, { imgurl })
                 .then(setProfilePic(imgurl))
                 .catch(er => console.log(er))
         }
+    }
+
+    const profilePicChecker = () => {
+        const defaultdpurl = 'https://preview.redd.it/simba-what-do-you-think-about-this-character-v0-7ffmfdfy56pb1.jpg?width=640&crop=smart&auto=webp&s=8ef7bacd9c3aaa19bc5192bf7ad89dcdcd1069b3'
+
+        if (profilePic !== defaultdpurl) return true
+        else return false
     }
 
     return (
@@ -225,7 +232,7 @@ const Profile = () => {
                                 {!JSON.parse(localStorage.getItem('edp')) &&
                                     <>
                                         <button onClick={() => localStorage.setItem('edp', JSON.stringify(true))} className={styles.button}>✏️ Profile Pic</button>
-                                        <button onClick={() => removeDP(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)} className={styles.button}>Remove Profile Pic</button>
+                                        {profilePicChecker() && <button onClick={() => removeDP(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)} className={styles.button}>Remove Profile Pic</button>}
                                     </>}
 
                                 {JSON.parse(localStorage.getItem('edp')) &&
