@@ -221,7 +221,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                             {isBlogOwner() &&
                                 <>
                                     <button onClick={handlePicUpdate} className={styles.button}>Update Pic</button>
-                                    <button onClick={() => { setEditBlogPic(false), setFile(null) }} className={styles.button}>Cancel</button>
+                                    <button onClick={() => { setEditBlogPic(false); setFile(null) }} className={styles.button}>Cancel</button>
                                 </>
                             }
                         </>
