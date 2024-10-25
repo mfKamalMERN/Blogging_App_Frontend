@@ -22,32 +22,45 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
 
 
     const handleLike = async () => {
-        try {
-            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog?._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
+        const userId = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
+        const blogId = blog?._id;
 
-            setLikes(res.data.Likes)
-
-        } catch (error) {
-            console.log(error);
+        if (!userId || !blogId) {
+            console.error("User  ID or Blog ID is missing");
+            return;
         }
 
-    }
+        try {
+            const response = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blogId}/${userId}`);
+            if (response.data && response.data.Likes !== undefined) {
+                setLikes(response.data.Likes);
+            } else {
+                console.error("Unexpected response structure:", response.data);
+            }
+        } catch (error) {
+            console.error("Error liking/unliking the blog:", error);
+        }
+    };
 
     const handleAddComment = async () => {
+        const trimmedComment = newComment.trim();
 
-        if (newComment.trim() === "") alert("Please type your comment")
-        else {
-            try {
-                const res = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newComment })
-
-                setComments(res?.data?.Comments)
-                setNewComment("")
-                tokenChecker()
-            } catch (error) {
-                console.log(error);
-            }
+        if (!trimmedComment) {
+            alert("Please type your comment");
+            return;
         }
-    }
+
+        try {
+            const userId = JSON.parse(localStorage.getItem('LoggedInUser'))._id;
+            const response = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}/${userId}`, { newComment: trimmedComment });
+
+            setComments(response?.data?.Comments || []);
+            setNewComment("");
+            tokenChecker();
+        } catch (error) {
+            console.error("Error adding comment:", error);
+        }
+    };
 
     const handleEditComment = (commentId) => {
 
