@@ -18,36 +18,51 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const [title, setTitle] = useState(blog.Title)
     const [ownername, setOwnername] = useState("")
     const [file, setFile] = useState(null)
+    const [isReadMore, setIsReadMore] = useState(false);
+    const MAX_LENGTH = 200; // Set your desired max length here
     const nav = useNavigate()
 
 
     const handleLike = async () => {
-        try {
-            const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blog?._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
+        const userId = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
+        const blogId = blog?._id;
 
-            setLikes(res.data.Likes)
-
-        } catch (error) {
-            console.log(error);
+        if (!userId || !blogId) {
+            console.error("User  ID or Blog ID is missing");
+            return;
         }
 
-    }
+        try {
+            const response = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/likeunlikeblog/${blogId}/${userId}`);
+            if (response.data && response.data.Likes !== undefined) {
+                setLikes(response.data.Likes);
+            } else {
+                console.error("Unexpected response structure:", response.data);
+            }
+        } catch (error) {
+            console.error("Error liking/unliking the blog:", error);
+        }
+    };
 
     const handleAddComment = async () => {
+        const trimmedComment = newComment.trim();
 
-        if (newComment.trim() === "") alert("Please type your comment")
-        else {
-            try {
-                const res = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newComment })
-
-                setComments(res?.data?.Comments)
-                setNewComment("")
-                tokenChecker()
-            } catch (error) {
-                console.log(error);
-            }
+        if (!trimmedComment) {
+            alert("Please type your comment");
+            return;
         }
-    }
+
+        try {
+            const userId = JSON.parse(localStorage.getItem('LoggedInUser'))._id;
+            const response = await axios.post(`https://blogging-app-backend-dpk0.onrender.com/addcomment/${blog._id}/${userId}`, { newComment: trimmedComment });
+
+            setComments(response?.data?.Comments || []);
+            setNewComment("");
+            tokenChecker();
+        } catch (error) {
+            console.error("Error adding comment:", error);
+        }
+    };
 
     const handleEditComment = (commentId) => {
 
@@ -226,7 +241,14 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                             }
                         </>
                     }
-                    <p className={styles.blogContent}> {blog?.Blog}</p>
+                    <p className={styles.blogContent}>
+                        {isReadMore ? blog?.Blog : `${blog?.Blog.substring(0, MAX_LENGTH)}...`}
+                        {blog?.Blog.length > MAX_LENGTH && (
+                            <button onClick={() => setIsReadMore(!isReadMore)} className={styles.button}>
+                                {isReadMore ? "Read Less" : "Read More"}
+                            </button>
+                        )}
+                    </p>
                 </div>
             )
             }
