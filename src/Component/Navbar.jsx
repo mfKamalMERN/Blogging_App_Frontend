@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../Styles/Navbar.module.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import Localization from '../Resources/Localization.json';
 import Cookies from 'universal-cookie';
 
