@@ -11,7 +11,7 @@ const Profile = () => {
     const [password, setPassword] = useState('');
     const [confirmpassword, setConfirmPassword] = useState('');
     const [File, setFile] = useState(null);
-    const [profilePic, setProfilePic] = useState('https://t4.ftcdn.net/jpg/01/16/61/93/360_F_116619399_YA611bKNOW35ffK0OiyuaOcjAgXgKBui.jpg');
+    const [profilePic, setProfilePic] = useState('https://preview.redd.it/simba-what-do-you-think-about-this-character-v0-7ffmfdfy56pb1.jpg?width=640&crop=smart&auto=webp&s=8ef7bacd9c3aaa19bc5192bf7ad89dcdcd1069b3');
     const [followingsCount, setFollowingsCount] = useState(0)
     const [followersCount, setFollowersCount] = useState(0)
     const [pwdsetter, setPwdSetter] = useState(false)
@@ -196,6 +196,16 @@ const Profile = () => {
 
     }
 
+    const removeDP = (loggedUserID) => {
+        const imgurl = "https://preview.redd.it/simba-what-do-you-think-about-this-character-v0-7ffmfdfy56pb1.jpg?width=640&crop=smart&auto=webp&s=8ef7bacd9c3aaa19bc5192bf7ad89dcdcd1069b3"
+        
+        if (window.confirm(`Removing Profile Picture...`)) {
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/removedp/${loggedUserID}`, { imgurl })
+                .then(setProfilePic(imgurl))
+                .catch(er => console.log(er))
+        }
+    }
+
     return (
         <div>
             <Navbar />
@@ -212,7 +222,11 @@ const Profile = () => {
                         {
                             isLoggedUser() &&
                             <>
-                                {!JSON.parse(localStorage.getItem('edp')) && <button onClick={() => localStorage.setItem('edp', JSON.stringify(true))} className={styles.button}>✏️ Profile Pic</button>}
+                                {!JSON.parse(localStorage.getItem('edp')) &&
+                                    <>
+                                        <button onClick={() => localStorage.setItem('edp', JSON.stringify(true))} className={styles.button}>✏️ Profile Pic</button>
+                                        <button onClick={() => removeDP(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)} className={styles.button}>Remove Profile Pic</button>
+                                    </>}
 
                                 {JSON.parse(localStorage.getItem('edp')) &&
                                     <>
