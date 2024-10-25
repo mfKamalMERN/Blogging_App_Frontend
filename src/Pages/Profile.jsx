@@ -232,7 +232,7 @@ const Profile = () => {
                                 {!JSON.parse(localStorage.getItem('edp')) &&
                                     <>
                                         <button onClick={() => localStorage.setItem('edp', JSON.stringify(true))} className={styles.button}>✏️ Profile Pic</button>
-                                        {profilePicChecker() && <button onClick={() => removeDP(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)} className={styles.button}>Remove Profile Pic</button>}
+                                        {profilePicChecker() && <button onClick={() => removeDP(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)} className={styles.deleteaccount}>Remove Profile Pic</button>}
                                     </>}
 
                                 {JSON.parse(localStorage.getItem('edp')) &&
@@ -273,7 +273,7 @@ const Profile = () => {
 
                                 <button onClick={handlePasswordUpdate} className={styles.button}>Update</button>
 
-                                <button onClick={() => setPwdSetter(false)} className={styles.button}>Cancel</button>
+                                <button onClick={() => setPwdSetter(false)} className={styles.deleteaccount}>Cancel</button>
                             </>
                             :
                             isLoggedUser() &&
