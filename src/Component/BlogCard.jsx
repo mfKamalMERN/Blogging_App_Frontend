@@ -18,6 +18,8 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const [title, setTitle] = useState(blog.Title)
     const [ownername, setOwnername] = useState("")
     const [file, setFile] = useState(null)
+    const [isReadMore, setIsReadMore] = useState(false);
+    const MAX_LENGTH = 200; // Set your desired max length here
     const nav = useNavigate()
 
 
@@ -239,7 +241,14 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                             }
                         </>
                     }
-                    <p className={styles.blogContent}> {blog?.Blog}</p>
+                    <p className={styles.blogContent}>
+                        {isReadMore ? blog?.Blog : `${blog?.Blog.substring(0, MAX_LENGTH)}...`}
+                        {blog?.Blog.length > MAX_LENGTH && (
+                            <button onClick={() => setIsReadMore(!isReadMore)} className={styles.button}>
+                                {isReadMore ? "Read Less" : "Read More"}
+                            </button>
+                        )}
+                    </p>
                 </div>
             )
             }
