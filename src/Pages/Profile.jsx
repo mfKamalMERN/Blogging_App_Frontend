@@ -267,6 +267,7 @@ const Profile = () => {
 
                 if (res.data.Contact) {
                     setContact(res.data.Contact);
+                    setEditContact(false);
                     alert(res.data.message);
                     return;
                 }
