@@ -4,6 +4,7 @@ import styles from '../Styles/Profile.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { changeAccountPrivacy, checkFollowingStatus, enableContactView } from '../Helpers/Functions';
 
 const Profile = () => {
     const [name, setName] = useState('');
@@ -23,6 +24,10 @@ const Profile = () => {
     const { userid } = useParams()
     const [fstatus, setFstatus] = useState(false)
     const [token, setToken] = useState("")
+    const [showContact, setShowcontact] = useState(false)
+    const [contact, setContact] = useState('')
+    const [contactvalue, setContactValue] = useState('')
+    const [addContactEnabled, setAddContactEnabled] = useState(false)
     const nav = useNavigate();
 
     axios.defaults.withCredentials = true
@@ -40,12 +45,19 @@ const Profile = () => {
                 else {
                     setToken(cookies.get('token'))
                     const profileUser = res?.data?.User
-                    setName(res.data.User.Name)
+                    if (!profileUser) {
+                        console.log(`User not found`);
+                        return;
+                    }
+
+                    setName(profileUser?.Name)
                     setFollowingsCount(profileUser?.Followings?.length)
                     setFollowersCount(profileUser?.Followers?.length)
                     setFollowers(profileUser?.Followers)
                     setBlogscount(profileUser?.Blogs?.length)
                     setPrivateAccount(profileUser?.isPrivateAccount)
+                    setContact(profileUser?.Contact || '')
+                    setShowcontact(profileUser?.showContact || false)
                     if (privateAccount) setPrivateText(`Private Account`)
                     else setPrivateText(`Public Account`)
                 }
@@ -60,10 +72,7 @@ const Profile = () => {
     // [File, followingsCount, followersCount, edp, blogscount, profilePic, privateAccount, fstatus]
     // [File, followingsCount, followersCount, profilePic, edp, followers, blogscount]
 
-    const handleNameChange = (e) => {
-        setName(e.target.value);
-        // setProfileName(e.target.value)
-    }
+    const handleNameChange = (e) => setName(e.target.value);
 
     const handlePasswordChange = (e) => setPassword(e.target.value);
 
@@ -172,18 +181,6 @@ const Profile = () => {
         }
     }
 
-    const checkFollowingStatus = () => followers.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
-
-    const changeAccountPrivacy = () => {
-        const isPrivate = !privateAccount
-        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/privatepublic/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { isPrivate })
-            .then(res => {
-                setPrivateAccount(!privateAccount)
-                alert(res.data)
-            })
-            .catch(er => console.log(er))
-    }
-
     const FollowUnfollow = async (usrid) => {
 
         try {
@@ -213,21 +210,140 @@ const Profile = () => {
         else return false
     }
 
+
+    const addContact = (isDeleteContact) => {
+        const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
+        const NrFormatContactValue = (!isDeleteContact && contactvalue) ? Number(contactvalue) : contact;
+
+        if (!loggeduserid) {
+            console.log(`Invalid User id`);
+            alert(`Invalid User id`);
+            setAddContactEnabled(false);
+            setContactValue('');
+            return;
+        }
+
+        if (isDeleteContact) {
+            if (window.confirm(`Deleting contact...`)) {
+                axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatecontact`, { loggeduserid, NrFormatContactValue, isDeleteContact })
+                .then(res => {
+                    if (!res.data) {
+                        console.log(`Invalid response from server while updating contact`);
+                        // setContactValue('');
+                        return;
+                    }
+    
+                    if (res.data.Contact) {
+                        setContact(res.data.Contact);
+                        alert(res.data.message);
+                        return;
+                    }
+    
+                    if (res.data.ContactDeleted) {
+                        setContact('');
+                        setContactValue('')
+                        alert(res.data.message);
+                        setAddContactEnabled(false);
+                        return;
+                    }
+    
+                    alert(res.data.message);
+                    setAddContactEnabled(false);
+                    setContactValue('');
+                })
+                .catch(er => console.log(`Error updating contact`, er));
+            }
+            return;
+        }
+
+        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatecontact`, { loggeduserid, NrFormatContactValue, isDeleteContact })
+            .then(res => {
+                if (!res.data) {
+                    console.log(`Invalid response from server while updating contact`);
+                    // setContactValue('');
+                    return;
+                }
+
+                if (res.data.Contact) {
+                    setContact(res.data.Contact);
+                    alert(res.data.message);
+                    return;
+                }
+
+                if (res.data.ContactDeleted) {
+                    setContact('');
+                    alert(res.data.message);
+                    return;
+                }
+
+                alert(res.data.message);
+                setAddContactEnabled(false);
+                setContactValue('');
+
+            })
+            .catch(er => console.log(`Error updating contact`, er));
+    }
+
+    // const deleteContact = () => {
+    //     const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
+    //     console.log(loggeduserid);
+
+    //     if (!loggeduserid) {
+    //         console.log(`Invalid User id`);
+    //         alert(`Invalid User id`);
+    //         return;
+    //     }
+
+    //     // if (window.confirm(`Deleting Contact...`)) {
+    //     axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecontact/${loggeduserid}`)
+    //         .then(res => {
+    //             if (!res.data) {
+    //                 console.log(`Invalid response from server while deleting contact`);
+    //                 // setContactValue('');
+    //                 return;
+    //             }
+
+    //             if (res.data.ContactDeleted) {
+    //                 setContact('');
+    //                 alert(res.data.message);
+    //                 return;
+    //             }
+
+    //             alert(res.data.message);
+
+    //         })
+    //         .catch(er => console.log(`Error deleting contact`, er));
+    //     // }
+
+    // }
+
     return (
         <div>
             <Navbar />
             <div className={styles.container}>
                 <h2>{name} ({privateText})</h2>
+
+                {((contact && showContact) && (isLoggedUser() || checkFollowingStatus(followers) || !privateAccount)) &&
+                    <>
+                        <h3>{contact}</h3>
+                        {isLoggedUser() &&
+                            <>
+                                <button className={styles.button}>✏️</button>
+                                <button onClick={() => addContact(true)} className={styles.deleteaccount}>🪣</button>
+                            </>}
+                    </>
+                }
+
                 <form className={styles.form}>
                     <div className={styles.profilePicContainer}>
+
                         {!File ?
                             <img src={getOwnerAvatar(userid)} alt="" className={styles.profilePic} />
                             :
                             <img src={profilePic} alt="" className={styles.profilePic} />
-
                         }
-                        {
-                            isLoggedUser() &&
+
+                        {isLoggedUser() &&
                             <>
                                 {!JSON.parse(localStorage.getItem('edp')) &&
                                     <>
@@ -283,7 +399,7 @@ const Profile = () => {
                 </form>
 
                 <div className={styles.followButtons}>
-                    {isLoggedUser() || checkFollowingStatus(userid) || !privateAccount ?
+                    {isLoggedUser() || checkFollowingStatus(followers) || !privateAccount ?
                         <>
                             <button onClick={() => nav(`/followers/${userid}`)} className={styles.button}>Followers {followersCount}</button>
                             <button onClick={() => nav(`/followings/${userid}`)} className={styles.button}>Followings {followingsCount}</button>
@@ -302,25 +418,38 @@ const Profile = () => {
                         </>}
                 </div>
 
-                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
+
+                {isLoggedUser() &&
+                    (contact ? <button onClick={() => enableContactView(!showContact, setShowcontact)} className={styles.button}>{showContact ? '🔒 ' + 'Contact' : '👁️ ' + 'Contact'}</button>
+                        :
+                        addContactEnabled ?
+                            <>
+                                <input required type="text" placeholder='Your 10 digit contact...' value={contactvalue} onChange={(e) => setContactValue(e.target.value)} className={styles.input} />
+                                <button className={styles.button} onClick={() => addContact(false)}>➕</button>
+                                <button className={styles.deleteaccount} onClick={() => { setAddContactEnabled(false); setContactValue('') }}>Cancel</button>
+                            </>
+                            :
+                            <button onClick={() => setAddContactEnabled(!addContactEnabled)} className={styles.button}>Add Contact</button>
+                    )}
 
                 {!isLoggedUser() &&
-                    (checkFollowingStatus() ?
+                    (checkFollowingStatus(followers) ?
                         <button onClick={() => FollowUnfollow(userid)} className={styles.deleteaccount}>Unfollow</button>
                         :
                         <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>)}
 
                 {isLoggedUser() ?
                     privateAccount ?
-                        <button onClick={changeAccountPrivacy} className={styles.button}>Change Account to Public</button>
+                        <button onClick={() => changeAccountPrivacy(!privateAccount, setPrivateAccount)} className={styles.button}>Change Account to Public</button>
                         :
-                        <button onClick={changeAccountPrivacy} className={styles.button}>Change Account to Private</button>
+                        <button onClick={() => changeAccountPrivacy(!privateAccount, setPrivateAccount)} className={styles.button}>Change Account to Private</button>
                     :
                     privateAccount ?
                         <p style={{ color: "wheat" }}>This account is private</p>
                         :
                         <></>}
 
+                {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>
         </div >
