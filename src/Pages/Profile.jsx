@@ -439,7 +439,7 @@ const Profile = () => {
                                 <button className={styles.deleteaccount} onClick={() => { setAddContactEnabled(false); setContactValue('') }}>Cancel</button>
                             </>
                             :
-                            <button onClick={() => setAddContactEnabled(!addContactEnabled)} className={styles.button}>Add Contact</button>
+                            <button onClick={() => setAddContactEnabled(!addContactEnabled)} className={styles.button}>➕ Contact</button>
                     )}
 
                 {!isLoggedUser() &&
