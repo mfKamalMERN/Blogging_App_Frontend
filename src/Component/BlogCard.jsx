@@ -279,11 +279,11 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                 {
                     showComments &&
                     <>
-                        <h4>Comments</h4>
+                        <h4>☘️ Comments ☘️</h4>
                         {comments.map((comment) => (
                             <div key={comment._id} className={styles.comment}>
                                 <p>
-                                    <strong>{allUsers?.find((user) => user._id == comment?.CommentedBy)?.Name}</strong>: {comment?.Comment}
+                                    <strong onClick={() => nav(`/profile/${comment.CommentedBy}`)} className={styles.commentorName}>{allUsers?.find((user) => user._id == comment?.CommentedBy)?.Name}</strong>: {comment?.Comment}
                                 </p>
                                 {isCommentOwner(comment?.CommentedBy) ? (
                                     <div>
