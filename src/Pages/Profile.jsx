@@ -58,7 +58,7 @@ const Profile = () => {
                     setBlogscount(profileUser?.Blogs?.length)
                     setPrivateAccount(profileUser?.isPrivateAccount)
                     setContact(profileUser?.Contact || '')
-                    setShowcontact(profileUser?.showContact || false)
+                    setShowcontact(profileUser?.showContact || false)                    
                     if (privateAccount) setPrivateText(`Private Account`)
                     else setPrivateText(`Public Account`)
                 }
@@ -370,7 +370,7 @@ const Profile = () => {
 
                                         <button onClick={handleProfilePicUpdate} className={styles.button}>Update</button>
 
-                                        <button onClick={() => localStorage.setItem('edp', JSON.stringify(false))} className={styles.button}>Cancel</button>
+                                        <button onClick={() => localStorage.setItem('edp', JSON.stringify(false))} className={styles.button} style={{ backgroundColor: "darkred" }}>X</button>
                                     </>
                                 }
                             </>
