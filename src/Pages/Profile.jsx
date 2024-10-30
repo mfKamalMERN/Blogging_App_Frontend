@@ -28,6 +28,7 @@ const Profile = () => {
     const [contact, setContact] = useState('')
     const [contactvalue, setContactValue] = useState('')
     const [addContactEnabled, setAddContactEnabled] = useState(false)
+    const [editContact, setEditContact] = useState(false)
     const nav = useNavigate();
 
     axios.defaults.withCredentials = true
@@ -213,7 +214,7 @@ const Profile = () => {
 
     const addContact = (isDeleteContact) => {
         const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
-        const NrFormatContactValue = (!isDeleteContact && contactvalue) ? Number(contactvalue) : contact;
+        const NrFormatContactValue = (!isDeleteContact) ? Number(contactvalue) : contact;
 
         if (!loggeduserid) {
             console.log(`Invalid User id`);
@@ -226,32 +227,32 @@ const Profile = () => {
         if (isDeleteContact) {
             if (window.confirm(`Deleting contact...`)) {
                 axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatecontact`, { loggeduserid, NrFormatContactValue, isDeleteContact })
-                .then(res => {
-                    if (!res.data) {
-                        console.log(`Invalid response from server while updating contact`);
-                        // setContactValue('');
-                        return;
-                    }
-    
-                    if (res.data.Contact) {
-                        setContact(res.data.Contact);
-                        alert(res.data.message);
-                        return;
-                    }
-    
-                    if (res.data.ContactDeleted) {
-                        setContact('');
-                        setContactValue('')
-                        alert(res.data.message);
+                    .then(res => {
+                        if (!res.data) {
+                            console.log(`Invalid response from server while updating contact`);
+                            // setContactValue('');
+                            return;
+                        }
+
+                        if (res.data.Contact) {
+                            setContact(res.data.Contact);
+                            alert(res.data.message);
+                            return;
+                        }
+
+                        if (res.data.ContactDeleted) {
+                            setContact('');
+                            setContactValue('')
+                            alert(res.data.message);
+                            setAddContactEnabled(false);
+                            return;
+                        }
+
                         setAddContactEnabled(false);
-                        return;
-                    }
-    
-                    alert(res.data.message);
-                    setAddContactEnabled(false);
-                    setContactValue('');
-                })
-                .catch(er => console.log(`Error updating contact`, er));
+                        setContactValue('');
+                        alert(res.data.message);
+                    })
+                    .catch(er => console.log(`Error updating contact`, er));
             }
             return;
         }
@@ -279,6 +280,7 @@ const Profile = () => {
                 alert(res.data.message);
                 setAddContactEnabled(false);
                 setContactValue('');
+                setEditContact(false);
 
             })
             .catch(er => console.log(`Error updating contact`, er));
@@ -327,8 +329,15 @@ const Profile = () => {
                     <>
                         <h3>{contact}</h3>
                         {isLoggedUser() &&
+                            editContact ?
                             <>
-                                <button className={styles.button}>✏️</button>
+                                <input type="text" value={contactvalue} onChange={(e) => setContactValue(e.target.value)} className={styles.input} placeholder='10 digit contact...' />
+                                <button onClick={() => addContact(false)} className={styles.button}>Update</button>
+                                <button onClick={() => { setEditContact(false); setContactValue(contact) }} className={styles.deleteaccount}>Cancel</button>
+                            </>
+                            :
+                            <>
+                                <button onClick={() => { setEditContact(true); setContactValue(contact) }} className={styles.button}>✏️</button>
                                 <button onClick={() => addContact(true)} className={styles.deleteaccount}>🪣</button>
                             </>}
                     </>
