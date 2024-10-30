@@ -8,7 +8,7 @@
     },
     "home": {
         "title": "Home",
-        "createNewBlog": "Create New Blog",
+        "createNewBlog": "➕ Thoughts 💡🚵‍♀️⚽",
         "form": {
             "titleLabel": "Title",
             "titlePlaceholder": "Enter blog title",
