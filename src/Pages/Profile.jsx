@@ -25,7 +25,9 @@ const Profile = () => {
     const [fstatus, setFstatus] = useState(false)
     const [token, setToken] = useState("")
     const [showContact, setShowcontact] = useState(false)
+    const [showContactDetails, setShowContactDetails] = useState(false);
     const [contact, setContact] = useState('')
+    const [email, setEmail] = useState('')
     const [contactvalue, setContactValue] = useState('')
     const [addContactEnabled, setAddContactEnabled] = useState(false)
     const [editContact, setEditContact] = useState(false)
@@ -58,7 +60,9 @@ const Profile = () => {
                     setBlogscount(profileUser?.Blogs?.length)
                     setPrivateAccount(profileUser?.isPrivateAccount)
                     setContact(profileUser?.Contact || '')
-                    setShowcontact(profileUser?.showContact || false)                    
+                    setEmail(profileUser?.Email || '')
+                    setShowcontact(profileUser?.showContact || false)
+                    setShowContactDetails(profileUser?.showContactDetails || false)
                     if (privateAccount) setPrivateText(`Private Account`)
                     else setPrivateText(`Public Account`)
                 }
@@ -320,23 +324,50 @@ const Profile = () => {
 
     // }
 
+    const showHideContactDetails = (preference) => {
+        const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
+
+        if (!loggeduserid) {
+            console.log(`Invalid user id`);
+            return;
+        }
+
+        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/showhidecontactdetails`, { loggeduserid, preference })
+            .then(res => {
+                if (!res.data) {
+                    console.log(`Invalid response from server while showing/hiding contact details`);
+                    return;
+                }
+
+                if (res.data.ContactDetailsShownUpdated) {
+                    setShowContactDetails(res.data.Preference);
+                    alert(res.data.message);
+                    return;
+                }
+                alert(res.data.message);
+            })
+            .catch(er => console.log(`Error showing/hiding contact details`, er));
+    }
+
     return (
         <div>
             <Navbar />
             <div className={styles.container}>
                 <h2>{name} ({privateText})</h2>
 
-                {((contact && showContact) && (isLoggedUser() || checkFollowingStatus(followers) || !privateAccount)) &&
+                {(showContactDetails && (isLoggedUser() || checkFollowingStatus(followers) || !privateAccount)) &&
                     <>
-                        <h3>{contact}</h3>
+                        <h3>📧: {email}</h3>
+                        {(contact && showContact) && <h3>☎️: {contact}</h3>}
                         {isLoggedUser() &&
                             editContact ?
                             <>
                                 <input type="text" value={contactvalue} onChange={(e) => setContactValue(e.target.value)} className={styles.input} placeholder='10 digit contact...' />
-                                <button onClick={() => addContact(false)} className={styles.button}>Update</button>
-                                <button onClick={() => { setEditContact(false); setContactValue(contact) }} className={styles.deleteaccount}>Cancel</button>
+                                <button onClick={() => { setEditContact(false); setContactValue(contact) }} className={styles.button} style={{ backgroundColor: 'darkred' }}>X</button>
+                                <button onClick={() => addContact(false)} className={styles.button} style={{ backgroundColor: "darkblue" }}>Update ✅</button>
                             </>
                             :
+                            (showContact && contact) &&
                             <>
                                 <button onClick={() => { setEditContact(true); setContactValue(contact) }} className={styles.button}>✏️</button>
                                 <button onClick={() => addContact(true)} className={styles.deleteaccount}>🪣</button>
@@ -429,7 +460,7 @@ const Profile = () => {
                 </div>
 
 
-                {isLoggedUser() &&
+                {(isLoggedUser() && showContactDetails) &&
                     (contact ? <button onClick={() => enableContactView(!showContact, setShowcontact)} className={styles.button}>{showContact ? '🔒 ' + 'Contact' : '👁️ ' + 'Contact'}</button>
                         :
                         addContactEnabled ?
@@ -441,6 +472,8 @@ const Profile = () => {
                             :
                             <button onClick={() => setAddContactEnabled(!addContactEnabled)} className={styles.button}>➕ Contact</button>
                     )}
+
+                {isLoggedUser() && <button onClick={() => showHideContactDetails(!showContactDetails)} className={styles.button}>{showContactDetails ? '🔒 ' + 'Contact Details' : '👁️ ' + 'Contact Details'}</button>}
 
                 {!isLoggedUser() &&
                     (checkFollowingStatus(followers) ?
