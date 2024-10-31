@@ -39,3 +39,14 @@ export const changeAccountPrivacy = (pa, setPrivateaccount) => {
         })
         .catch(er => console.log(er))
 }
+
+export const checkFollowRequest = (FollowRequests) => {
+    const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
+
+    return FollowRequests.includes(loggeduserid);
+
+}
+
+export const followUnfollowDecider = (Followers, IsPrivate, FollowRequests) => {
+   return checkFollowingStatus(Followers) ? 'Unfollow' : (IsPrivate ? (checkFollowRequest(FollowRequests) ? 'Request sent' : 'Follow') : 'Follow')
+}

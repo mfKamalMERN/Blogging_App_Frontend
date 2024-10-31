@@ -4,7 +4,7 @@ import styles from '../Styles/Profile.module.css';
 import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { changeAccountPrivacy, checkFollowingStatus, enableContactView } from '../Helpers/Functions';
+import { changeAccountPrivacy, checkFollowingStatus, checkFollowRequest, enableContactView } from '../Helpers/Functions';
 
 const Profile = () => {
     const [name, setName] = useState('');
@@ -19,6 +19,7 @@ const Profile = () => {
     const [privateAccount, setPrivateAccount] = useState(false)
     const [privateText, setPrivateText] = useState('')
     const [followers, setFollowers] = useState([])
+    const [followRequests, setFollowRequests] = useState([])
     const [blogscount, setBlogscount] = useState(0)
     const [edp, setEdp] = useState(false)
     const { userid } = useParams()
@@ -63,6 +64,7 @@ const Profile = () => {
                     setEmail(profileUser?.Email || '')
                     setShowcontact(profileUser?.showContact || false)
                     setShowContactDetails(profileUser?.showContactDetails || false)
+                    setFollowRequests(profileUser?.FollowRequests || []);
                     if (privateAccount) setPrivateText(`Private Account`)
                     else setPrivateText(`Public Account`)
                 }
@@ -349,6 +351,7 @@ const Profile = () => {
             .catch(er => console.log(`Error showing/hiding contact details`, er));
     }
 
+
     return (
         <div>
             <Navbar />
@@ -479,7 +482,10 @@ const Profile = () => {
                     (checkFollowingStatus(followers) ?
                         <button onClick={() => FollowUnfollow(userid)} className={styles.deleteaccount}>Unfollow</button>
                         :
-                        <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>)}
+                        privateAccount ?
+                            (checkFollowRequest(followRequests) ? <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Request sent</button> : <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>)
+                            :
+                            <button onClick={() => FollowUnfollow(userid)} className={styles.button}>Follow</button>)}
 
                 {isLoggedUser() ?
                     privateAccount ?

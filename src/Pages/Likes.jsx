@@ -5,6 +5,7 @@ import styles from '../Styles/LikesPage.module.css';
 import axios from 'axios';
 import BlogCard from '../Component/BlogCard';
 import Cookies from 'universal-cookie';
+import { followUnfollowDecider } from '../Helpers/Functions';
 
 const LikesPage = () => {
     const nav = useNavigate()
@@ -105,10 +106,13 @@ const LikesPage = () => {
                                     {isLoggedUser(likeuser?._id) ?
                                         <></>
                                         :
-                                        checkFollowingStatus(likeuser?.Followers) ?
-                                            <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.unfollowbutton}>Unfollow</button>
-                                            :
-                                            <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>}
+                                        <button onClick={() => FollowUnfollow(likeuser?._id)} className={!checkFollowingStatus(likeuser?.Followers) ? styles.button : styles.unfollowbutton}>{followUnfollowDecider(likeuser.Followers, likeuser.isPrivateAccount, likeuser.FollowRequests)}</button>
+
+                                        // checkFollowingStatus(likeuser?.Followers) ?
+                                        //     <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.unfollowbutton}>Unfollow</button>
+                                        //     :
+                                        //     <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>
+                                    }
                                 </div>
                             ))
                         )}
