@@ -4,6 +4,7 @@ import styles from '../Styles/NewFriendsPage.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { checkFollowingStatus, checkFollowRequest, followUnfollowDecider } from '../Helpers/Functions';
 
 const NewFriendsPage = () => {
     const [friends, setFriends] = useState([]);
@@ -50,8 +51,6 @@ const NewFriendsPage = () => {
 
     }
 
-    const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
-
 
     return (
         <div>
@@ -73,11 +72,8 @@ const NewFriendsPage = () => {
                                 {/* https://via.placeholder.com/100 */}
                                 <div className={styles.name} onClick={() => nav(`/profile/${friend._id}`)}>{friend?.Name}</div>
 
-                                <button
-                                    onClick={() => FollowUnfollow(friend?._id)}
-                                    className={checkFollowingStatus(friend.Followers) ? styles.unfollowButton : styles.followButton}
-                                >
-                                    {checkFollowingStatus(friend.Followers) ? 'Unfollow' : 'Follow'}
+                                <button onClick={() => FollowUnfollow(friend?._id)} className={checkFollowingStatus(friend.Followers) ? styles.unfollowButton : styles.followButton}>
+                                    {followUnfollowDecider(friend.Followers, friend.isPrivateAccount, friend.FollowRequests)}
                                 </button>
 
                             </div>))}

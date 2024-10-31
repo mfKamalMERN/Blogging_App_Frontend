@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { checkFollowingStatus, followUnfollowDecider } from '../Helpers/Functions';
 
 const Followers = () => {
 
@@ -52,7 +53,7 @@ const Followers = () => {
     //     return IsFollowing
     // }
 
-    const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
+    // const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
 
     const FollowUnfollow = async (usrid) => {
 
@@ -104,8 +105,7 @@ const Followers = () => {
                                 isLoggedUser(follower?._id) ?
                                     <></>
                                     :
-                                    <button onClick={() => FollowUnfollow(follower?._id)} className={!checkFollowingStatus(follower?.Followers) ? styles.button : styles.unfollowbutton}>{checkFollowingStatus(follower?.Followers) ? 'Unfollow' : 'Follow'}</button>
-
+                                    <button onClick={() => FollowUnfollow(follower?._id)} className={!checkFollowingStatus(follower?.Followers) ? styles.button : styles.unfollowbutton}>{followUnfollowDecider(follower.Followers, follower.isPrivateAccount, follower.FollowRequests)}</button>
                             }
                         </div>
                     ))}
