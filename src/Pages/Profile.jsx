@@ -498,6 +498,8 @@ const Profile = () => {
                         :
                         <></>}
 
+                {(isLoggedUser() && followRequests.length != 0) && <button onClick={() => nav(`/requests/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.button}>Follow Requests {followRequests.length}</button>}
+
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
             </div >
             <button onClick={() => nav(-1)} className={styles.button}>Back</button>

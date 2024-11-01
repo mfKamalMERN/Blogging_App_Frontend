@@ -6,6 +6,7 @@ import { Login } from "../Pages/Login"
 import NewBlog from "../Pages/NewBlog"
 import NewFriendsPage from "../Pages/NewFriendsPage"
 import Profile from "../Pages/Profile"
+import FollowRequests from "../Pages/RequestedUsers"
 
 const routeConfig = [
     { path: "/", element: <Login /> },
@@ -17,6 +18,7 @@ const routeConfig = [
     { path: "/newblog", element: <NewBlog /> },
     { path: "/likes/:blogid", element: <LikesPage /> },
     { path: "/newfriends", element: <NewFriendsPage /> },
+    { path: "/requests/:loggeduserid", element: <FollowRequests /> }
 ]
 
 export default routeConfig
