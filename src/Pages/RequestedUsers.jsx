@@ -31,10 +31,8 @@ const FollowRequests = () => {
                 return;
             }
 
-            if (res.data.Requests) {
-                console.log(res.data.Requests);
-                setRequestedUsers(res.data.Requests);
-            }
+            console.log(res.data.Requests);
+            setRequestedUsers(res.data.Requests);
 
         } catch (error) {
             console.log(error);
@@ -116,7 +114,7 @@ const FollowRequests = () => {
                                 <div className="buttons">
 
                                     <button onClick={() => handleAccept(request._id)} className={styles.buttonAccept}>Accept</button>
-                                    <button onClick={() => handleReject(request._id)} className={styles.buttonReject}>Reject</button>
+                                    <button onClick={() => handleReject(request._id)} className={styles.buttonReject}>Delete</button>
                                 </div>
                                 {/* <hr /> */}
                             </li>
