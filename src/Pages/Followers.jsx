@@ -69,18 +69,21 @@ const Followers = () => {
     const removeFollower = (followerid) => {
         const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
 
-        axios.patch(`https://blogging-app-backend-dpk0.onrender.com/removefollower/${loggeduserid}`, { followerid })
-            .then((res) => {
-                if (!res.data) {
-                    console.log(`Invalid response from server`)
-                    return;
-                }
+        if (window.confirm(`Removing follower...`)) {
 
-                setFstatus(!fstatus);
-            })
-            .catch(er => {
-                console.log(er);
-            })
+            axios.patch(`https://blogging-app-backend-dpk0.onrender.com/removefollower/${loggeduserid}`, { followerid })
+                .then((res) => {
+                    if (!res.data) {
+                        console.log(`Invalid response from server`)
+                        return;
+                    }
+
+                    setFstatus(!fstatus);
+                })
+                .catch(er => {
+                    console.log(er);
+                })
+        }
     }
 
     return (
