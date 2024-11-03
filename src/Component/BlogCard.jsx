@@ -223,7 +223,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                     {!editBlogPic ?
                         blogPicUrl ?
                             <>
-                                <img src={blogPicUrl} alt="" style={{ width: "95%" }} />
+                                <img src={blogPicUrl} alt="" style={{ width: "99%", borderRadius:"13%" }} />
                                 {(isBlogOwner() && !isLikes) && <button onClick={() => setEditBlogPic(true)} className={styles.button}>✏️</button>}
                                 {(isBlogOwner() && !isLikes) && <button onClick={removeBlogPic} className={styles.buttonRemove}>🪣</button>}
                             </>
