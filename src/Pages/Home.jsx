@@ -72,8 +72,9 @@ const Home = () => {
             <Navbar isLogin={false} fromHome={true} userid={userid} />
 
             <div className={styles.container}>
-                <h1 style={{ color: "wheat" }}>Welcome to MUFAISA 🦁🦁!</h1>
-                <p>Share your thoughts and read amazing content from others.</p>
+                <h1 style={{ color: "wheat" }}>IonVibe 💡⚛️🚥</h1>
+                {/* <p>Share your thoughts and read amazing content from others.</p> */}
+                <p>using "ion" to convey energy and vibes in science.</p>
 
                 <div className={styles.Button} style={{ marginBottom: "50px" }}>
                     <button onClick={() => nav('/newblog')} style={{ backgroundColor: "black", color: "wheat", width: "auto", fontSize: "large", borderRadius: "20px", padding: "10px" }} ><h2>➕ Thoughts 💡🚵‍♀️⚽</h2></button>
