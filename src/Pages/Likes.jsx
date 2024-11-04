@@ -7,13 +7,13 @@ import BlogCard from '../Component/BlogCard';
 import Cookies from 'universal-cookie';
 import { followUnfollowDecider } from '../Helpers/Functions';
 
-const LikesPage = () => {
+const LikesPage = ({ blogid, closeLikes }) => {
     const nav = useNavigate()
     const [likesusers, setLikesUsers] = useState([])
     // const [au, setAu] = useState([])
-    const { blogid } = useParams()
+    // const { blogid } = useParams()
     const [blog, setBlog] = useState(null)
-    const [fstatus, setFstatus] = useState(false)
+    const [fstatus, setFstatus] = useState(false);
 
     axios.defaults.withCredentials = true
 
@@ -34,17 +34,17 @@ const LikesPage = () => {
                     //     nav('/')
                     // }
                     // else {
-                    setLikesUsers(res.data.LikedUsers)
+                    setLikesUsers(res.data.LikedUsers);
 
-                    axios.get(`https://blogging-app-backend-dpk0.onrender.com/getblog/${blogid}`)
-                        .then(response => {
-                            setBlog(response?.data)
+                    // axios.get(`https://blogging-app-backend-dpk0.onrender.com/getblog/${blogid}`)
+                    //     .then(response => {
+                    //         setBlog(response?.data)
 
-                            // axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-                            //     .then(res2 => setAu(res2.data))
-                            //     .catch(er => console.log(er))
-                        })
-                        .catch(er => console.log(er))
+                    //         // axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
+                    //         //     .then(res2 => setAu(res2.data))
+                    //         //     .catch(er => console.log(er))
+                    //     })
+                    //     .catch(er => console.log(er))
 
 
 
@@ -81,15 +81,15 @@ const LikesPage = () => {
 
     return (
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             <div className={styles.all}>
 
-                {blog && <div className={styles.blogcard}>
+                {/* {blog && <div className={styles.blogcard}>
                     <BlogCard key={blogid} blog={blog} isLikes={true} />
-                </div>}
+                </div>} */}
 
                 <div className={styles.container}>
-                    <h2>Blog Likes</h2>
+                    <h2>Likes</h2>
                     <div className={styles.likesContainer}>
                         {likesusers.length === 0 ? (
                             <p>No likes yet.</p>
@@ -117,8 +117,11 @@ const LikesPage = () => {
                             ))
                         )}
                     </div>
-                    <button onClick={handleBackClick} className={styles.backButton}>
+                    {/* <button onClick={handleBackClick} className={styles.backButton}>
                         Back
+                    </button> */}
+                    <button onClick={closeLikes} className={styles.backButton}>
+                        Close
                     </button>
                 </div>
             </div>
