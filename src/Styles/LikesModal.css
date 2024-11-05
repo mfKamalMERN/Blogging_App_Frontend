@@ -1,0 +1,131 @@
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+/* Modal Container */
+.modal {
+    background-color: darkslategray;
+    /* White background for the modal */
+    border-radius: 8px;
+    /* Rounded corners */
+    padding: 20px;
+    /* Padding inside the modal */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    max-width: 500px;
+    /* Max width of the modal */
+    width: 90%;
+    /* Responsive width */
+    position: relative;
+    /* For positioning close button */
+}
+
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Modal Title */
+.modal-title {
+    font-size: 24px;
+    /* Title font size */
+    margin-bottom: 15px;
+    /* Space below title */
+}
+
+/* Modal Content */
+.modal-content {
+    font-size: 16px;
+    /* Content font size */
+    line-height: 1.5;
+    /* Line height for readability */
+}
+
+/* Modal Actions */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    /* Align buttons to the right */
+    margin-top: 20px;
+    /* Space above actions */
+}
+
+.modal-button {
+    background-color: #007bff;
+    /* Primary button color */
+    color: white;
+    /* Button text color */
+    border: none;
+    border-radius: 4px;
+    /* Rounded corners for buttons */
+    padding: 10px 15px;
+    /* Padding for buttons */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: background-color 0.3s;
+    /* Smooth transition */
+}
+
+.modal-button:hover {
+    background-color: #0056b3;
+    /* Darker shade on hover */
+}
+
+body.modal-open {
+    overflow: hidden; /* Disable scrolling */
+}
+
+.blur {
+    filter: blur(5px); /* Adjust the blur amount as needed */
+    transition: filter 0.3s ease; /* Smooth transition */
+}
+
+@media only screen and (max-width: 700px) {
+    .modal {
+        max-width: 72%;
+        /* max-height: 90%; */
+        /* Max width of the modal for larger screens */
+    }
+
+    .modal-title {
+        font-size: 24px;
+        /* Title font size for larger screens */
+    }
+
+    .modal-content {
+        font-size: 16px;
+        /* Content font size for larger screens */
+    }
+
+    .modal-button {
+        margin-top: 0;
+        /* Reset margin for larger screens */
+        margin-left: 10px;
+        /* Space between buttons on larger screens */
+        width: auto;
+        /* Reset width for larger screens */
+    }
+
+    .modal-actions {
+        flex-direction: row;
+        /* Align buttons side by side on larger screens */
+    }
+}
