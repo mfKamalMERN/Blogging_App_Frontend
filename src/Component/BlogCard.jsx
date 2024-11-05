@@ -181,7 +181,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     }
 
     const closeModal = () => {
-        document.body.classList.remove('modal-open'); // remove class to enable scroll
+        // document.body.classList.remove('modal-open'); // remove class to enable scroll
         setShowModal(false);
     }
 
@@ -189,7 +189,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
         setShowModal(true);
         setBlogId(blog._id);
         setShowComments(false);
-        document.body.classList.add('modal-open'); // Add class to disable scroll
+        // document.body.classList.add('modal-open'); // Add class to disable scroll
         // document.getElementsByClassName('.blogCard').classList.add('blur'); // Add blur to background content
     }
 
