@@ -4,6 +4,7 @@ import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import LikesPage from '../Pages/Likes';
+import '../Styles/LikesModal.css';
 
 const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const [likes, setLikes] = useState(blog?.Likes);
@@ -179,6 +180,19 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
         }
     }
 
+    const closeModal = () => {
+        document.body.classList.remove('modal-open'); // remove class to enable scroll
+        setShowModal(false);
+    }
+
+    const openModal = () => {
+        setShowModal(true);
+        setBlogId(blog._id);
+        setShowComments(false);
+        document.body.classList.add('modal-open'); // Add class to disable scroll
+        // document.getElementsByClassName('.blogCard').classList.add('blur'); // Add blur to background content
+    }
+
     return (
         <div className={styles.blogCard}>
             <div className={styles.header}>
@@ -271,7 +285,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                     </div>
 
                     {/* <button onClick={() => nav(`/likes/${blog._id}`)} className={styles.button}>👁️ Likes</button> */}
-                    <button onClick={() => { setShowModal(!showModal); setBlogId(blog._id); setShowComments(false) }} className={styles.button}>👁️ Likes</button>
+                    <button onClick={openModal} className={styles.button}>👁️ Likes</button>
                     {blog.Comments.length ?
                         <button className={styles.button} onClick={() => { setShowComments(!showComments); setShowModal(false) }}>📢 {blog.Comments.length}</button>
                         :
@@ -281,8 +295,17 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                 </div>
             }
 
-            {/* {(showModal && blogid) && ReactDOM.createPortal(<LikesPage blogid={blogid} />, document.querySelector(".likesModal"))} */}
-            {(showModal && blogid) && <LikesPage blogid={blogid} closeLikes={() => setShowModal(false)} />}
+            {(showModal && blogid) &&
+                ReactDOM.createPortal(
+                    <div className="modal-overlay">
+                        <div className="modal">
+                            <button className="modal-close" onClick={closeModal}>✖</button>
+                            <div className="modal-content">
+                                <LikesPage blogid={blogid} closeLikes={closeModal} />
+                            </div>
+                        </div>
+                    </div>, document.querySelector(".likesModal"))}
+
 
             <div className={styles.comments}>
                 {
