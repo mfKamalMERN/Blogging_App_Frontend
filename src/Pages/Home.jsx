@@ -11,6 +11,7 @@ const Home = () => {
     const [blogs, setBlogs] = useState([])
     const { userid } = useParams()
     const [au, setAu] = useState([])
+    const [name, setName] = useState('')
 
     axios.defaults.withCredentials = true
 
@@ -29,6 +30,7 @@ const Home = () => {
                     const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)
                     // if (!blogs.length)
                     setBlogs(res?.data?.UserBlogs)
+                    setName(res?.data?.Name)
                     // console.log(res.data.Token);
 
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
@@ -72,15 +74,30 @@ const Home = () => {
             <Navbar isLogin={false} fromHome={true} userid={userid} />
 
             <div className={styles.container}>
-                <h1 style={{ color: "wheat" }}>IonVibe 💡⚛️🚥</h1>
-                {/* <p>Share your thoughts and read amazing content from others.</p> */}
-                <p>using "ion" to convey energy and vibes in science.</p>
+                {!name ?
+                    <h1 style={{ color: "wheat" }}>IonVibe 💡⚛️🚥</h1>
+                    :
+                    <>
+                        <div style={{ display: "flex", justifyContent: "space-evenly", width: "100%", marginBottom: "30px" }}>
 
-                <div className={styles.Button} style={{ marginBottom: "50px" }}>
+                            <button onClick={() => nav(-1)} className={styles.button} style={{ marginTop: "0px", backgroundColor: "black", }}><h1>🔙</h1></button>
+
+                            <button onClick={() => nav('/home')} className={styles.button} style={{ marginTop: "0px", backgroundColor: "black", }}><h1>🏠</h1></button>
+
+                        </div>
+                        <h2 style={{ color: "wheat", marginBottom: "40px" }}>Vibes of {name} 💡⚛️</h2>
+                    </>}
+
+                {/* <p>Share your thoughts and read amazing content from others.</p> */}
+
+                {!name && <p>using "ion" to convey energy and vibes in science.</p>}
+
+                {!name && <div className={styles.Button} style={{ marginBottom: "50px" }}>
                     <button onClick={() => nav('/newblog')} style={{ backgroundColor: "black", color: "wheat", width: "auto", fontSize: "large", borderRadius: "20px", padding: "10px" }} ><h2>➕ Thoughts 💡🚵‍♀️⚽</h2></button>
-                </div>
+                </div>}
+
                 {!blogs.length ?
-                    <h1 style={{color:"wheat"}}>No Blogs yet...</h1>
+                    <h1 style={{ color: "wheat" }}>No Blogs yet...</h1>
                     :
                     <div className={styles.blogs}>
                         {blogs.length && blogs?.map((blog) => {
