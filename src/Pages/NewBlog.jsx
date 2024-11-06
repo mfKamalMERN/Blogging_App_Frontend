@@ -65,6 +65,9 @@ const NewBlog = () => {
     return (
         <div>
             <Navbar />
+
+            <button onClick={() => nav(-1)} className={styles.button} style={{ marginTop: "100px", backgroundColor:"black", }}><h1>🔙</h1></button>
+
             <div className={styles.container}>
                 <h2>{Localization.home.createNewBlog}</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
@@ -105,7 +108,6 @@ const NewBlog = () => {
                     <button type="submit" className={styles.button}>➕ Blog</button>
                 </form>
             </div>
-            <button onClick={() => nav('/home')} className={styles.button}>Back</button>
         </div>
     );
 };

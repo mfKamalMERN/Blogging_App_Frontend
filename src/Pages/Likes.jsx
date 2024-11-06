@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../Component/Navbar';
+import { useNavigate } from 'react-router-dom';
+// import Navbar from '../Component/Navbar';
 import styles from '../Styles/LikesPage.module.css';
 import axios from 'axios';
-import BlogCard from '../Component/BlogCard';
+// import BlogCard from '../Component/BlogCard';
 import Cookies from 'universal-cookie';
 import { followUnfollowDecider } from '../Helpers/Functions';
 
@@ -12,7 +12,7 @@ const LikesPage = ({ blogid, closeLikes }) => {
     const [likesusers, setLikesUsers] = useState([])
     // const [au, setAu] = useState([])
     // const { blogid } = useParams()
-    const [blog, setBlog] = useState(null)
+    // const [blog, setBlog] = useState(null)
     const [fstatus, setFstatus] = useState(false);
 
     axios.defaults.withCredentials = true

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import styles from '../Styles/BlogCard.module.css';
 import axios from 'axios';
@@ -25,7 +25,8 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const MAX_LENGTH = 200; // Set your desired max length here
     const [showModal, setShowModal] = useState(false);
     const [blogid, setBlogId] = useState(null);
-    const nav = useNavigate()
+    const nav = useNavigate();
+    const cancel = useRef("");
 
 
     const handleLike = async () => {
@@ -193,6 +194,15 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
         // document.getElementsByClassName('.blogCard').classList.add('blur'); // Add blur to background content
     }
 
+    const CancelPic = (e) => {
+        if (cancel.current == e.target) {
+            setEditBlogPic(false);
+            setFile(null)
+            return;
+        }
+
+    }
+
     return (
         <div className={styles.blogCard}>
             <div className={styles.header}>
@@ -255,7 +265,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                             {isBlogOwner() &&
                                 <>
                                     <button onClick={handlePicUpdate} className={styles.button}>Update Pic</button>
-                                    <button onClick={() => { setEditBlogPic(false); setFile(null) }} className={styles.button}>Cancel</button>
+                                    <button ref={cancel} onClick={CancelPic} className={styles.button}>Cancel</button>
                                 </>
                             }
                         </>

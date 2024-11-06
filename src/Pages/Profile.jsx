@@ -355,6 +355,11 @@ const Profile = () => {
     return (
         <div>
             <Navbar />
+
+            <button onClick={() => nav(-1)} className={styles.deleteaccount} style={{ marginTop: "100px", backgroundColor:"black", }}><h1>🔙</h1></button>
+            
+            <button onClick={() => nav('/home')} className={styles.deleteaccount} style={{ marginTop: "100px", backgroundColor:"black", }}><h1>🏠</h1></button>
+
             <div className={styles.container}>
                 <h2>{name} ({privateText})</h2>
 
@@ -502,7 +507,7 @@ const Profile = () => {
 
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
             </div >
-            <button onClick={() => nav(-1)} className={styles.button}>Back</button>
+            {/* <button onClick={() => nav(-1)} className={styles.button}>Back</button> */}
         </div >
     );
 };
