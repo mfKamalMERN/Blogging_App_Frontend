@@ -9,7 +9,7 @@ export const HomeBackNavigations = (props) => {
 
             <button onClick={() => nav(-1)} className={styles.button} style={{ backgroundColor: "black", }}><h1>🔙</h1></button>
 
-            <button onClick={() => nav('/home')} className={styles.button} style={{ backgroundColor: "black", }}><h1>🏠</h1></button>
+            <button onClick={() => nav('/')} className={styles.button} style={{ backgroundColor: "black", }}><h1>🏠</h1></button>
 
         </div >
     )
