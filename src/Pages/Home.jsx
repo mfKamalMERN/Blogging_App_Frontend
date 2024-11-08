@@ -5,6 +5,7 @@ import BlogCard from '../Component/BlogCard';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { HomeBackNavigations } from '../Component/HomeBackNavigations';
 
 const Home = () => {
     const nav = useNavigate()
@@ -78,13 +79,7 @@ const Home = () => {
                     <h1 style={{ color: "wheat" }}>IonVibe 💡⚛️🚥</h1>
                     :
                     <>
-                        <div style={{ display: "flex", justifyContent: "space-evenly", width: "100%", marginBottom: "30px" }}>
-
-                            <button onClick={() => nav(-1)} className={styles.button} style={{ marginTop: "0px", backgroundColor: "black", }}><h1>🔙</h1></button>
-
-                            <button onClick={() => nav('/home')} className={styles.button} style={{ marginTop: "0px", backgroundColor: "black", }}><h1>🏠</h1></button>
-
-                        </div>
+                        <HomeBackNavigations styles={styles} />
                         <h2 style={{ color: "wheat", marginBottom: "40px" }}>Vibes of {name} 💡⚛️</h2>
                     </>}
 
