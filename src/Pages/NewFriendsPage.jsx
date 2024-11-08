@@ -4,7 +4,7 @@ import styles from '../Styles/NewFriendsPage.module.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { checkFollowingStatus, checkFollowRequest, followUnfollowDecider } from '../Helpers/Functions';
+import { checkFollowingStatus, followUnfollowDecider } from '../Helpers/Functions';
 import { HomeBackNavigations } from '../Component/HomeBackNavigations';
 
 const NewFriendsPage = () => {
