@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { HomeBackNavigations } from '../Component/HomeBackNavigations';
 
 const Followings = () => {
     const nav = useNavigate()
@@ -77,6 +78,9 @@ const Followings = () => {
     return (
         <div>
             <Navbar />
+
+            <HomeBackNavigations styles={styles} F={true} />
+
             <div className={styles.container}>
                 {Followings?.length === 0 ?
                     <h1>{getUserName(userid)} doesn't follow anyone yet</h1>
@@ -108,7 +112,7 @@ const Followings = () => {
                         ))}
                 </div>
             </div>
-            <button onClick={() => nav(-1)} className={styles.button}>Back</button>
+            {/* <button onClick={() => nav(-1)} className={styles.button}>Back</button> */}
 
         </div>
     );

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { checkFollowingStatus, followUnfollowDecider } from '../Helpers/Functions';
+import { HomeBackNavigations } from '../Component/HomeBackNavigations';
 
 const Followers = () => {
 
@@ -89,6 +90,9 @@ const Followers = () => {
     return (
         <div>
             <Navbar />
+
+            <HomeBackNavigations styles={styles} F={true} />
+
             <div className={styles.container}>
 
                 {Followers?.length === 0 ?
@@ -126,7 +130,7 @@ const Followers = () => {
 
             </div>
 
-            <button onClick={() => nav(-1)} className={styles.button}>Back</button>
+            {/* <button onClick={() => nav(-1)} className={styles.button}>Back</button> */}
 
         </div>
     );
