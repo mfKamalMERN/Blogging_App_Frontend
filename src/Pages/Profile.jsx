@@ -5,6 +5,7 @@ import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { changeAccountPrivacy, checkFollowingStatus, checkFollowRequest, enableContactView } from '../Helpers/Functions';
+import { HomeBackNavigations } from '../Component/HomeBackNavigations';
 
 const Profile = () => {
     const [name, setName] = useState('');
@@ -356,9 +357,7 @@ const Profile = () => {
         <div>
             <Navbar />
 
-            <button onClick={() => nav(-1)} className={styles.deleteaccount} style={{ marginTop: "100px", backgroundColor:"black", }}><h1>🔙</h1></button>
-            
-            <button onClick={() => nav('/home')} className={styles.deleteaccount} style={{ marginTop: "100px", backgroundColor:"black", }}><h1>🏠</h1></button>
+            <HomeBackNavigations styles={styles} P={true} />
 
             <div className={styles.container}>
                 <h2>{name} ({privateText})</h2>
