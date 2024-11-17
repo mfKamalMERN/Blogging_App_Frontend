@@ -31,12 +31,17 @@
   background: none;
   border: none;
   font-size: 18px;
-  margin-left: 50px;
+  /* margin-left: 50px; */
   cursor: pointer;
 }
 
 .navButton:hover {
   text-decoration: underline;
+}
+
+.hamburger {
+  display: none;
+  /* Hide by default */
 }
 
 @media only screen and (max-width: 700px) {
@@ -47,37 +52,58 @@
     position: fixed;
     top: 0;
   }
-  
+
   .navContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 6vh;
   }
-  
+
   .brand {
     color: wheat;
     cursor: pointer;
     font-size: medium;
     font-weight: bold;
   }
-  
-  .navButtons {
+
+  /* .navButtons {
     display: flex;
     margin-right: 8%;
+  } */
+  .navButtons {
+    display: none;
+    /* Hide buttons on mobile */
   }
-  
+
+  .navButtons.show {
+    display: flex;
+    /* Show buttons when hamburger menu is open */
+  }
+
   .navButton {
     color: white;
     background: none;
     border: none;
     font-size: 13px;
-    margin-left: 7%;
+    /* margin-left: 7%; */
     cursor: pointer;
   }
-  
+
   .navButton:hover {
     text-decoration: underline;
+  }
+
+  .hamburger {
+    display: block;
+    /* Hide by default */
+    margin-right: 25px;
+    color: wheat;
+    margin-left: 20px;
+  }
+
+  .hamburger:hover{
+    cursor: pointer;
   }
 
 }
