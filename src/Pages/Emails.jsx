@@ -26,7 +26,6 @@ export const Emails = () => {
         try {
             if (!sentmails) {
                 const { data } = await axios.get(`http://localhost:7500/emailsreceived/${loggeduserid}`);
-                console.log(data);
                 setEmails(data);
                 return;
             }
