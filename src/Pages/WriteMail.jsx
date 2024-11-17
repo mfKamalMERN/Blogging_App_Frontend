@@ -28,8 +28,8 @@ const WriteMail = () => {
         }
 
         try {
-            // const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`);
-            setUserNames(["Kamal", "Rahul Kumar", "Ankit Kumar"]);
+            const { data } = await axios.get(`http://localhost:7500/allusernames/${loggeduserid}`);
+            setUserNames(data.usernames);
         } catch (error) {
             console.error(error);
         }
