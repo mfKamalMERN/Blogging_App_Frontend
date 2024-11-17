@@ -6,7 +6,7 @@ import Localization from '../Resources/Localization.json';
 import Cookies from 'universal-cookie';
 
 const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
-
+    const FollowRequests = JSON.parse(localStorage.getItem('LoggedInUser'))?.FollowRequests;
     const nav = useNavigate()
 
     const SignOut = () => {
@@ -57,6 +57,12 @@ const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
                             <button onClick={() => nav(`/profile/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
                                 {JSON.parse(localStorage.getItem('LoggedInUser'))?.Name}
                             </button>
+                            <button onClick={() => nav(`/emails/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton} style={{ marginRight: "50px" }}>
+                                Emails
+                            </button>
+                            {(FollowRequests && FollowRequests.length != 0) && <button onClick={() => nav(`/requests/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton} style={{ marginRight: "50px" }}>
+                                ❤️({FollowRequests.length})
+                            </button>}
                         </div>
                 }
             </div>
