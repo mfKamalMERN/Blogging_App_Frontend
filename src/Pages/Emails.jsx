@@ -6,7 +6,7 @@ import Navbar from "../Component/Navbar";
 import styles from '../Styles/Emails.module.css'; // Import the CSS file for styling
 
 export const Emails = () => {
-    const [emails, setEmails] = useState([{ sentBy: "John", Subject: "Subject demo", _id: 11 }, { sentBy: "John", Subject: "Subject demo", _id: 12 }, { sentBy: "John", Subject: "Subject demo", _id: 13 }, { sentBy: "John", Subject: "Subject demo", _id: 14 }, { sentBy: "John", Subject: "Subject demo", _id: 15 }]);
+    const [emails, setEmails] = useState([]);
     const [axiosError, setAxioserror] = useState(false);
     const nav = useNavigate();
     const { loggeduserid, sentmails } = useParams();
@@ -49,23 +49,23 @@ export const Emails = () => {
 
 
     return (
-        // !axiosError ? <div style={{ color: "wheat" }}>Something went wrong</div> :
-        <>
-            <Navbar />
+        axiosError ? <div style={{ color: "wheat" }}>Something went wrong</div> :
+            <>
+                <Navbar />
 
 
-            <div className={styles.mailbuttons}>
-                <button className={styles.button} onClick={() => nav(`/newmail`)}>Compose ✏️</button>
-                <button className={styles.button} onClick={() => nav(`/emails/${loggeduserid}/${true}`)}>Sent Mails</button>
-            </div>
-
-
-            {emails?.map((email) => (
-                <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
-                    <h2>{email?.SentBy}</h2>
-                    <h3>{email?.Subject}</h3>
+                <div className={styles.mailbuttons}>
+                    <button className={styles.button} onClick={() => nav(`/newmail`)}>Compose ✏️</button>
+                    <button className={styles.button} onClick={() => nav(`/emails/${loggeduserid}/${true}`)}>Sent Mails</button>
                 </div>
-            ))}
-        </>
+
+
+                {emails?.map((email) => (
+                    <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
+                        <h2>{email?.SentBy}</h2>
+                        <h3>{email?.Subject}</h3>
+                    </div>
+                ))}
+            </>
     );
 };
