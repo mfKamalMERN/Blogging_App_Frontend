@@ -25,12 +25,13 @@ export const Emails = () => {
 
         try {
             if (!sentmails) {
-                const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emailsreceived/${loggeduserid}`);
+                const { data } = await axios.get(`http://localhost:7500/emailsreceived/${loggeduserid}`);
+                console.log(data);
                 setEmails(data);
                 return;
             }
 
-            const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emailssent/${loggeduserid}`);
+            const { data } = await axios.get(`http://localhost:7500/emailssent/${loggeduserid}`);
             setEmails(data);
             return;
 
@@ -61,7 +62,7 @@ export const Emails = () => {
 
             {emails?.map((email) => (
                 <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
-                    <h2>{email?.sentBy}</h2>
+                    <h2>{email?.SentBy}</h2>
                     <h3>{email?.Subject}</h3>
                 </div>
             ))}
