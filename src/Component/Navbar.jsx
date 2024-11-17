@@ -33,9 +33,10 @@ const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
                 <div onClick={homeNavigator} className={styles.brand}>{Localization.navbar.brand}</div>
 
                 {/* Hamburger Icon */}
-                <div className={styles.hamburger} onClick={toggleMenu}>
-                    ☰
-                </div>
+                {!isLogin &&
+                    <div className={styles.hamburger} onClick={toggleMenu}>
+                        ☰
+                    </div>}
 
                 {/* Navbar Buttons */}
                 {isLogin ? (
