@@ -9,12 +9,13 @@ import { HomeBackNavigations } from "../Component/HomeBackNavigations";
 
 const WriteMail = () => {
     const [userNames, setUserNames] = useState([]);
-    const [inputValue, setInputValue] = useState({ To: '', CC: '', Subject: '', Body: '' });
+    const [inputValue, setInputValue] = useState({ SentTo: '', CC: '', Subject: '', MailBody: '' });
     const [isCC, setIsCC] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
+    const [files, setFiles] = useState(null);
     const nav = useNavigate();
     const cookies = new Cookies();
-    const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser '))?._id;
+    const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
 
     axios.defaults.withCredentials = true;
 
@@ -28,7 +29,7 @@ const WriteMail = () => {
 
         try {
             // const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`);
-            setUserNames(["Faisal", "Rahul Kumar", "Ankit Kumar"]);
+            setUserNames(["Kamal", "Rahul Kumar", "Ankit Kumar"]);
         } catch (error) {
             console.error(error);
         }
@@ -41,12 +42,12 @@ const WriteMail = () => {
     const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(prev => ({ ...prev, [event.target.name]: value }));
-        if (event.target.name === 'To') setIsCC(false)
+        if (event.target.name === 'SentTo') setIsCC(false)
 
         if (event.target.name === "CC") setIsCC(true)
 
         // Filter suggestions based on the input value
-        if (value && (event.target.name === 'To' || event.target.name === "CC")) {
+        if (value && (event.target.name === 'SentTo' || event.target.name === "CC")) {
             const filteredSuggestions = userNames.filter(username => username.toLowerCase().includes(value.toLowerCase()));
             setSuggestions(filteredSuggestions);
         } else setSuggestions([]);
@@ -56,10 +57,10 @@ const WriteMail = () => {
         if (isCC) {
             setInputValue(prev => ({ ...prev, CC: suggestion }));
             setSuggestions([]); // Clear suggestions after selection
-            setIsCC(false)
+            setIsCC(false);
             return;
         }
-        setInputValue(prev => ({ ...prev, To: suggestion }));
+        setInputValue(prev => ({ ...prev, SentTo: suggestion }));
         setSuggestions([]); // Clear suggestions after selection
     };
 
@@ -71,12 +72,25 @@ const WriteMail = () => {
             return;
         }
 
-        axios.post(`https://blogging-app-backend-dpk0.onrender.com/newmail/${loggeduserid}`, inputValue)
+        const formdata = new FormData();
+        formdata.append('SentTo', inputValue.SentTo);
+        formdata.append('CC', inputValue.CC);
+        formdata.append('Subject', inputValue.Subject);
+        formdata.append('MailBody', inputValue.MailBody);
+
+        if (files && files.length > 0) {
+            for (let file of files) {
+                formdata.append('files', file);
+            }
+        }
+
+        axios.post(`http://localhost:7500/newmail/${loggeduserid}`, formdata)
             .then(res => {
-                alert(res.data.message)
-                nav(`/emails/${loggeduserid}`)
+                alert(res.data.message);
+                setFiles(null);
+                nav(`/emails/${loggeduserid}`);
             })
-            .catch(error => console.error(error))
+            .catch(error => console.error(error.message))
     }
 
     return (
@@ -89,13 +103,15 @@ const WriteMail = () => {
                 <input
                     type="text"
                     id="to"
-                    value={inputValue.To}
+                    value={inputValue.SentTo}
                     onChange={handleInputChange}
-                    name="To"
+                    name="SentTo"
                 />
-                {suggestions.length > 0 && !isCC &&  suggestions.map((sugg, idx)=>(
+
+                {suggestions.length > 0 && !isCC && suggestions.map((sugg, idx) => (
                     <Suggestions key={idx} suggestion={sugg} handleSuggestionClick={handleSuggestionClick} />
                 ))}
+
                 <br />
                 <label htmlFor="cc">CC:</label>
                 <input
@@ -105,11 +121,12 @@ const WriteMail = () => {
                     onChange={handleInputChange}
                     name="CC"
                 />
-                {suggestions.length > 0 && isCC &&  suggestions.map((sugg, idx)=>(
+
+                {suggestions.length > 0 && isCC && suggestions.map((sugg, idx) => (
                     <Suggestions key={idx} suggestion={sugg} handleSuggestionClick={handleSuggestionClick} />
                 ))}
-                <br />
 
+                <br />
                 <label htmlFor="subject">Subject:</label>
                 <input
                     type="text"
@@ -118,11 +135,19 @@ const WriteMail = () => {
                     onChange={handleInputChange}
                     name="Subject"
                 />
+
                 <br />
                 <label htmlFor="mailbody">Mail:</label>
-                <textarea id="mailbody" value={inputValue.Body} onChange={handleInputChange} name="Body" />
+                <textarea id="mailbody" value={inputValue.MailBody} onChange={handleInputChange} name="MailBody" />
+
+                <br />
+                <label htmlFor="attachments">Attachments:</label>
+                <input id="attachments" type="file" multiple onChange={(e) => setFiles(e.target.files)} />
+
+                <br />
                 <br />
                 <button type="submit">Send</button>
+
             </form>
         </>
     );
