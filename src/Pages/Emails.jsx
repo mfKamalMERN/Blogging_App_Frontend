@@ -43,9 +43,17 @@ export const Emails = () => {
 
     useEffect(() => {
         tokenChecker();
-    }, []);
+    }, [sentmails]);
 
     const handleEmailClick = (emailId) => nav(`/email/${emailId}`); // Navigate to the email detail page
+
+    const handleInboxSentToggele = () => {
+        if (!sentmails) {
+            nav(`/emails/${loggeduserid}/${true}`)
+            return
+        }
+        nav(`/emails/${loggeduserid}`)
+    }
 
 
     return (
@@ -53,14 +61,13 @@ export const Emails = () => {
             <>
                 <Navbar />
 
-
                 <div className={styles.mailbuttons}>
                     <button className={styles.button} onClick={() => nav(`/newmail`)}>Compose ✏️</button>
-                    <button className={styles.button} onClick={() => nav(`/emails/${loggeduserid}/${true}`)}>Sent Mails</button>
+                    <button className={styles.button} onClick={handleInboxSentToggele}>{sentmails ? "Inbox" : "Sent"}</button>
                 </div>
 
 
-                {emails?.map((email) => (
+                {!emails.length ? <h1 className={styles.noEmails}>No Emails for now...</h1> : emails?.map((email) => (
                     <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
                         <h2>{email?.SentBy}</h2>
                         <h3>{email?.Subject}</h3>
