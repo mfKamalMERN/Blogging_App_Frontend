@@ -14,6 +14,7 @@ const EmailDetail = () => {
     const nav = useNavigate();
     const cookies = new Cookies();
     const token = cookies.get('token');
+    const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))._id;
 
     useEffect(() => {
         const fetchEmailDetails = async () => {
@@ -24,12 +25,15 @@ const EmailDetail = () => {
                 nav('/')
                 return;
             }
+
             try {
-                // const response = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/email/${emailId}`);
-                setEmailDetails({ sentTo: "John", sentBy: "Rahul", Subject: "Imp", EmailBody: "sadkjfjfbwejf wqeiufhwqeifhwe weouifhweofhweof", Attachments: [] });
+                const { data } = await axios.get(`http://localhost:7500/emaildetails/${emailId}/${loggeduserid}`);
+                setEmailDetails(data);
+
             } catch (err) {
                 console.error(err);
                 setError(true);
+
             } finally {
                 setLoading(false);
             }
@@ -56,23 +60,35 @@ const EmailDetail = () => {
             <div className="card" style={{ display: "flex", justifyContent: "center" }}>
                 <div className="email-detail-container">
                     <h1>Subject: {emailDetails.Subject}</h1>
+
                     <div className="email-detail">
                         <div className="detail-item">
                             <strong>Sent To:</strong> {emailDetails.sentTo}
                         </div>
+
                         <div className="detail-item">
                             <strong>Sent By:</strong> {emailDetails.sentBy}
                         </div>
+
                         {/* <div className="detail-item">
                             <strong>Subject:</strong> {emailDetails.Subject}
                         </div> */}
+
                         <div className="detail-item">
-                            <strong>CC:</strong> {(emailDetails.CC && emailDetails.CC.length > 0) ? emailDetails.CC.map((cc) => <p>{cc}</p>) : 'N/A'}
+                            <strong>CC:</strong> {(emailDetails.CC) ? `${emailDetails.CC}` : 'N/A'}
                         </div>
-                        {emailDetails.Attachments.length > 0 && <div className="detail-item">
+
+                        {(emailDetails.Attachments && emailDetails.Attachments.length > 0) && <div className="detail-item">
                             <strong>Attachments:</strong> {emailDetails.Attachments.map((filePath) => (
-                                <button><a href={filePath} download={filePath.split('/').pop()}>download {filePath.split('/').pop()}</a></button>))}
+                                <>
+                                    <button><a href={filePath} download={filePath.split('/').pop()}>{filePath.split('/').pop().toUpperCase()}</a></button>
+                                    <br />
+                                    <br />
+                                </>
+                            ))}
                         </div>}
+
+                        <br />
                         <div className="detail-item">
                             {/* <strong>Email Body:</strong> */}
                             <div className="email-body">{emailDetails.EmailBody}</div>
