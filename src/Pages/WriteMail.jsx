@@ -28,7 +28,7 @@ const WriteMail = () => {
         }
 
         try {
-            const { data } = await axios.get(`http://localhost:7500/allusernames/${loggeduserid}`);
+            const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`);
             setUserNames(data.usernames);
         } catch (error) {
             console.error(error);
@@ -84,7 +84,7 @@ const WriteMail = () => {
             }
         }
 
-        axios.post(`http://localhost:7500/newmail/${loggeduserid}`, formdata)
+        axios.post(`https://blogging-app-backend-dpk0.onrender.com/newmail/${loggeduserid}`, formdata)
             .then(res => {
                 alert(res.data.message);
                 setFiles(null);

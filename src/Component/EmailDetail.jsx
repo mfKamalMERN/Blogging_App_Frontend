@@ -27,7 +27,7 @@ const EmailDetail = () => {
             }
 
             try {
-                const { data } = await axios.get(`http://localhost:7500/emaildetails/${emailId}/${loggeduserid}`);
+                const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emaildetails/${emailId}/${loggeduserid}`);
                 setEmailDetails(data);
 
             } catch (err) {

@@ -25,12 +25,12 @@ export const Emails = () => {
 
         try {
             if (!sentmails) {
-                const { data } = await axios.get(`http://localhost:7500/emailsreceived/${loggeduserid}`);
+                const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emailsreceived/${loggeduserid}`);
                 setEmails(data);
                 return;
             }
 
-            const { data } = await axios.get(`http://localhost:7500/emailssent/${loggeduserid}`);
+            const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emailssent/${loggeduserid}`);
             setEmails(data);
             return;
 
