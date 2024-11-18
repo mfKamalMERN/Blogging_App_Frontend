@@ -59,7 +59,7 @@ const EmailDetail = () => {
             <HomeBackNavigations styles={styles} ED={true} />
             <div className="card" style={{ display: "flex", justifyContent: "center" }}>
                 <div className="email-detail-container">
-                    <h1>Subject: {emailDetails.Subject}</h1>
+                    {emailDetails.Subject && <h1>Subject: {emailDetails.Subject}</h1>}
 
                     <div className="email-detail">
                         <div className="detail-item">
@@ -85,10 +85,12 @@ const EmailDetail = () => {
                         </div>}
 
                         <br />
-                        <div className="detail-item">
-                            {/* <strong>Email Body:</strong> */}
-                            <div className="email-body">{emailDetails.EmailBody}</div>
-                        </div>
+                        {emailDetails.EmailBody &&
+                            <div className="detail-item">
+                                {/* <strong>Email Body:</strong> */}
+                                <div className="email-body">{emailDetails.EmailBody}</div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
