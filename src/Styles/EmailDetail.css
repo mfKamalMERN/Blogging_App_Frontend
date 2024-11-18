@@ -1,0 +1,48 @@
+.email-detail-container {
+    color: wheat;
+    padding: 20px;
+    background-color: darkslategrey;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 5%;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.email-detail {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #2b2b2b; /* Darker background for the details */
+}
+
+.detail-item {
+    margin: 10px 0;
+}
+
+strong {
+    color: #ffcc00; /* Gold color for the labels */
+}
+
+.email-body {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #444; /* Slightly lighter for the email body */
+    border-radius: 4px;
+    white-space: pre-wrap; /* Preserve whitespace in the email body */
+}
+
+.loading {
+    color: wheat;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}

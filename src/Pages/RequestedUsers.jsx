@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { HomeBackNavigations } from '../Component/HomeBackNavigations';
 
 const FollowRequests = () => {
 
@@ -97,15 +98,16 @@ const FollowRequests = () => {
     return (
         <>
             <Navbar />
-
+            <br />
+            <HomeBackNavigations styles={styles} FR={true} />
             <div className={styles.container}>
                 <h2 className={styles.header}>Follow Requests</h2>
                 {requestedUsers.length === 0 ? (
                     <p className={styles.message}>No follow requests at the moment.</p>
                 ) : (
                     <ul className={styles.list}>
-                        {requestedUsers.map(request => (
-                            <li key={request.id} className={styles.listItem}>
+                        {requestedUsers.map((request, idx) => (
+                            <li key={idx} className={styles.listItem}>
 
                                 <div className="user" onClick={() => nav(`/profile/${request._id}`)}>
                                     <img src={request.DP} alt={`${request.username}'s profile`} className={styles.profilePic} />
