@@ -13,6 +13,7 @@ const WriteMail = () => {
     const [isCC, setIsCC] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
     const [files, setFiles] = useState(null);
+    const [error, setError] = useState(false);
     const nav = useNavigate();
     const cookies = new Cookies();
     const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
@@ -90,8 +91,12 @@ const WriteMail = () => {
                 setFiles(null);
                 nav(`/emails/${loggeduserid}`);
             })
-            .catch(error => console.error(error.message))
+            .catch(error => {
+                setError(error.message);
+                console.error(error.message)
+            })
     }
+    if (error) return <h1 style={{ color: "darkred", textAlign: "center", marginLeft: "5%" }}>Internal Server Error...Please try again later!</h1>
 
     return (
         <>
