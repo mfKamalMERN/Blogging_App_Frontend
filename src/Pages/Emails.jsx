@@ -69,7 +69,7 @@ export const Emails = () => {
                 {!emails.length ? <h1 className={styles.noEmails}>No Emails for now...</h1> : emails?.map((email) => (
                     <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
                         <h4>{!sentmails ? (`From: ${email?.SentBy}`) : (`To: ${email?.SentTo}`)}</h4>
-                        <h5>Subject: {email?.Subject}</h5>
+                        {email.Subject && <h5>Subject: {email?.Subject}</h5>}
                     </div>
                 ))}
             </>
