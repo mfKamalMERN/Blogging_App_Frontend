@@ -62,14 +62,14 @@ export const Emails = () => {
 
                 <div className={styles.mailbuttons}>
                     <button className={styles.button} onClick={() => nav(`/newmail`)}>Compose ✏️</button>
-                    <button className={styles.button} onClick={handleInboxSentToggele}>{sentmails ? "Inbox" : "Sent"}</button>
+                    <button className={styles.button} onClick={handleInboxSentToggele}>{sentmails ? "View Inbox" : "Sent Mails"}</button>
                 </div>
 
 
                 {!emails.length ? <h1 className={styles.noEmails}>No Emails for now...</h1> : emails?.map((email) => (
                     <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
-                        <h2>{email?.SentBy}</h2>
-                        <h3>{email?.Subject}</h3>
+                        <h4>{!sentmails ? (`From: ${email?.SentBy}`) : (`To: ${email?.SentTo}`)}</h4>
+                        <h5>Subject: {email?.Subject}</h5>
                     </div>
                 ))}
             </>

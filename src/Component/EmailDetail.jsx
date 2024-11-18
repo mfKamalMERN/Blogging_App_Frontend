@@ -63,16 +63,12 @@ const EmailDetail = () => {
 
                     <div className="email-detail">
                         <div className="detail-item">
-                            <strong>Sent To:</strong> {emailDetails.sentTo}
+                            <strong>To:</strong> {emailDetails.sentTo}
                         </div>
 
                         <div className="detail-item">
-                            <strong>Sent By:</strong> {emailDetails.sentBy}
+                            <strong>From:</strong> {emailDetails.sentBy}
                         </div>
-
-                        {/* <div className="detail-item">
-                            <strong>Subject:</strong> {emailDetails.Subject}
-                        </div> */}
 
                         <div className="detail-item">
                             <strong>CC:</strong> {(emailDetails.CC) ? `${emailDetails.CC}` : 'N/A'}
