@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
 import Navbar from "../Component/Navbar";
 import styles from '../Styles/Emails.module.css'; // Import the CSS file for styling
+import { useEmailClk } from "../Helpers/Functions";
 
 export const Emails = () => {
     const [emails, setEmails] = useState([]);
@@ -11,6 +12,7 @@ export const Emails = () => {
     const nav = useNavigate();
     const { loggeduserid, sentmails } = useParams();
     const cookies = new Cookies();
+    const EmailClick = useEmailClk();
 
 
     axios.defaults.withCredentials = true;
@@ -44,7 +46,6 @@ export const Emails = () => {
         tokenChecker();
     }, [sentmails]);
 
-    const handleEmailClick = (emailId) => nav(`/email/${emailId}`); // Navigate to the email detail page
 
     const handleInboxSentToggele = () => {
         if (!sentmails) {
@@ -67,7 +68,7 @@ export const Emails = () => {
 
 
                 {!emails.length ? <h1 className={styles.noEmails}>No Emails for now...</h1> : emails?.map((email) => (
-                    <div className={styles.emailbar} key={email._id} onClick={() => handleEmailClick(email._id)}>
+                    <div className={styles.emailbar} key={email._id} onClick={() => EmailClick(email._id)}>
                         <h4>{!sentmails ? (`From: ${email?.SentBy}`) : (`To: ${email?.SentTo}`)}</h4>
                         {email.Subject && <h5>Subject: {email?.Subject}</h5>}
                     </div>
