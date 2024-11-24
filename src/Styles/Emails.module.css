@@ -6,6 +6,8 @@
     border-radius: 8px;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
+    width: 45%;
+    margin-left: 25%;
 }
 
 .email-bar:hover {
@@ -33,8 +35,8 @@
     margin-right: 30px;
 }
 
-.mailbuttons{
-    margin: 90px;
+.mailbuttons {
+    margin: 10%;
     display: flex;
     justify-content: center;
     /* position: fixed;
@@ -42,7 +44,13 @@
     /* left: 40%; */
 }
 
-.noEmails{
+.noEmails {
     color: wheat;
     margin-left: 5%;
+}
+
+@media(max-width:1024px) {
+    .mailbuttons {
+        margin: 25%;
+    }
 }
