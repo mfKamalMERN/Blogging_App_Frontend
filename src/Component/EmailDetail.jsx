@@ -46,7 +46,7 @@ const EmailDetail = () => {
         return <div className="loading">Loading...</div>;
     }
 
-    if (error) {
+    if (error || !emailId) {
         return <div className="error">Something went wrong while fetching the email details.</div>;
     }
 

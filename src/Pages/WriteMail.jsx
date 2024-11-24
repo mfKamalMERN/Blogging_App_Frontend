@@ -145,9 +145,9 @@ const WriteMail = () => {
                 <label htmlFor="mailbody">Mail:</label>
                 <textarea id="mailbody" value={inputValue.MailBody} onChange={handleInputChange} name="MailBody" />
 
-                <br />
+                {/* <br />
                 <label htmlFor="attachments">Attachments:</label>
-                <input id="attachments" type="file" multiple onChange={(e) => setFiles(e.target.files)} />
+                <input id="attachments" type="file" multiple onChange={(e) => setFiles(e.target.files)} /> */}
 
                 <br />
                 <br />
