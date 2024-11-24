@@ -57,7 +57,7 @@ const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
                                         <h2>🔍</h2>
                                     </button>
                                     <button onClick={() => nav(`/emails/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.navButton}>
-                                        Emails
+                                        <h2>📧</h2>
                                     </button>
                                     <button onClick={SignOut} className={styles.navButton}>
                                         Log Out
