@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../Component/Navbar";
 import Cookies from "universal-cookie";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from '../Styles/WriteMail.module.css';
 import { Suggestions } from "../Component/Suggestions";
 import { HomeBackNavigations } from "../Component/HomeBackNavigations";
@@ -16,6 +16,7 @@ const WriteMail = () => {
     const [error, setError] = useState(false);
     const nav = useNavigate();
     const cookies = new Cookies();
+    const { userid } = useParams();
     const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
 
     axios.defaults.withCredentials = true;
@@ -29,8 +30,15 @@ const WriteMail = () => {
         }
 
         try {
-            const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`);
-            setUserNames(data.usernames);
+            if (!userid) {
+                const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`);
+                setUserNames(data.usernames);
+                return;
+            }
+
+            const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/username/${loggeduserid}/${userid}`);
+            setInputValue((pre) => ({ ...pre, SentTo: data }))
+
         } catch (error) {
             console.error(error);
         }
@@ -148,7 +156,6 @@ const WriteMail = () => {
                 {/* <br />
                 <label htmlFor="attachments">Attachments:</label>
                 <input id="attachments" type="file" multiple onChange={(e) => setFiles(e.target.files)} /> */}
-
                 <br />
                 <br />
                 <button type="submit">Send</button>

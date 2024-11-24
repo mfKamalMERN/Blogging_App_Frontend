@@ -294,38 +294,6 @@ const Profile = () => {
             .catch(er => console.log(`Error updating contact`, er));
     }
 
-    // const deleteContact = () => {
-    //     const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
-    //     console.log(loggeduserid);
-
-    //     if (!loggeduserid) {
-    //         console.log(`Invalid User id`);
-    //         alert(`Invalid User id`);
-    //         return;
-    //     }
-
-    //     // if (window.confirm(`Deleting Contact...`)) {
-    //     axios.patch(`https://blogging-app-backend-dpk0.onrender.com/deletecontact/${loggeduserid}`)
-    //         .then(res => {
-    //             if (!res.data) {
-    //                 console.log(`Invalid response from server while deleting contact`);
-    //                 // setContactValue('');
-    //                 return;
-    //             }
-
-    //             if (res.data.ContactDeleted) {
-    //                 setContact('');
-    //                 alert(res.data.message);
-    //                 return;
-    //             }
-
-    //             alert(res.data.message);
-
-    //         })
-    //         .catch(er => console.log(`Error deleting contact`, er));
-    //     // }
-
-    // }
 
     const showHideContactDetails = (preference) => {
         const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
@@ -505,8 +473,9 @@ const Profile = () => {
                 {(isLoggedUser() && followRequests.length != 0) && <button onClick={() => nav(`/requests/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)} className={styles.button}>Follow Requests {followRequests.length}</button>}
 
                 {isLoggedUser() && <button onClick={DeleteAccount} className={styles.deleteaccount}>Delete My Account</button>}
+                
+                {!isLoggedUser() && <button onClick={() => nav(`/newmail/${userid}`)} className={styles.button}>📧</button>}
             </div >
-            {/* <button onClick={() => nav(-1)} className={styles.button}>Back</button> */}
         </div >
     );
 };
