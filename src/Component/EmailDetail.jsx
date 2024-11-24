@@ -77,7 +77,7 @@ const EmailDetail = () => {
                         {(emailDetails.Attachments && emailDetails.Attachments.length > 0) && <div className="detail-item">
                             <strong>Attachments:</strong> {emailDetails.Attachments.map((filePath) => (
                                 <>
-                                    <button><a href={filePath} download={filePath.split('/').pop()}>{filePath.split('/').pop().toUpperCase()}</a></button>
+                                    <button><a href={filePath} download={filePath.split('/').pop()}>{filePath.split('/').pop()}</a></button>
                                     <br />
                                     <br />
                                 </>
