@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const enableContactView = (sc, setShowcontact) => {
     const loggeduserid = JSON.parse(localStorage.getItem('LoggedInUser'))?._id;
@@ -48,5 +49,13 @@ export const checkFollowRequest = (FollowRequests) => {
 }
 
 export const followUnfollowDecider = (Followers, IsPrivate, FollowRequests) => {
-   return checkFollowingStatus(Followers) ? 'Unfollow' : (IsPrivate ? (checkFollowRequest(FollowRequests) ? 'Request sent' : 'Follow') : 'Follow')
+    return checkFollowingStatus(Followers) ? 'Unfollow' : (IsPrivate ? (checkFollowRequest(FollowRequests) ? 'Request sent' : 'Follow') : 'Follow')
+}
+
+export const useEmailClk = () => {
+    const nav = useNavigate();
+
+    const handleEmailClick = (emailid) => nav(`/email/${emailid}`);
+    
+    return handleEmailClick;
 }
