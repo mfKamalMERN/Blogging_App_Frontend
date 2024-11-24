@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Navbar from '../Component/Navbar';
 import styles from '../Styles/LikesPage.module.css';
 import axios from 'axios';
-// import BlogCard from '../Component/BlogCard';
 import Cookies from 'universal-cookie';
 import { followUnfollowDecider } from '../Helpers/Functions';
 
 const LikesPage = ({ blogid, closeLikes }) => {
     const nav = useNavigate()
-    const [likesusers, setLikesUsers] = useState([])
-    // const [au, setAu] = useState([])
-    // const { blogid } = useParams()
-    // const [blog, setBlog] = useState(null)
+    const [likesusers, setLikesUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [fstatus, setFstatus] = useState(false);
 
     axios.defaults.withCredentials = true
@@ -28,29 +24,9 @@ const LikesPage = ({ blogid, closeLikes }) => {
         else {
 
             axios.get(`https://blogging-app-backend-dpk0.onrender.com/likesusers/${blogid}`)
-                .then((res) => {
-                    // if (!res.data.Token) {
-                    //     localStorage.clear()
-                    //     nav('/')
-                    // }
-                    // else {
-                    setLikesUsers(res.data.LikedUsers);
-
-                    // axios.get(`https://blogging-app-backend-dpk0.onrender.com/getblog/${blogid}`)
-                    //     .then(response => {
-                    //         setBlog(response?.data)
-
-                    //         // axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-                    //         //     .then(res2 => setAu(res2.data))
-                    //         //     .catch(er => console.log(er))
-                    //     })
-                    //     .catch(er => console.log(er))
-
-
-
-                    // }
-                })
+                .then(res => setLikesUsers(res?.data?.LikedUsers))
                 .catch((er) => console.log(er))
+                .finally(setIsLoading(false))
         }
     }
 
@@ -58,9 +34,6 @@ const LikesPage = ({ blogid, closeLikes }) => {
         tokenChecker()
     }, [fstatus])
 
-    const handleBackClick = () => {
-        nav('/home')
-    };
 
     const checkFollowingStatus = (values) => values.includes(JSON.parse(localStorage.getItem('LoggedInUser'))?._id)
 
@@ -77,16 +50,16 @@ const LikesPage = ({ blogid, closeLikes }) => {
 
     }
 
-    const isLoggedUser = (userid) => JSON.parse(localStorage.getItem('LoggedInUser'))?._id == userid
+    const isLoggedUser = (userid) => JSON.parse(localStorage.getItem('LoggedInUser'))?._id == userid;
+
+    if (isLoading) {
+        return <div className="loading">Loading...</div>;
+    }
 
     return (
         <div>
-            {/* <Navbar /> */}
-            <div className={styles.all}>
 
-                {/* {blog && <div className={styles.blogcard}>
-                    <BlogCard key={blogid} blog={blog} isLikes={true} />
-                </div>} */}
+            <div className={styles.all}>
 
                 <div className={styles.container}>
                     <h2>Likes</h2>
@@ -106,20 +79,12 @@ const LikesPage = ({ blogid, closeLikes }) => {
                                     {isLoggedUser(likeuser?._id) ?
                                         <></>
                                         :
-                                        <button onClick={() => FollowUnfollow(likeuser?._id)} className={!checkFollowingStatus(likeuser?.Followers) ? styles.button : styles.unfollowbutton}>{followUnfollowDecider(likeuser.Followers, likeuser.isPrivateAccount, likeuser.FollowRequests)}</button>
-
-                                        // checkFollowingStatus(likeuser?.Followers) ?
-                                        //     <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.unfollowbutton}>Unfollow</button>
-                                        //     :
-                                        //     <button onClick={() => FollowUnfollow(likeuser._id)} className={styles.button}>Follow</button>
-                                    }
+                                        <button onClick={() => FollowUnfollow(likeuser?._id)} className={!checkFollowingStatus(likeuser?.Followers) ? styles.button : styles.unfollowbutton}>{followUnfollowDecider(likeuser.Followers, likeuser.isPrivateAccount, likeuser.FollowRequests)}</button>}
                                 </div>
                             ))
                         )}
                     </div>
-                    {/* <button onClick={handleBackClick} className={styles.backButton}>
-                        Back
-                    </button> */}
+
                     <button onClick={closeLikes} className={styles.backButton}>
                         Close
                     </button>
