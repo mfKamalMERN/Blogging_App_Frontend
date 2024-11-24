@@ -26,6 +26,7 @@ const routeConfig = [
     { path: "/emails/:loggeduserid/:sentmails", element: <Emails /> },
     { path: "/email/:emailId", element: <EmailDetail /> },
     { path: "/newmail", element: <WriteMail /> },
+    { path: "/newmail/:userid", element: <WriteMail /> },
 ]
 
 export default routeConfig
