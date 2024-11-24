@@ -156,7 +156,6 @@ const WriteMail = () => {
                 {/* <br />
                 <label htmlFor="attachments">Attachments:</label>
                 <input id="attachments" type="file" multiple onChange={(e) => setFiles(e.target.files)} /> */}
-
                 <br />
                 <br />
                 <button type="submit">Send</button>
