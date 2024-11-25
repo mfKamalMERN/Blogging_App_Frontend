@@ -88,7 +88,7 @@ const Home = () => {
                 {!name && <p>using "ion" to convey energy and vibes in science.</p>}
 
                 {!name && <div className={styles.Button} style={{ marginBottom: "50px" }}>
-                    <button onClick={() => nav('/newblog')} style={{ backgroundColor: "black", color: "wheat", width: "auto", fontSize: "large", borderRadius: "20px", padding: "10px" }} ><h2>➕ Thoughts 💡🚵‍♀️⚽</h2></button>
+                    <button onClick={() => nav('/newblog')} style={{ backgroundColor: "black", color: "wheat", width: "auto", fontSize: "large", borderRadius: "20px", padding: "10px", border: "1px solid wheat" }} ><h2>➕ Thoughts 💡🚵‍♀️⚽</h2></button>
                 </div>}
 
                 {!blogs.length ?
