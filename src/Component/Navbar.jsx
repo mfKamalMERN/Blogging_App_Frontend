@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 
 const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
     const [isOpen, setIsOpen] = useState(false); // State to control the hamburger menu
-    const FollowRequests = JSON.parse(localStorage.getItem('LoggedInUser '))?.FollowRequests;
+    const FollowRequests = JSON.parse(localStorage.getItem('LoggedInUser'))?.FollowRequests;
     const nav = useNavigate();
 
     const SignOut = () => {
