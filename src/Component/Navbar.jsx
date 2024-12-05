@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 
 const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
     const [isOpen, setIsOpen] = useState(false); // State to control the hamburger menu
-    const FollowRequests = JSON.parse(localStorage.getItem('LoggedInUser '))?.FollowRequests;
+    const FollowRequests = JSON.parse(localStorage.getItem('LoggedInUser'))?.FollowRequests;
     const nav = useNavigate();
 
     const SignOut = () => {
@@ -40,14 +40,16 @@ const Navbar = ({ toggleForm, isLogin, fromHome, userid }) => {
 
                 {/* Navbar Buttons */}
                 {isLogin ? (
-                    <>
+                    <div className="btnss" style={{ marginRight: "3%" }}>
+
                         <button onClick={() => toggleForm(false)} className={styles.navButton}>
                             Login
                         </button>
                         <button onClick={() => toggleForm(true)} className={styles.navButton}>
                             Signup
                         </button>
-                    </>)
+                    </div>
+                )
                     :
                     <div className={`${styles.navButtons} ${isOpen ? styles.show : ''}`}>
                         {
