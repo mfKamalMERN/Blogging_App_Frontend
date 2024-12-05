@@ -39,6 +39,9 @@ const WriteMail = () => {
             const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/username/${loggeduserid}/${userid}`);
             setInputValue((pre) => ({ ...pre, SentTo: data }))
 
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`)
+            setUserNames(res?.data?.usernames);
+
         } catch (error) {
             console.error(error);
         }
