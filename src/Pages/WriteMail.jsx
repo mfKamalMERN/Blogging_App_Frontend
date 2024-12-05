@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styles from '../Styles/WriteMail.module.css';
 import { Suggestions } from "../Component/Suggestions";
 import { HomeBackNavigations } from "../Component/HomeBackNavigations";
+import { toast } from "react-toastify";
 
 const WriteMail = () => {
     const [userNames, setUserNames] = useState([]);
@@ -38,6 +39,9 @@ const WriteMail = () => {
 
             const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/username/${loggeduserid}/${userid}`);
             setInputValue((pre) => ({ ...pre, SentTo: data }))
+
+            const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/allusernames/${loggeduserid}`)
+            setUserNames(res?.data?.usernames);
 
         } catch (error) {
             console.error(error);
@@ -77,7 +81,7 @@ const WriteMail = () => {
         e.preventDefault();
 
         if (!Object.values(inputValue)[0]) {
-            alert("Please enter a valid username");
+            toast("Please enter a valid username");
             return;
         }
 
@@ -95,7 +99,7 @@ const WriteMail = () => {
 
         axios.post(`https://blogging-app-backend-dpk0.onrender.com/newmail/${loggeduserid}`, formdata)
             .then(res => {
-                alert(res.data.message);
+                toast(res.data.message);
                 setFiles(null);
                 nav(`/emails/${loggeduserid}`);
             })

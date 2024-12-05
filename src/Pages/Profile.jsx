@@ -6,6 +6,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { changeAccountPrivacy, checkFollowingStatus, checkFollowRequest, enableContactView } from '../Helpers/Functions';
 import { HomeBackNavigations } from '../Component/HomeBackNavigations';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
     const [name, setName] = useState('');
@@ -106,14 +107,14 @@ const Profile = () => {
             const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatename/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newName })
 
             if (res.data.ValidationError) {
-                res.data.ActError.map((er) => alert(er.msg))
+                res.data.ActError.map((er) => toast(er.msg))
                 tokenChecker()
             }
 
             else {
                 // setProfileName(newName)
                 localStorage.setItem('LoggedInUser', JSON.stringify(res?.data?.UpdatedUser))
-                alert(res.data.Msg)
+                toast(res.data.Msg)
                 tokenChecker()
             }
 
@@ -126,17 +127,17 @@ const Profile = () => {
     const handlePasswordUpdate = (e) => {
         e.preventDefault();
 
-        if (password.trim() === "" || confirmpassword.trim() === "") alert(`Please type your new password`)
+        if (password.trim() === "" || confirmpassword.trim() === "") toast(`Please type your new password`)
 
-        else if (password !== confirmpassword) alert(`Passwords didn't match`)
+        else if (password !== confirmpassword) toast(`Passwords didn't match`)
 
         else {
             const newpassword = password
             axios.patch(`https://blogging-app-backend-dpk0.onrender.com/updatepassword/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, { newpassword })
                 .then(res => {
-                    if (res.data.ValidationError) res.data.ActError.map((err) => alert(err.msg))
+                    if (res.data.ValidationError) res.data.ActError.map((err) => toast(err.msg))
 
-                    else alert(res?.data)
+                    else toast(res?.data)
                 })
                 .catch(er => console.log(er))
         }
@@ -145,7 +146,7 @@ const Profile = () => {
     const handleProfilePicUpdate = async (e) => {
         e.preventDefault();
 
-        if (!File) alert(`No Pic selected`)
+        if (!File) toast(`No Pic selected`)
 
         else {
             const formdata = new FormData()
@@ -156,7 +157,7 @@ const Profile = () => {
                 await axios.put(`https://blogging-app-backend-dpk0.onrender.com/uploadprofilepic/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, formdata)
                 localStorage.setItem('edp', JSON.stringify(false))
                 setEdp(!edp)
-                // alert(res.data)
+                // toast(res.data)
             } catch (error) {
                 console.log(error);
             }
@@ -180,7 +181,7 @@ const Profile = () => {
 
             try {
                 const res = await axios.delete(`https://blogging-app-backend-dpk0.onrender.com/deleteaccount/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`)
-                alert(res?.data)
+                toast(res?.data)
                 nav('/')
             } catch (error) {
                 console.log(error);
@@ -225,7 +226,7 @@ const Profile = () => {
 
         if (!loggeduserid) {
             console.log(`Invalid User id`);
-            alert(`Invalid User id`);
+            toast(`Invalid User id`);
             setAddContactEnabled(false);
             setContactValue('');
             return;
@@ -243,21 +244,21 @@ const Profile = () => {
 
                         if (res.data.Contact) {
                             setContact(res.data.Contact);
-                            alert(res.data.message);
+                            toast(res.data.message);
                             return;
                         }
 
                         if (res.data.ContactDeleted) {
                             setContact('');
                             setContactValue('')
-                            alert(res.data.message);
+                            toast(res.data.message);
                             setAddContactEnabled(false);
                             return;
                         }
 
                         setAddContactEnabled(false);
                         setContactValue('');
-                        alert(res.data.message);
+                        toast(res.data.message);
                     })
                     .catch(er => console.log(`Error updating contact`, er));
             }
@@ -275,17 +276,17 @@ const Profile = () => {
                 if (res.data.Contact) {
                     setContact(res.data.Contact);
                     setEditContact(false);
-                    alert(res.data.message);
+                    toast(res.data.message);
                     return;
                 }
 
                 if (res.data.ContactDeleted) {
                     setContact('');
-                    alert(res.data.message);
+                    toast(res.data.message);
                     return;
                 }
 
-                alert(res.data.message);
+                toast(res.data.message);
                 setAddContactEnabled(false);
                 setContactValue('');
                 setEditContact(false);
@@ -312,10 +313,10 @@ const Profile = () => {
 
                 if (res.data.ContactDetailsShownUpdated) {
                     setShowContactDetails(res.data.Preference);
-                    alert(res.data.message);
+                    toast(res.data.message);
                     return;
                 }
-                alert(res.data.message);
+                toast(res.data.message);
             })
             .catch(er => console.log(`Error showing/hiding contact details`, er));
     }

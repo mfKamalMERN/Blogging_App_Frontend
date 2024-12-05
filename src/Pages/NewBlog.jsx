@@ -5,6 +5,7 @@ import Navbar from '../Component/Navbar';
 import axios from 'axios';
 import Localization from '../Resources/Localization.json'
 import Cookies from 'universal-cookie';
+import { toast } from 'react-toastify';
 
 const NewBlog = () => {
     const [title, setTitle] = useState('');
@@ -50,10 +51,10 @@ const NewBlog = () => {
 
         axios.put(`https://blogging-app-backend-dpk0.onrender.com/createblog/${JSON.parse(localStorage.getItem('LoggedInUser'))._id}`, formdata)
             .then((res) => {
-                if (res.data.ValidationError) res.data.ActError.map((er) => alert(er.msg))
+                if (res.data.ValidationError) res.data.ActError.map((er) => toast(er.msg))
 
                 else {
-                    alert(res.data)
+                    toast(res.data)
                     nav('/home');
                 }
 

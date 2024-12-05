@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import LikesPage from '../Pages/Likes';
 import '../Styles/LikesModal.css';
+import { toast } from 'react-toastify';
 
 const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const [likes, setLikes] = useState(blog?.Likes);
@@ -55,7 +56,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
         const trimmedComment = newComment.trim();
 
         if (!trimmedComment) {
-            alert("Please type your comment");
+            toast("Please type your comment");
             return;
         }
 
@@ -74,7 +75,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const handleEditComment = (commentId) => {
 
         if (eComment.trim() === "") {
-            alert(`Kindly Enter a comment`)
+            toast(`Kindly Enter a comment`)
             setComments(blog.Comments);
             setEcomment(blog.Comments.find((c) => c._id == commentId).Comment);
         }
@@ -102,7 +103,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
             const res = await axios.patch(`https://blogging-app-backend-dpk0.onrender.com/editblogtext/${blog._id}`, { blogContent, title })
 
             if (res.data.ValidationError) {
-                res.data.ActError.map((er) => alert(er.msg))
+                res.data.ActError.map((er) => toast(er.msg))
                 setBlogContent(blog.Blog)
                 setTitle(blog.Title)
             }
@@ -150,7 +151,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
     const isCommentOwner = (commentorId) => commentorId == JSON.parse(localStorage.getItem('LoggedInUser'))?._id
 
     const handlePicUpdate = () => {
-        if (!file) alert(`No image file selected`)
+        if (!file) toast(`No image file selected`)
 
         else {
             const formdata = new FormData()
@@ -163,7 +164,7 @@ const BlogCard = ({ blog, allUsers, isLikes, tokenChecker }) => {
                         setEditBlogPic(false)
                         setFile(null)
                     }
-                    else alert(res.data.Msg)
+                    else toast(res.data.Msg)
                 })
                 .catch(er => console.log(er))
         }

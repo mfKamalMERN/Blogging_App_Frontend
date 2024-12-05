@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Localization from '../Resources/Localization.json'
 import Cookies from 'universal-cookie';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     axios.defaults.withCredentials = true;
@@ -52,21 +53,21 @@ const Login = () => {
         if (isSignup) {
 
             if (formdata.password !== formdata.confirmPassword) {
-                alert("Passwords do not match!");
+                toast("Passwords do not match!");
                 return;
             }
 
             axios.post(`https://blogging-app-backend-dpk0.onrender.com/signup`, formdata)
                 .then(res => {
-                    if (res.data.ValidationError) res.data.actError.map((er) => alert(er.msg))
+                    if (res.data.ValidationError) res.data.actError.map((er) => toast(er.msg))
 
                     else if (res.data.AlreadyRegistered) {
-                        alert(res.data.Msg)
+                        toast(res.data.Msg)
                         setIsSignup(false)
                     }
 
                     else {
-                        alert(res.data)
+                        toast(res.data)
                         setIsSignup(false)
                     }
 
@@ -77,7 +78,7 @@ const Login = () => {
 
             axios.post(`https://blogging-app-backend-dpk0.onrender.com/login`, formdata)
                 .then((res) => {
-                    if (res.data.ValidationError) res.data.actError.map((ve) => alert(ve.msg))
+                    if (res.data.ValidationError) res.data.actError.map((ve) => toast(ve.msg))
 
                     else if (res.data.Token) {
                         console.log(res.data.Token);
@@ -88,7 +89,7 @@ const Login = () => {
                         nav(`/home`)
                     }
 
-                    else alert(res.data)
+                    else toast(res.data)
 
                 })
                 .catch(err => console.log(err))

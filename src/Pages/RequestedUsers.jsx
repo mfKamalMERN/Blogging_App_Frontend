@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { HomeBackNavigations } from '../Component/HomeBackNavigations';
+import { toast } from 'react-toastify';
 
 const FollowRequests = () => {
 
@@ -63,7 +64,7 @@ const FollowRequests = () => {
                     return;
                 }
 
-                alert(response.data.message);
+                toast(response.data.message);
 
             })
             .catch((error) => {
@@ -87,7 +88,7 @@ const FollowRequests = () => {
 
                     return;
                 }
-                alert(response.data.message);
+                toast(response.data.message);
 
             })
             .catch((error) => {
