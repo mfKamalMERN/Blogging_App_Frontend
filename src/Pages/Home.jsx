@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import { HomeBackNavigations } from '../Component/HomeBackNavigations';
+import { toast } from 'react-toastify';
 
 const Home = () => {
     const nav = useNavigate()
@@ -24,26 +25,28 @@ const Home = () => {
                 if (!cookies.get('token') || !localStorage.getItem('token')) {
                     localStorage.clear()
                     cookies.remove('token')
+                    toast(`Kindly login/Sign up`)
                     nav('/')
                 }
-
+                
                 else {
                     const res = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/getuserblogs/${userid}/${JSON.parse(localStorage.getItem('LoggedInUser'))?._id}`)
                     // if (!blogs.length)
                     setBlogs(res?.data?.UserBlogs)
                     setName(res?.data?.Name)
                     // console.log(res.data.Token);
-
+                    
                     axios.get(`https://blogging-app-backend-dpk0.onrender.com/getallusers`)
-                        .then(resp => setAu(resp?.data))
-                        .catch(er => console.log(er))
+                    .then(resp => setAu(resp?.data))
+                    .catch(er => console.log(er))
                 }
             }
-
+            
             else {
                 if (!cookies.get('token') || !localStorage.getItem('token')) {
                     localStorage.clear()
                     cookies.remove('token')
+                    toast(`Kindly login/Sign up`)
                     nav('/')
                 }
                 else {
