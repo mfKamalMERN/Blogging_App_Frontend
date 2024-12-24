@@ -63,9 +63,9 @@ export const Emails = () => {
                 .then(async (response) => {
                     if (response.status === 200) {
                         try {
-                            const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emailssent/${loggeduserid}`);
+                            // const { data } = await axios.get(`https://blogging-app-backend-dpk0.onrender.com/emailssent/${loggeduserid}`);
                             toast('Email Unsent Successfully')
-                            setEmails(data);
+                            // setEmails(data);
                             nav(-1)
                             return;
                         } catch (error) {
