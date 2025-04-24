@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react"
 import EmailDetail from "../Component/EmailDetail"
 import { Emails } from "../Pages/Emails"
 import Followers from "../Pages/Followers"
@@ -7,15 +8,22 @@ import LikesPage from "../Pages/Likes"
 import { Login } from "../Pages/Login"
 import NewBlog from "../Pages/NewBlog"
 import NewFriendsPage from "../Pages/NewFriendsPage"
-import Profile from "../Pages/Profile"
+// import Profile from "../Pages/Profile"
 import FollowRequests from "../Pages/RequestedUsers"
 import { WriteMail } from "../Pages/WriteMail"
+const Profile = lazy(() => import('../Pages/Profile'))
 
 const routeConfig = [
     { path: "/", element: <Login /> },
     { path: "/home", element: <Home /> },
     { path: "/home/:userid", element: <Home /> },
-    { path: "/profile/:userid", element: <Profile /> },
+    {
+        path: "/profile/:userid", element: (
+            < Suspense fallback={<p>Loading Profile...</p>}>
+                <Profile />
+            </Suspense >
+        )
+    },
     { path: "/followers/:userid", element: <Followers /> },
     { path: "/followings/:userid", element: <Followings /> },
     { path: "/newblog", element: <NewBlog /> },
